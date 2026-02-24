@@ -24,9 +24,9 @@
             <div class="page-header">
                 <h1>Quản lý minh chứng đánh giá</h1>
 
-                <button class="primary-btn" id="openCriteriaModal">
+                <a href="/evidences/create" class="primary-btn" id="openCriteriaModal">
                     </span>THÊM MINH CHỨNG ĐÁNH GIÁ
-                </button>
+                </a>
             </div>
 
             <h2 class="criteria-subtitle"><?= htmlspecialchars("Tiêu chí {$criteriaId}: {$criteriaName}") ?></h2>

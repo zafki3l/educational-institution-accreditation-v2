@@ -3,7 +3,6 @@
 namespace App\Modules\QualityAssessment\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Evidence extends Model
 {
@@ -17,6 +16,7 @@ class Evidence extends Model
     protected $fillable = [
         'id',
         'name',
+        'milestone_id',
         'document_number',
         'issued_date',
         'issuing_authority',

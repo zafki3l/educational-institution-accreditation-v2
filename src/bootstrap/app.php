@@ -20,6 +20,9 @@ CsrfTokenGenerator::generate();
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
+foreach ($_ENV as $key => $value) {
+    $_SERVER[$key] = $value;
+}
 
 require_once 'database.php';
 require_once 'container/container.php';

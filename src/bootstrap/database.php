@@ -12,8 +12,11 @@ $capsule->addConnection([
     'database' => $_ENV['MYSQL_DATABASE'],
     'username' => $_ENV['MYSQL_USER'],
     'password' => $_ENV['MYSQL_PASSWORD'],
-    'charset' => 'utf8',
-    'collation' => 'utf8_unicode_ci',
+    'port' => $_ENV['MYSQL_PORT'] ?? 3306,
+    'charset' => 'utf8mb4',
+    'collation' => 'utf8mb4_unicode_ci',
+    'prefix' => '',
+    'unix_socket' => null,
 ]);
 
 $capsule->setEventDispatcher(new IlluminateDispatcher(new Container));

@@ -17,9 +17,7 @@ class File
         private string $storedName,
         private string $path,
         private string $extension,
-        private int $size,
-        private string $storage,
-        private string $status
+        private int $size
     ) {}
 
     public static function create(
@@ -28,9 +26,7 @@ class File
         string $storedName,
         string $path,
         string $extension,
-        int $size,
-        string $storage,
-        string $status
+        int $size
     ): self {
         if (!self::isValidUuidV4($id)) {
             throw new InvalidIdException();
@@ -44,7 +40,7 @@ class File
             throw new FileExtensionInvalidException();
         }
 
-        return new self($id, $originalName, $storedName, $path, $extension, $size, $storage, $status);
+        return new self($id, $originalName, $storedName, $path, $extension, $size);
     } 
 
     public function getId(): string
@@ -75,16 +71,6 @@ class File
     public function getSize(): int
     {
         return $this->size;
-    }
-
-    public function getStorage(): string
-    {
-        return $this->storage;
-    }
-
-    public function getStatus(): string
-    {
-        return $this->status;
     }
 
     private static function isValidUuidV4(string $id): bool

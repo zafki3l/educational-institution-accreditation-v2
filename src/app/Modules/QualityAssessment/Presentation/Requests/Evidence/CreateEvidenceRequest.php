@@ -11,6 +11,7 @@ final class CreateEvidenceRequest
     private string $document_number;
     private string $issued_date;
     private string $issuing_authority;
+    private array $file;
 
     public function __construct() 
     {
@@ -21,6 +22,7 @@ final class CreateEvidenceRequest
         $this->document_number = $_POST['document_number'];
         $this->issued_date = $_POST['issued_date'];
         $this->issuing_authority = $_POST['issuing_authority'];
+        $this->file = $_FILES['file'];
     }
 
     public function getId(): string
@@ -56,5 +58,10 @@ final class CreateEvidenceRequest
     public function getIssuingAuthority(): string
     {
         return $this->issuing_authority;
+    }
+
+    public function getFile(): array
+    {
+        return $this->file;
     }
 }

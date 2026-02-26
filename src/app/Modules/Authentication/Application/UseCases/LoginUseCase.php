@@ -19,7 +19,8 @@ final class LoginUseCase
 
     public function execute(LoginRequestInterface $request): ?AuthenticableUser
     {
-        $authUser = $this->repository->findByAuthId($request->getAuthId());
+        $identifier = strtolower($request->getIdentifier());
+        $authUser = $this->repository->findByIdentifier($identifier);
         
         $password = $this->getHashedPassword($authUser);
 

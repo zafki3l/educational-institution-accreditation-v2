@@ -37,7 +37,7 @@ final class LoginController extends AuthController
 
         AuthSession::set([
             'user_id' => $auth_user->getUserId()->value(),
-            'auth_id' => $auth_user->getAuthId()->value(),
+            'identifier' => $auth_user->getIdentifier(),
             'role_id' => $auth_user->getRoleId()
         ]);
 

@@ -6,18 +6,18 @@ use App\Modules\Authentication\Application\Requests\LoginRequestInterface;
 
 final class LoginRequest implements LoginRequestInterface
 {
-    private string $auth_id;
+    private string $identifier;
     private string $password;
 
     public function __construct()
     {
-        $this->auth_id = $_POST['auth_id'];
+        $this->identifier = $_POST['identifier'];
         $this->password = $_POST['password'];
     }
 
-    public function getAuthId(): string
+    public function getIdentifier(): string
     {
-        return $this->auth_id;
+        return $this->identifier;
     }
 
     public function getPassword(): string

@@ -2,7 +2,6 @@
 
 namespace App\Modules\Authentication\Domain\Entities;
 
-use App\Modules\Authentication\Domain\ValueObjects\AuthId;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 
@@ -10,20 +9,20 @@ class AuthenticableUser
 {
     private function __construct(
         private UserId $user_id,
-        private AuthId $auth_id,
+        private string $identifier,
         private Password $password,
         private int $role_id
     ) {}
 
     public static function create(
         UserId $user_id,
-        AuthId $auth_id,
+        string $identifier,
         Password $password,
         int $role_id
     ): self {
         return new self(
             $user_id,
-            $auth_id,
+            $identifier,
             $password,
             $role_id
         );
@@ -34,9 +33,9 @@ class AuthenticableUser
         return $this->user_id;
     }
 
-    public function getAuthId(): AuthId
+    public function getIdentifier(): string
     {
-        return $this->auth_id;
+        return $this->identifier;
     }
 
     public function getPassword(): Password

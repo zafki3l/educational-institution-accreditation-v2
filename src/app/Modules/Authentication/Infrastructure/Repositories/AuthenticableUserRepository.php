@@ -9,25 +9,17 @@ use App\Modules\UserManagement\Infrastructure\Models\User as ModelsUser;
 
 final class AuthenticableUserRepository implements AuthenticableUserRepositoryInterface
 {
-    public function findByAuthId(string $auth_id): ?AuthenticableUser
+    public function findByIdentifier(string $identifier): ?AuthenticableUser
     {
         $modelsUser = ModelsUser::select(['id', 'auth_id', 'password', 'role_id'])
-                    ->where('auth_id', $auth_id)
+                    ->where(function ($query) use ($identifier) {
+                        $query->where('auth_id', $identifier)
+                            ->orWhere('email', $identifier);
+                    })
                     ->first();
         
         return $modelsUser 
-            ? AuthenticableUserMapper::toDomain($modelsUser)
-            : null;
-    }
-
-    public function findByUserId(string $user_id): ?AuthenticableUser
-    {
-        $modelsUser = ModelsUser::select(['id', 'auth_id', 'password', 'role_id'])
-                    ->where('auth_id', $user_id)
-                    ->first();
-
-        return $modelsUser 
-            ? AuthenticableUserMapper::toDomain($modelsUser)
+            ? AuthenticableUserMapper::toDomain($modelsUser, $identifier)
             : null;
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Requests\Evidence;
 
-final class CreateEvidenceRequest
+use App\Modules\QualityAssessment\Application\Requests\Evidence\CreateEvidenceRequestInterface;
+
+final class CreateEvidenceRequest implements CreateEvidenceRequestInterface
 {
     private string $id;
     private string $name;
@@ -11,7 +13,7 @@ final class CreateEvidenceRequest
     private string $document_number;
     private string $issued_date;
     private string $issuing_authority;
-    private array $file;
+    private ?array $file;
 
     public function __construct() 
     {
@@ -60,7 +62,7 @@ final class CreateEvidenceRequest
         return $this->issuing_authority;
     }
 
-    public function getFile(): array
+    public function getFile(): ?array
     {
         return $this->file;
     }

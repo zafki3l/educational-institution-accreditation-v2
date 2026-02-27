@@ -19,7 +19,8 @@ class Evidence
         private string $document_number,
         private DateTimeImmutable $issued_date,
         private string $issuing_authority,
-        private string $file_url
+        private string $file_url,
+        private string $milestone_id
     ) {}
 
     public static function create(
@@ -28,7 +29,8 @@ class Evidence
         string $document_number,
         DateTimeImmutable $issued_date,
         string $issuing_authority,
-        string $file_url
+        string $file_url,
+        string $milestone_id
     ): self {
         self::checkIdEmpty($id);
 
@@ -42,7 +44,7 @@ class Evidence
 
         self::checkFileUrlEmpty($file_url);
 
-        return new self($id, $name, $document_number, $issued_date, $issuing_authority, $file_url);
+        return new self($id, $name, $document_number, $issued_date, $issuing_authority, $file_url, $milestone_id);
     }
 
     public function getId(): EvidenceId
@@ -73,6 +75,11 @@ class Evidence
     public function getFileUrl(): string
     {
         return $this->file_url;
+    }
+
+    public function getMilestoneId(): string
+    {
+        return $this->milestone_id;
     }
 
     private static function checkDocumentNumberEmpty(string $document_number): void

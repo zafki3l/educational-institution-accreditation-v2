@@ -2,7 +2,7 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Controllers\Evidence;
 
-use App\Modules\FileUpload\Application\UploadFileUseCase;
+use App\Modules\QualityAssessment\Application\UseCases\Evidence\CreateEvidenceUseCase;
 use App\Modules\QualityAssessment\Infrastructure\Models\Criteria;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
@@ -14,9 +14,7 @@ use App\Shared\Response\ViewResponse;
 
 final class CreateEvidenceController extends QualityAssessmentController
 {
-    public function __construct(private UploadFileUseCase $uploadFile)
-    {
-    }
+    public function __construct(private CreateEvidenceUseCase $createEvidenceUseCase) {}
 
     public function create()
     {
@@ -59,15 +57,7 @@ final class CreateEvidenceController extends QualityAssessmentController
 
     public function store(CreateEvidenceRequest $request)
     {
-        Evidence::create([
-            'id' => $request->getId(),
-            'name' => $request->getName(),
-            'milestone_id' => $request->getMilestoneId(),
-            'document_number' => $request->getDocumentNumber(),
-            'issued_date' => $request->getIssuedDate(),
-            'issuing_authority' => $request->getIssuingAuthority(),
-            'file_url' => $this->uploadFile->execute($request->getFile())
-        ]);
+        $this->createEvidenceUseCase->execute($request);
 
         $this->redirect("/criterias/{$request->getCriteriaId()}/evidences");
     }

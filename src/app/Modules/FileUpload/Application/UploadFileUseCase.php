@@ -7,11 +7,8 @@ use App\Shared\Infrastructure\UuidGenerator;
 
 final class UploadFileUseCase
 {
-    public function execute(array $file)
+    public function execute(array $file, string $name = '')
     {
-        // Generate uuid v4 for file_id
-        $id = UuidGenerator::v4();
-
         // Extract info
         $original_name = $file['name']; 
 
@@ -21,13 +18,17 @@ final class UploadFileUseCase
         $size = $file['size'];
 
         // Generate stored name
-        $stored_name = "{$id}.{$extension}";
+
+        $safeName = str_replace('.', '_', $name);
+
+        $stored_name = ($name === '') 
+            ? UuidGenerator::v4() . ".{$extension}"
+            : "{$safeName}_" . date('Ymd') . ".{$extension}";
 
         // Path 
-        $path = $path = __DIR__ . '/../../../../public/assets/evidences';
+        $path = __DIR__ . '/../../../../public/assets/evidences';
 
         $entityFile = File::create(
-            $id,
             $original_name,
             $stored_name,
             $path,

@@ -26,10 +26,13 @@ final class CreateEvidenceUseCase
             $request->getDocumentNumber(),
             new DateTimeImmutable($request->getIssuedDate()),
             $request->getIssuingAuthority(),
-            $file_url,
             $request->getMilestoneId()
         );
 
+        if ($request->getFile()['error'] === UPLOAD_ERR_OK) {
+            $evidence->changeFileUrl($file_url);
+        }
+        
         $this->repository->create($evidence);
     }
 }

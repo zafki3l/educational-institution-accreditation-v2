@@ -2,15 +2,16 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Controllers\Evidence;
 
-use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
+use App\Modules\QualityAssessment\Application\UseCases\Evidence\UpdateEvidenceUseCase;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\UpdateEvidenceRequest;
 use App\Shared\Response\ViewResponse;
+use App\Shared\SessionManager\AuthSession;
 
 final class UpdateEvidenceController extends QualityAssessmentController
 {
-    public function __construct(private EvidenceFileUploaderInterface $evidenceFileUploader) {}
+    public function __construct(private UpdateEvidenceUseCase $updateEvidenceUseCase) {}
 
     public function edit(string $id): ViewResponse
     {
@@ -29,23 +30,8 @@ final class UpdateEvidenceController extends QualityAssessmentController
 
     public function update(UpdateEvidenceRequest $request): void
     {
-        $evidence = Evidence::with(['milestone.criteria.standard'])->findOrFail($request->getId());
+        $criteria_id = $this->updateEvidenceUseCase->execute($request, AuthSession::getUserId());
 
-        $data = [
-            'name' => $request->getName(),
-            'document_number' => $request->getDocumentNumber(),
-            'issued_date' => $request->getIssuedDate(),
-            'issuing_authority' => $request->getIssuingAuthority()
-        ];
-
-        if ($request->getFile()['error'] === UPLOAD_ERR_OK) {
-            $data['file_url'] = $this->evidenceFileUploader->upload($request->getFile(), $request->getId());
-        }
-
-        $evidence->update($data);
-
-        $evidence->refresh();
-
-        $this->redirect("/criterias/{$evidence->milestone->criteria->id}/evidences");
+        $this->redirect("/criterias/{$criteria_id}/evidences");
     }
 }

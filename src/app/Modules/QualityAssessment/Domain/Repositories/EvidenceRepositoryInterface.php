@@ -9,4 +9,6 @@ interface EvidenceRepositoryInterface
     public function create(EntitiesEvidence $entitiesEvidence): void;
 
     public function delete(string $id): string;
+
+    public function update(EntitiesEvidence $entitiesEvidence): string;
 }

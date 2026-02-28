@@ -2,7 +2,9 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Requests\Evidence;
 
-final class UpdateEvidenceRequest
+use App\Modules\QualityAssessment\Application\Requests\Evidence\UpdateEvidenceRequestInterface;
+
+final class UpdateEvidenceRequest implements UpdateEvidenceRequestInterface
 {
     private string $id;
     private string $name;
@@ -10,6 +12,7 @@ final class UpdateEvidenceRequest
     private string $issued_date;
     private string $issuing_authority;
     private ?array $file;
+    private string $milestone_id;
 
     public function __construct() 
     {
@@ -19,6 +22,7 @@ final class UpdateEvidenceRequest
         $this->issued_date = $_POST['issued_date'];
         $this->issuing_authority = $_POST['issuing_authority'];
         $this->file = $_FILES['file'];
+        $this->milestone_id = $_POST['milestone_id'];
     }
 
     public function getId(): string
@@ -49,5 +53,10 @@ final class UpdateEvidenceRequest
     public function getFile(): ?array
     {
         return $this->file;
+    }
+
+    public function getMilestoneId(): string
+    {
+        return $this->milestone_id;
     }
 }

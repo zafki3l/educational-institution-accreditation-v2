@@ -20,4 +20,15 @@ class EvidenceRepository implements EvidenceRepositoryInterface
             'file_url' => $entitiesEvidence->getFileUrl()
         ]);
     }
+
+    public function delete(string $id): string
+    {
+        $evidence = ModelsEvidence::with('milestone')->select('id', 'milestone_id', 'name')->findOrFail($id);
+
+        $criteria_id = $evidence->milestone->criteria_id;
+
+        $evidence->delete();
+
+        return $criteria_id;
+    }
 }

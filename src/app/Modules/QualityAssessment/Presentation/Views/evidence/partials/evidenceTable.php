@@ -44,18 +44,18 @@
                     <td class="right"><a>Xem</a></td>
                     <td class="right">
                         <div class="action-group">
-                            <button class="icon-btn edit-evidence-btn"
-                                    type="button"
-                                    title="Chỉnh sửa"
-                                    data-id="<?= $evidence->id ?>">
+                            <a class="icon-btn edit-evidence-btn"
+                                href="/evidences/<?= htmlspecialchars($evidence->id) ?>/edit"
+                                title="Chỉnh sửa">
                                 <span class="material-symbols-outlined">edit</span>
-                            </button>
+                            </a>
 
-                            <button class="icon-btn danger delete-evidence-btn"
-                                    type="button"
-                                    title="Xóa"
-                                    data-id="<?= $evidence->id ?>"
-                                    data-name="<?= htmlspecialchars($evidence->name) ?>">
+                            <button
+                                type="button"
+                                class="icon-btn danger delete-evidence-btn"
+                                data-id="<?= htmlspecialchars($evidence->id) ?>"
+                                data-name="<?= htmlspecialchars($evidence->name) ?>"
+                            >
                                 <span class="material-symbols-outlined">delete</span>
                             </button>
                         </div>
@@ -65,5 +65,7 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+
+<?php include 'deleteModal.php' ?>
 
 <script src="/js/evidence/EvidenceTable.js"></script>

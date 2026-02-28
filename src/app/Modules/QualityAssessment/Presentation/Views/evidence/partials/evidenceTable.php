@@ -44,11 +44,11 @@
                     <td class="right"><a>Xem</a></td>
                     <td class="right">
                         <div class="action-group">
-                            <button class="icon-btn edit-evidence-btn"
-                                    type="button"
-                                    title="Chỉnh sửa">
+                            <a class="icon-btn edit-evidence-btn"
+                                href="/evidences/<?= htmlspecialchars($evidence->id) ?>/edit"
+                                title="Chỉnh sửa">
                                 <span class="material-symbols-outlined">edit</span>
-                            </button>
+                            </a>
 
                             <button
                                 type="button"

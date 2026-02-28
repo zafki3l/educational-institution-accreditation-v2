@@ -23,7 +23,7 @@ final class CreateEvidenceController extends QualityAssessmentController
             'evidence/create',
             'main.layouts',
             [
-                'title' => 'Thêm minh chứng đánh giá'
+                'title' => 'Thêm minh chứng đánh giá | ' . SYSTEM_NAME
             ]
         );
     }

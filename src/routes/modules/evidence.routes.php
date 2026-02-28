@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\CreateEvidenceController;
+use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\DeleteEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\IndexEvidenceController;
 use App\Shared\Middlewares\EnsureAuth;
 use App\Shared\Middlewares\EnsureStaff;
@@ -22,3 +23,6 @@ $route->middleware([EnsureAuth::class, EnsureStaff::class])
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->get('/api/criterias/{criteria_id}/milestones', [CreateEvidenceController::class, 'getAllMilestonesByCriteria']);
+
+$route->middleware([EnsureAuth::class, EnsureStaff::class])
+    ->delete('/evidences/{id}', [DeleteEvidenceController::class, 'destroy']);

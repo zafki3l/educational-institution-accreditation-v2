@@ -12,12 +12,12 @@ final class DeleteEvidenceUseCase
         private LoggerInterface $logger
     ) {}
 
-    public function execute(string $id, string $actor_id)
+    public function execute(string $id, string $actor_id): string
     {
         $criteria_id = $this->repository->delete($id);
 
         $this->writeLog($id, $criteria_id, $actor_id);
-        
+
         return $criteria_id;
     }
 

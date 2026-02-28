@@ -31,4 +31,26 @@ class EvidenceRepository implements EvidenceRepositoryInterface
 
         return $criteria_id;
     }
+
+    public function update(EntitiesEvidence $entitiesEvidence): string
+    {
+        $evidence = ModelsEvidence::with(['milestone.criteria.standard'])->findOrFail($entitiesEvidence->getId()->value());
+
+        $data = [
+            'name' => $entitiesEvidence->getName(),
+            'document_number' => $entitiesEvidence->getDocumentNumber(),
+            'issued_date' => $entitiesEvidence->getIssuedDate(),
+            'issuing_authority' => $entitiesEvidence->getIssuingAuthority()
+        ];
+
+        if ($entitiesEvidence !== null || $entitiesEvidence !== '') {
+            $data['file_url'] = $entitiesEvidence->getFileUrl();
+        }
+
+        $evidence->update($data);
+
+        $evidence->refresh();   
+
+        return $evidence->milestone->criteria->id;
+    }
 }

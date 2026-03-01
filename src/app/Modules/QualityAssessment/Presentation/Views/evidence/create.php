@@ -44,7 +44,7 @@
                                     <span class="material-icons-round">qr_code</span>
                                     <!-- Prefix tự nhập -->
                                     <input type="text" id="prefixInput" placeholder="H1">
-                                    <input type="text" id="autoCode" readonly>
+                                    <input type="text" id="autoCode" placeholder="01.01" readonly>
                                     <input type="text" id="lastCode" placeholder="01">
                                 </div>
                             </div>

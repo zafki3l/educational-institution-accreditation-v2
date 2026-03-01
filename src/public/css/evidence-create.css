@@ -311,7 +311,7 @@ select:focus {
 }
 
 #prefixInput {
-    padding-left: 38px; /* chừa chỗ cho icon */
+    padding-left: 38px; 
     width: 100px;
 }
 

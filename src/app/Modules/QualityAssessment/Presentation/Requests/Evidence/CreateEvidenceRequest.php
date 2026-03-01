@@ -19,10 +19,10 @@ final class CreateEvidenceRequest implements CreateEvidenceRequestInterface
     {
         $this->id = $_POST['id'];
         $this->name = $_POST['name'];
-        $this->criteria_id = $_POST['criteria_id'];
-        $this->milestone_id = (int) $_POST['milestone_id'];
+        $this->criteria_id = $_POST['criteria_id'] ?? '';
+        $this->milestone_id = isset($_POST['milestone_id']) ? (int) $_POST['milestone_id'] : null;
         $this->document_number = $_POST['document_number'];
-        $this->issued_date = $_POST['issued_date'];
+        $this->issued_date = !empty($_POST['issued_date']) ? $_POST['issued_date'] : '';
         $this->issuing_authority = $_POST['issuing_authority'];
         $this->file = $_FILES['file'];
     }
@@ -42,7 +42,7 @@ final class CreateEvidenceRequest implements CreateEvidenceRequestInterface
         return $this->criteria_id;
     }
 
-    public function getMilestoneId(): int
+    public function getMilestoneId(): ?int
     {
         return $this->milestone_id;
     }

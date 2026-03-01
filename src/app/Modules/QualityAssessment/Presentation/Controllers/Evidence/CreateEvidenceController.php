@@ -10,6 +10,7 @@ use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\CreateEvidenceRequest;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
+use App\Shared\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;
 
@@ -64,8 +65,15 @@ final class CreateEvidenceController extends QualityAssessmentController
 
     public function store(CreateEvidenceRequest $request)
     {
-        $this->createEvidenceUseCase->execute($request);
+        try {
+            $this->createEvidenceUseCase->execute($request);
 
-        $this->redirect("/criterias/{$request->getCriteriaId()}/evidences");
+            $this->redirect("/criterias/{$request->getCriteriaId()}/evidences");
+        } catch (DomainException $e) {
+            $_SESSION['errors'] = [$e->getMessage()];
+
+            $_SESSION['old'] = $_POST;
+            $this->redirect('/evidences/create');
+        }
     }
 }

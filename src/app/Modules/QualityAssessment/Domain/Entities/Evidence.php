@@ -8,6 +8,7 @@ use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyDocumen
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIssuedDateException;
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIssuingAuthorityException;
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyFileUrlException;
+use App\Modules\QualityAssessment\Domain\Exception\Milestone\MilestoneIdEmptyException;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
 use DateTimeImmutable;
 
@@ -34,6 +35,8 @@ class Evidence
         self::checkIdEmpty($id);
 
         self::checkNameEmpty($name);
+
+        self::checkMilestoneIdEmpty($milestone_id);
 
         self::checkDocumentNumberEmpty($document_number);
 
@@ -125,6 +128,13 @@ class Evidence
     {
         if ($id->value() === '') {
             throw new EvidenceEmptyIdException();
+        }
+    }
+
+    private static function checkMilestoneIdEmpty(int $milestone_id): void
+    {
+        if ($milestone_id === null || $milestone_id === 0) {
+            throw new MilestoneIdEmptyException();
         }
     }
 }

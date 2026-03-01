@@ -39,7 +39,7 @@
                         <div class="grid-2">
 
                             <div class="form-group">
-                                <label>Mã minh chứng <span>*</span></label>
+                                <label>Mã minh chứng </label>
                                 <div class="input-icon">
                                     <span class="material-icons-round">qr_code</span>
                                     <!-- Prefix tự nhập -->
@@ -52,9 +52,10 @@
                             <input type="hidden" name="id" id="finalCode">
 
                             <div class="form-group">
-                                <label>Tên minh chứng <span>*</span></label>
+                                <label>Tên minh chứng </label>
                                 <div class="input-icon">
-                                    <input type="text" name="name" placeholder="Nhập tên minh chứng">
+                                    <input type="text" name="name" placeholder="Nhập tên minh chứng"
+                                    value="<?= htmlspecialchars($_SESSION['old']['name'] ?? '') ?>">
                                 </div>
                             </div>
 
@@ -91,7 +92,8 @@
 
                             <div class="form-group">
                                 <label>Quyết định</label>
-                                <input type="text" name="document_number" placeholder="Nhập quyết định">
+                                <input type="text" name="document_number" placeholder="Nhập quyết định"
+                                value="<?= htmlspecialchars($_SESSION['old']['document_number'] ?? '') ?>">
                             </div>
 
                             <div class="form-group">
@@ -110,7 +112,8 @@
 
                             <div class="form-group">
                                 <label>Nơi phát hành</label>
-                                <input type="text" name="issuing_authority" placeholder="Nhập nơi phát hành">
+                                <input type="text" name="issuing_authority" placeholder="Nhập nơi phát hành"
+                                value="<?= htmlspecialchars($_SESSION['old']['issuing_authority'] ?? '') ?>">
                             </div>
 
                         </div>
@@ -122,7 +125,7 @@
                             <div class="upload-box">
                                 <span class="material-icons-round upload-icon">cloud_upload</span>
                                 <p><strong>Tải tệp lên</strong> hoặc kéo và thả tệp vào đây</p>
-                                <small>PDF, PNG, JPG hoặc JPEG tối đa 20MB</small>
+                                <small>PDF, PNG, JPG, JPEG hoặc WEBP tối đa 20MB</small>
                                 <p id="fileName" class="file-name">Chưa chọn file</p>
                                 <input type="file" name="file" id="fileInput">
                             </div>
@@ -136,6 +139,16 @@
                                 <span class="material-icons-round">save</span>
                                 Tạo minh chứng
                             </button>
+                        </div>
+
+                        <?php if (!empty($_SESSION['errors'])): ?>
+                            <div class="error">
+                                <?php foreach ($_SESSION['errors'] as $err): ?>
+                                    <p class="error-message"><?= htmlspecialchars($err) ?></p>
+                                <?php endforeach ?>
+                            </div>
+                        <?php endif ?>
+                            
                         </div>
 
                     </form>
@@ -225,6 +238,25 @@ function updateIssuedDate() {
     i.addEventListener('input', updateIssuedDate)
 );
 </script>
+
+<script>
+    const fileInput = document.getElementById('fileInput');
+const fileName  = document.getElementById('fileName');
+
+fileInput.addEventListener('change', function () {
+    if (this.files && this.files.length > 0) {
+        fileName.textContent = this.files[0].name;
+    } else {
+        fileName.textContent = 'Chưa chọn file';
+    }
+});
+</script>
 </body>
 
 </html>
+
+<?php
+unset($_SESSION['errors']);
+unset($_SESSION['old']);
+
+?>

@@ -8,7 +8,7 @@ use App\Modules\FileUpload\Domain\Exceptions\SizeTooBigException;
 class File
 {
     private const ALLOWED_SIZE = 20_000_000;
-    private const ALLOWED_EXTENSION = ['png', 'jpg', 'webp', 'pdf'];
+    private const ALLOWED_EXTENSION = ['png', 'jpg', 'webp', 'jpeg', 'pdf'];
 
     private function __construct(
         private string $originalName,

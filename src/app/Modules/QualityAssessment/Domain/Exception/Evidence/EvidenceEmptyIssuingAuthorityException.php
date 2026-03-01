@@ -9,7 +9,7 @@ final class EvidenceEmptyIssuingAuthorityException extends DomainException
     public function __construct()
     {
         parent::__construct(
-            'Cơ quan ban hành không được bỏ trống!',
+            'Nơi phát hành không được bỏ trống!',
             'EVIDENCE_ISSUING_AUTHORITY_EMPTY'
         );
     }

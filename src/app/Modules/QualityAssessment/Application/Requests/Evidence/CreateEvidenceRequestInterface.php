@@ -10,7 +10,7 @@ interface CreateEvidenceRequestInterface
 
     public function getCriteriaId(): string;
 
-    public function getMilestoneId(): int;
+    public function getMilestoneId(): ?int;
 
     public function getDocumentNumber(): string;
 

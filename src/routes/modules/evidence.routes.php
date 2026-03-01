@@ -2,6 +2,7 @@
 
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\CreateEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\DeleteEvidenceController;
+use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\FindEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\IndexEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\ShowEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\UpdateEvidenceController;
@@ -37,3 +38,12 @@ $route->middleware([EnsureAuth::class, EnsureStaff::class])
 
 $route->middleware([EnsureAuth::class])
     ->get('/evidences/{id}/show', [ShowEvidenceController::class, 'show']);
+
+$route->middleware([EnsureAuth::class])
+    ->get('/evidences/find', [FindEvidenceController::class, 'find']);
+
+$route->middleware([EnsureAuth::class])
+    ->get('/evidences/results', [FindEvidenceController::class, 'results']);
+
+$route->middleware([EnsureAuth::class])
+    ->get('/evidences/results/{id}/view', [FindEvidenceController::class, 'viewResults']);

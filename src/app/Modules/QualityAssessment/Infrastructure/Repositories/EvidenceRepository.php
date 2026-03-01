@@ -43,7 +43,7 @@ class EvidenceRepository implements EvidenceRepositoryInterface
             'issuing_authority' => $entitiesEvidence->getIssuingAuthority()
         ];
 
-        if ($entitiesEvidence !== null || $entitiesEvidence !== '') {
+        if (!empty($entitiesEvidence->getFileUrl())) {
             $data['file_url'] = $entitiesEvidence->getFileUrl();
         }
 

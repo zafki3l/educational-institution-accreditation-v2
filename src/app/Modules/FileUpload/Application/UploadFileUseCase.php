@@ -22,10 +22,14 @@ final class UploadFileUseCase
 
         $stored_name = ($name === '') 
             ? UuidGenerator::v4() . ".{$extension}"
-            : "{$safeName}_" . date('Ymd') . ".{$extension}";
+            : "{$safeName}_" . date("YmdHis") . ".{$extension}";
 
         // Path 
         $path = __DIR__ . '/../../../../public/assets/evidences';
+
+        if (!is_dir($path)) {
+            mkdir($path, 0775, true);
+        }
 
         $entityFile = File::create(
             $original_name,

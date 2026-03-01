@@ -41,7 +41,7 @@
                     <td><?= htmlspecialchars($evidence->document_number) ?></td>
                     <td><?= htmlspecialchars($evidence->issued_date) ?></td>
                     <td><?= htmlspecialchars($evidence->issuing_authority) ?></td>
-                    <td class="right"><a>Xem</a></td>
+                    <td class="right"><a href="/evidences/<?= htmlspecialchars($evidence->id) ?>/show"><span class="material-symbols-outlined">visibility</span></a></td>
                     <td class="right">
                         <div class="action-group">
                             <a class="icon-btn edit-evidence-btn"

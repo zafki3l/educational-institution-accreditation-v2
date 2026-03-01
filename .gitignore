@@ -2,3 +2,4 @@ vendor/
 .env
 .phpunit.cache/
 .DS_Store
+src/public/assets/evidences

@@ -3,6 +3,7 @@
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\CreateEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\DeleteEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\IndexEvidenceController;
+use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\ShowEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\UpdateEvidenceController;
 use App\Shared\Middlewares\EnsureAuth;
 use App\Shared\Middlewares\EnsureStaff;
@@ -33,3 +34,6 @@ $route->middleware([EnsureAuth::class, EnsureStaff::class])
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->delete('/evidences/{id}', [DeleteEvidenceController::class, 'destroy']);
+
+$route->middleware([EnsureAuth::class])
+    ->get('/evidences/{id}/show', [ShowEvidenceController::class, 'show']);

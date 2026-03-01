@@ -5,7 +5,7 @@
                 <img src="http://localhost/assets/icon/fbu.png">
             </li>
             <li><a href="/">Trang chủ</a></li>
-            <li><a href="">Tìm kiếm minh chứng</a></li>
+            <li><a href="/evidences/find">Tìm kiếm minh chứng</a></li>
 
             <li><a href="/admin/dashboard">Trang điều khiển</a></li> <!--show dashboard for admin-->
 

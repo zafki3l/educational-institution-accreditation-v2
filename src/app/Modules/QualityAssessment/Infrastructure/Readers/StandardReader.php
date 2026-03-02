@@ -26,6 +26,16 @@ class StandardReader implements StandardReaderInterface
         return $standards;
     }
 
+    public function withCriteriaByDepartment(string $department_id): Collection
+    {
+        $standards = Standard::with('criteria')
+                        ->where('department_id', $department_id)
+                        ->orderByRaw('CAST(id AS UNSIGNED) ASC')
+                        ->get();
+
+        return $standards;
+    }
+
     public function count(): int
     {
         return Standard::count();

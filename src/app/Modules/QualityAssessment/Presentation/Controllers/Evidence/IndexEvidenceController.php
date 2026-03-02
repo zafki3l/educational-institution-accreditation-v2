@@ -14,7 +14,7 @@ final class IndexEvidenceController extends QualityAssessmentController
     public function index(string $criteria_id)
     {
         $standards = $this->standardReader->withCriteria();
-
+        $sidebarStandards = $this->renderSidebarStandards($this->standardReader);
         $criteria = Criteria::with(['milestones', 'milestones.evidences'])->findOrFail($criteria_id);
 
         return new ViewResponse(
@@ -26,7 +26,8 @@ final class IndexEvidenceController extends QualityAssessmentController
                 'standards' => $standards,
                 'criteria' => $criteria,
                 'criteriaId' => $criteria->id,
-                'criteriaName' => $criteria->name
+                'criteriaName' => $criteria->name,
+                'sidebarStandards' => $sidebarStandards
             ]
         );
     }

@@ -14,9 +14,9 @@
             </div>
 
             <div class="sidebar-sub">
-                <?php if (isset($standards) && !empty($standards)): ?>
+                <?php if (isset($sidebarStandards) && !empty($sidebarStandards)): ?>
                     <ul class="sidebar-tree">
-                        <?php foreach ($standards as $standard): ?>
+                        <?php foreach ($sidebarStandards as $standard): ?>
                             <li class="sidebar-standard">
                                 <button
                                     type="button"
@@ -59,8 +59,6 @@
                         Chưa có dữ liệu tiêu chuẩn/tiêu chí để hiển thị.
                     </p>
                 <?php endif; ?>
-
-                <a class="sidebar-item" href="/evidences">Mở trang quản lý minh chứng</a>
             </div>
         </div>
     </nav>

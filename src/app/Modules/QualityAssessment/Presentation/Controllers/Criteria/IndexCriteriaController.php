@@ -14,13 +14,16 @@ final class IndexCriteriaController extends QualityAssessmentController
     {
         $standards = $this->standardReader->withCriteria();
 
+        $sidebarStandards = $this->renderSidebarStandards($this->standardReader);
+
         return new ViewResponse(
             self::MODULE_NAME,
             'criteria/index',
             'main.layouts',
             [
                 'title' => 'Quản lý tiêu chí đánh giá | ' . SYSTEM_NAME,
-                'standards' => $standards
+                'standards' => $standards,
+                'sidebarStandards' => $sidebarStandards
             ]
         );
     }

@@ -14,9 +14,9 @@
             <?php include 'partials/standard-management-card.php' ?>
         </section>
 
-        <section class="stats-section">
+        <!-- <section class="stats-section">
             <?php include 'partials/stats-section.php' ?>
-        </section>
+        </section> -->
     </main>
 </body>
 </html>

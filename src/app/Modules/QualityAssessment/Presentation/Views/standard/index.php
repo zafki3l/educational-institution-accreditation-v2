@@ -23,9 +23,11 @@
             <div class="page-header">
                 <h1>Quản lý tiêu chuẩn đánh giá</h1>
 
-            <button class="primary-btn" id="openStandardModal">
-                THÊM TIÊU CHUẨN
-            </button>
+                <?php if (isAdmin()): ?>
+                    <button class="primary-btn" id="openStandardModal">
+                        THÊM TIÊU CHUẨN
+                    </button>
+                <?php endif; ?>
             </div>
 
             <div class="table-box">

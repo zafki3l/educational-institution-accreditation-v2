@@ -26,29 +26,31 @@
                 <form id="addMilestoneForm" action="/milestones" method="post">
                     <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
                     <input type="hidden" name="criteria_id" id="criteriaIdInput">
-                    <input
-                        type="text"
-                        id="newMilestoneOrder"
-                        name="order"
-                        placeholder="Số thứ tự (VD: 1, 2, 3...)"
-                    />
+                    <?php if (isAdmin()): ?>
+                        <input
+                            type="text"
+                            id="newMilestoneOrder"
+                            name="order"
+                            placeholder="Số thứ tự (VD: 1, 2, 3...)"
+                        />
 
-                    <input
-                        type="text"
-                        name="name"
-                        id="newMilestoneName"
-                        placeholder="Nhập tên mốc đánh giá..."
-                    />
+                        <input
+                            type="text"
+                            name="name"
+                            id="newMilestoneName"
+                            placeholder="Nhập tên mốc đánh giá..."
+                        />
 
-                    <button class="btn-primary" type="submit" id="addMilestoneBtn">
-                        <span class="material-icons-round">add</span>
-                        Thêm mốc đánh giá
-                    </button>
+                        <button class="btn-primary" type="submit" id="addMilestoneBtn">
+                            <span class="material-icons-round">add</span>
+                            Thêm mốc đánh giá
+                        </button>
+                    <?php endif; ?>
                 </form>
             </div>
 
             <div class="error" id="formMilestonesErrors"></div>
-
+            
             <table class="milestones-table">
                 <thead>
                     <tr>
@@ -299,4 +301,7 @@
 }
 </style>
 
+<script>
+    window.IS_ADMIN = <?= isAdmin() ? 'true' : 'false' ?>;
+</script>
 <script src="/js/criteria/milestonesModal.js"></script>

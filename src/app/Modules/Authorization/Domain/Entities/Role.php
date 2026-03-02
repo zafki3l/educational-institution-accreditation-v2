@@ -6,6 +6,9 @@ use App\Modules\Authorization\Domain\Exception\EmptyRoleNameException;
 
 class Role
 {
+    public const ROLE_ADMIN = 3;
+    public const ROLE_STAFF = 2;
+    
     private ?int $id;
 
     private function __construct(

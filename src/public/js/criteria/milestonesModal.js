@@ -42,7 +42,9 @@ document.addEventListener('click', async (e) => {
         const milestones = await fetchMilestones(currentCriteriaId);
         renderMilestonesTable(milestones);
         openMilestonesModal();
-        orderInput.focus();
+        if (window.IS_ADMIN && orderInput) {
+            orderInput.focus();
+        }
     } catch (err) {
         alert('Không thể tải mốc đánh giá');
     }
@@ -67,12 +69,14 @@ function renderMilestonesTable(milestones) {
         <tr>
             <td>#${m.order}</td>
             <td>${escapeHtml(m.name)}</td>
-            <td class="right">
-                <button class="icon-btn danger delete-milestone-btn"
-                        data-id="${m.id}">
-                    <span class="material-symbols-outlined">delete</span>
-                </button>
-            </td>
+            ${window.IS_ADMIN ? `
+                <td class="right">
+                    <button class="icon-btn danger delete-milestone-btn"
+                            data-id="${m.id}">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </td>
+            ` : ''}
         </tr>
     `).join('');
 }

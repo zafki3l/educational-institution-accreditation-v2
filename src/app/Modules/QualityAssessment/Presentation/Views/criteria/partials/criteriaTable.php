@@ -4,7 +4,9 @@
             <th>Mã tiêu chí</th>
             <th>Tên tiêu chí</th>
             <th class="right">Các mốc đánh giá</th>
-            <th class="right">Thao tác</th>
+            <?php if (isAdmin()): ?>
+                <th class="right">Thao tác</th>
+            <?php endif; ?>
         </tr>
     </thead>
     <tbody>
@@ -45,24 +47,26 @@
                         type="button"><span 
                         class="material-symbols-outlined">fact_check</span></button>
                     </td>
-                    <td class="right">
-                        <div class="action-group">
-                            <button class="icon-btn edit-criteria-btn"
-                                    type="button"
-                                    title="Chỉnh sửa"
-                                    data-id="<?= $criteria->id ?>">
-                                <span class="material-symbols-outlined">edit</span>
-                            </button>
+                    <?php if (isAdmin()): ?>
+                        <td class="right">
+                            <div class="action-group">
+                                <button class="icon-btn edit-criteria-btn"
+                                        type="button"
+                                        title="Chỉnh sửa"
+                                        data-id="<?= $criteria->id ?>">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
 
-                            <button class="icon-btn danger delete-criteria-btn"
-                                    type="button"
-                                    title="Xóa"
-                                    data-id="<?= $criteria->id ?>"
-                                    data-name="<?= htmlspecialchars($criteria->name) ?>">
-                                <span class="material-symbols-outlined">delete</span>
-                            </button>
-                        </div>
-                    </td>
+                                <button class="icon-btn danger delete-criteria-btn"
+                                        type="button"
+                                        title="Xóa"
+                                        data-id="<?= $criteria->id ?>"
+                                        data-name="<?= htmlspecialchars($criteria->name) ?>">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         <?php endforeach; ?>

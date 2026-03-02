@@ -38,7 +38,7 @@ final class AdminDashboardController extends DashboardController
             'admin-dashboard/main',
             'main.layouts',
             [
-                'title' => 'Trang điều khiển admin | ' . SYSTEM_NAME,
+                'title' => 'Trang điều khiển Admin | ' . SYSTEM_NAME,
                 'total_users' => $total_users,
                 'total_staffs' => $total_staffs,
                 'total_departments' => $total_departments,

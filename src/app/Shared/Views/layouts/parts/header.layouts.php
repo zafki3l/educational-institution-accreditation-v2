@@ -7,9 +7,15 @@
             <li><a href="/">Trang chủ</a></li>
             <li><a href="/evidences/find">Tìm kiếm minh chứng</a></li>
 
-            <li><a href="/admin/dashboard">Trang điều khiển</a></li> <!--show dashboard for admin-->
+            <?php if (isAuth()): ?>
+                <?php if (isAdmin()): ?>
+                    <li><a href="/admin/dashboard">Trang điều khiển Admin</a></li> <!--show dashboard for admin-->
+                <?php endif; ?>
 
-            <li><a href="">Staff Dashboard</a></li> <!--Show dashboard for staff-->
+                <?php if (isStaff()): ?>
+                    <li><a href="/staff/dashboard">Trang điều khiển</a></li> <!--Show dashboard for staff-->
+                <?php endif; ?>
+            <?php endif; ?>
         </ul>
 
         <ul class="right-nav">

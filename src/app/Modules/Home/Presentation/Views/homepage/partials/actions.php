@@ -8,7 +8,7 @@
     </div>
 
     <div class="actions-buttons">
-        <a href="<?= HOST ?>/login" class="btn-login">Đăng nhập hệ thống</a>
-        <a href="" class="btn-find-evidences">Tìm kiếm minh chứng</a>
+        <a href="/login" class="btn-login">Đăng nhập hệ thống</a>
+        <a href="/evidences/find" class="btn-find-evidences">Tìm kiếm minh chứng</a>
     </div>
 </section>

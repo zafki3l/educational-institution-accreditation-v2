@@ -41,8 +41,10 @@ final class LoginController extends AuthController
             'role_id' => $auth_user->getRoleId()
         ]);
 
-        if ($_SESSION['auth_user']['role_id'] === 3) {
+        if (isAdmin()) {
             $this->redirect('/admin/dashboard');
+        } else if (isStaff()) {
+            $this->redirect('/staff/dashboard');
         } else {
             $this->redirect('/');
         }

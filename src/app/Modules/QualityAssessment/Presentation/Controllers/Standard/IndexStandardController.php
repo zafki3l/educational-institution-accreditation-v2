@@ -17,6 +17,7 @@ final class IndexStandardController extends QualityAssessmentController
     public function index(): ViewResponse
     {
         $standards = $this->standardReader->all();
+        $sidebarStandards = $this->renderSidebarStandards($this->standardReader);
         $departments = $this->departmentReader->all();
 
         return new ViewResponse(
@@ -26,7 +27,8 @@ final class IndexStandardController extends QualityAssessmentController
             [
                 'title' => 'Quản lý tiêu chuẩn đánh giá | ' . SYSTEM_NAME,
                 'standards' => $standards,
-                'departments' => $departments
+                'departments' => $departments,
+                'sidebarStandards' => $sidebarStandards
             ]
         );
     }

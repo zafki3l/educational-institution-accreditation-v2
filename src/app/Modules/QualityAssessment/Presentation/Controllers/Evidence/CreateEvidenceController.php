@@ -22,9 +22,9 @@ final class CreateEvidenceController extends QualityAssessmentController
         private StandardReaderInterface $standardReader
     ) {}
 
-    public function create()
+    public function create(): ViewResponse
     {
-        $standards = $this->standardReader->withCriteria();
+        $sidebarStandards = $this->renderSidebarStandards($this->standardReader);
 
         return new ViewResponse(
             self::MODULE_NAME,
@@ -32,14 +32,16 @@ final class CreateEvidenceController extends QualityAssessmentController
             'main.layouts',
             [
                 'title' => 'Thêm minh chứng đánh giá | ' . SYSTEM_NAME,
-                'standards' => $standards
+                'sidebarStandards' => $sidebarStandards
             ]
         );
     }
 
     public function getAllStandard()
     {
-        $standards = Standard::select('id', 'name')->orderByRaw('CAST(id AS UNSIGNED) ASC')->get();
+        $standards = (isAdmin()) 
+            ? Standard::select('id', 'name')->orderByRaw('CAST(id AS UNSIGNED) ASC')->get()
+            : $this->renderSidebarStandards($this->standardReader);
 
         return new JsonResponse([
             'standards' => $standards

@@ -10,5 +10,7 @@ interface StandardReaderInterface
 
     public function withCriteria(): Collection;
 
+    public function withCriteriaByDepartment(string $department_id): Collection;
+
     public function count(): int;
 }

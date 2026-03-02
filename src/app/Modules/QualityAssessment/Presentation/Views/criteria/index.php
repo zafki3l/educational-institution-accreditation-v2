@@ -23,9 +23,11 @@
             <div class="page-header">
                 <h1>Quản lý tiêu chí đánh giá</h1>
 
-                <button class="primary-btn" id="openCriteriaModal">
-                    </span>THÊM TIÊU CHÍ MỚI
-                </button>
+                <?php if (isAdmin()): ?>
+                    <button class="primary-btn" id="openCriteriaModal">
+                        </span>THÊM TIÊU CHÍ MỚI
+                    </button>
+                <?php endif; ?>
             </div>
 
             <div class="table-box">

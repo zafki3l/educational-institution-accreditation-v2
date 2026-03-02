@@ -20,7 +20,7 @@ final class UpdateEvidenceController extends QualityAssessmentController
 
     public function edit(string $id): ViewResponse
     {
-        $standards = $this->standardReader->withCriteria();
+        $sidebarStandards = $this->renderSidebarStandards($this->standardReader);
         $evidence = Evidence::with(['milestone.criteria.standard'])->findOrFail($id);
 
         return new ViewResponse(
@@ -30,7 +30,7 @@ final class UpdateEvidenceController extends QualityAssessmentController
             [
                 'title' => 'Cập nhật minh chứng đánh giá | ' . SYSTEM_NAME,
                 'evidence' => $evidence,
-                'standards' => $standards
+                'sidebarStandards' => $sidebarStandards
             ]
         );
     }

@@ -13,7 +13,7 @@ final class ShowEvidenceController extends QualityAssessmentController
 
     public function show(string $id): ViewResponse
     {
-        $standards = $this->standardReader->withCriteria();
+        $sidebarStandards = $this->renderSidebarStandards($this->standardReader);
         $evidence = Evidence::findOrFail($id);
 
         return new ViewResponse(
@@ -23,7 +23,7 @@ final class ShowEvidenceController extends QualityAssessmentController
             [
                 'title' => "Minh chứng {$id} | " . SYSTEM_NAME,
                 'evidence' => $evidence,
-                'standards' => $standards
+                'sidebarStandards' => $sidebarStandards
             ]
         );
     }

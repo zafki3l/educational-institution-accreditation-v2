@@ -5,7 +5,6 @@ namespace App\Modules\QualityAssessment\Domain\Entities;
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIdException;
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyNameException;
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyDocumentNumberException;
-use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIssuedDateException;
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIssuingAuthorityException;
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyFileUrlException;
 use App\Modules\QualityAssessment\Domain\Exception\Milestone\MilestoneIdEmptyException;
@@ -39,8 +38,6 @@ class Evidence
         self::checkMilestoneIdEmpty($milestone_id);
 
         self::checkDocumentNumberEmpty($document_number);
-
-        self::checkIssuedDateEmpty($issued_date);
 
         self::checkIssuingAuthorityEmpty($issuing_authority);
 
@@ -93,13 +90,6 @@ class Evidence
     {
         if ($document_number === '') {
             throw new EvidenceEmptyDocumentNumberException();
-        }
-    }
-
-    private static function checkIssuedDateEmpty(DateTimeImmutable $issued_date): void
-    {
-        if ($issued_date->format('Y-m-d') === '') {
-            throw new EvidenceEmptyIssuedDateException();
         }
     }
 

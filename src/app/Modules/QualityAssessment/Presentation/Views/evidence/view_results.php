@@ -55,7 +55,11 @@
                 </div>
             </main>
         <?php else: ?>
-            <h1>Không tìm thấy minh chứng!</h1>
+            <main class="main" style="position: relative;">
+                <div class="evidence-fullscreen">
+                    <h1>Không tìm thấy minh chứng!</h1>
+                </div>
+            </main>
         <?php endif; ?>
     </div>
 

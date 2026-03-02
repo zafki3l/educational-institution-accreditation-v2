@@ -13,6 +13,7 @@ use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use App\Shared\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;
+use App\Shared\SessionManager\AuthSession;
 
 final class CreateEvidenceController extends QualityAssessmentController
 {
@@ -63,10 +64,10 @@ final class CreateEvidenceController extends QualityAssessmentController
         ]);
     }
 
-    public function store(CreateEvidenceRequest $request)
+    public function store(CreateEvidenceRequest $request): void
     {
         try {
-            $this->createEvidenceUseCase->execute($request);
+            $this->createEvidenceUseCase->execute($request, AuthSession::getUserId());
 
             $this->redirect("/criterias/{$request->getCriteriaId()}/evidences");
         } catch (DomainException $e) {

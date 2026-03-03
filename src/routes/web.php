@@ -12,3 +12,4 @@ require_once 'modules/standard.routes.php';
 require_once 'modules/criteria.routes.php';
 require_once 'modules/milestone.routes.php';
 require_once 'modules/evidence.routes.php';
+require_once 'modules/user_profile.routes.php';

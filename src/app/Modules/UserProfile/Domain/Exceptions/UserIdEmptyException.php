@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Modules\UserProfile\Domain\Exceptions;
+
+use App\Shared\Exception\DomainException;
+
+final class UserIdEmptyException extends DomainException
+{
+    public function __construct()
+    {
+        parent::__construct("User Id đang trống!", "EMPTY_USER_ID");
+    }
+}

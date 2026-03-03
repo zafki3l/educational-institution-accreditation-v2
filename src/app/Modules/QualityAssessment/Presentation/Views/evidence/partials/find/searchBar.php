@@ -4,7 +4,7 @@
     <div class="search-box">
         <span class="material-symbols-outlined icon">search</span>
         <input type="text" name="keyword" placeholder="Tìm kiếm minh chứng...">
-        <button type="submit">Tìm Kiếm</button>
+        <button type="submit" class="btn-primary">Tìm Kiếm</button>
     </div>
 
     <!-- FILTER -->

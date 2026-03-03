@@ -2,8 +2,13 @@
     <nav>
         <p class="sidebar-title">QUẢN LÝ BỘ TIÊU CHUẨN ĐÁNH GIÁ</p>
 
-        <a class="sidebar-item" href="/standards">Quản lý tiêu chuẩn đánh giá</a>
-        <a class="sidebar-item" href="/criterias">Quản lý tiêu chí đánh giá</a>
+        <?php if (isAdmin()): ?>
+            <a class="sidebar-item" href="/standards">Quản lý tiêu chuẩn đánh giá</a>
+            <a class="sidebar-item" href="/criterias">Quản lý tiêu chí đánh giá</a>
+        <?php else: ?>
+            <a class="sidebar-item" href="/standards">Danh sách tiêu chuẩn đánh giá</a>
+            <a class="sidebar-item" href="/criterias">Danh sách tiêu chí đánh giá</a>
+        <?php endif; ?>
 
         <div class="sidebar-group">
             <div class="sidebar-item sidebar-toggle">

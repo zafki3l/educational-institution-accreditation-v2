@@ -50,7 +50,7 @@
 .result-title {
     font-size: 20px;
     font-weight: 700;
-    color: #1d4ed8;
+    color: #1e40af;
     margin-bottom: 6px;
     cursor: pointer;
 }

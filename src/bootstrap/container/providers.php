@@ -9,6 +9,7 @@ use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\EvidenceService
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\MilestoneServiceProvider;
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\StandardServiceProvider;
 use App\Modules\UserManagement\Infrastructure\ServiceProvider\UserServiceProvider;
+use App\Modules\UserProfile\Infrastructure\ServiceProvider\UserProfileServiceProvider;
 
 return [
     new AuthServiceProvider(),
@@ -19,5 +20,6 @@ return [
     new StandardServiceProvider(),
     new CriteriaServiceProvider(),
     new MilestoneServiceProvider(),
-    new EvidenceServiceProvider()
+    new EvidenceServiceProvider(),
+    new UserProfileServiceProvider()
 ];

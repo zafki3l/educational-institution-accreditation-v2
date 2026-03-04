@@ -29,7 +29,7 @@
 
             <a href="/roles">
                 <div class="item">
-                    <h4>Phân quyền người dùng</h4>
+                    <h4>Cập nhật vai trò</h4>
                     <span><?= htmlspecialchars($total_roles) ?> vai trò</span>
                 </div>
             </a>

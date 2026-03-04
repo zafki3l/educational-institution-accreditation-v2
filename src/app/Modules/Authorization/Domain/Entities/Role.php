@@ -3,6 +3,7 @@
 namespace App\Modules\Authorization\Domain\Entities;
 
 use App\Modules\Authorization\Domain\Exception\EmptyRoleNameException;
+use App\Modules\Authorization\Domain\Exception\RoleIdExistsException;
 
 class Role
 {
@@ -30,7 +31,7 @@ class Role
     public function assignId(int $id): void
     {
         if ($this->id !== null) {
-            throw new EmptyRoleNameException();
+            throw new RoleIdExistsException();
         }
 
         $this->id = $id;

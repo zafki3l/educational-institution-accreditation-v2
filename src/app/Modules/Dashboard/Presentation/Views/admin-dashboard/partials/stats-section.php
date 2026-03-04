@@ -10,24 +10,12 @@
     <div class="stats-card large">
         <div class="stats-card-header">
             <div>
-                <h4>Hiệu suất tổ chức</h4>
-                <p class="subtitle">Tỉ lệ hoàn thành công việc theo tuần</p>
-            </div>
-            <div class="increase">
-                <span class="percent">+12.5%</span>
-                <br>
-                <small>Tăng so với tháng trước</small>
+                <h4>Thống kê số lượng tiêu chuẩn theo phòng ban quản lý</h4>
             </div>
         </div>
 
         <div class="bar-chart">
-            <div class="bar" style="height:65%"><span>Thứ 2</span></div>
-            <div class="bar" style="height:45%"><span>Thứ 3</span></div>
-            <div class="bar" style="height:85%"><span>Thứ 4</span></div>
-            <div class="bar" style="height:70%"><span>Thứ 5</span></div>
-            <div class="bar" style="height:95%"><span>Thứ 6</span></div>
-            <div class="bar gray" style="height:30%"><span>Thứ 7</span></div>
-            <div class="bar gray" style="height:25%"><span>CN</span></div>
+            <canvas id="departmentChart"></canvas>
         </div>
     </div>
 
@@ -58,3 +46,45 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    fetch('/api/departments/standards')
+.then(res => res.json())
+.then(data => {
+
+    const labels = data.department.map(d => d.name);
+    const values = data.department.map(d => d.standards_count);
+
+    new Chart(document.getElementById('departmentChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                borderRadius: 12,
+                barThickness: 20,
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        afterLabel: function(context) {
+                            const standards = data.department[context.dataIndex].standards;
+                            return standards.map(s => '• ' + s.name);
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { beginAtZero: true }
+            }
+        }
+    });
+});
+</script>

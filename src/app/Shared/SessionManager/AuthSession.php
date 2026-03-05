@@ -19,7 +19,7 @@ class AuthSession
         return $_SESSION['auth_user']['user_id'];
     }
 
-    public static function clear(): void
+    public function clear(): void
     {
         $_SESSION = [];
 

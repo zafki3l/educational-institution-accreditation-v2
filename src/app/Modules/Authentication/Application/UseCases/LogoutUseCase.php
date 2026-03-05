@@ -6,8 +6,10 @@ use App\Shared\SessionManager\AuthSession;
 
 final class LogoutUseCase
 {
+    public function __construct(private AuthSession $session) {}
+
     public function execute(): void
     {
-        AuthSession::clear();
+        $this->session->clear();
     }
 }

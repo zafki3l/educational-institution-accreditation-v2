@@ -6,18 +6,18 @@ use App\Modules\QualityAssessment\Application\Requests\Milestone\CreateMilestone
 
 final class CreateMilestoneRequest implements CreateMilestoneRequestInterface
 {
-    private string $order;
+    private int $order;
     private string $criteria_id;
     private string $name;
 
     public function __construct()
     {
-        $this->order = trim($_POST['order']);
+        $this->order = (int) trim($_POST['order']);
         $this->criteria_id = trim($_POST['criteria_id']);
         $this->name = trim($_POST['name']);
     }
 
-    public function getOrder(): string
+    public function getOrder(): int
     {
         return $this->order;
     }

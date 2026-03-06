@@ -10,10 +10,8 @@ use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterfac
 use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceIdExistsCheckerInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceIssuedDateEmptyCheckerInterface;
+use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
-use App\Modules\QualityAssessment\Infrastructure\Models\Criteria;
-use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Exception\DomainException;
 use App\Shared\Logging\LoggerInterface;
 use DateTimeImmutable;
 
@@ -24,17 +22,13 @@ final class CreateEvidenceUseCase
         private EvidenceFileUploaderInterface $evidenceFileUploader,
         private EvidenceIdExistsCheckerInterface $evidenceIdExistsChecker,
         private EvidenceIssuedDateEmptyCheckerInterface $evidenceIssuedDateEmptyChecker,
+        private EvidencePermissionCheckerInterface $evidencePermissionChecker,
         private LoggerInterface $logger
     ) {}
     
     public function execute(CreateEvidenceRequestInterface $request, string $actor_id): void
     {
-        $standard = Criteria::with('standard')->findOrFail($request->getCriteriaId())->standard;
-        $user = User::select('department_id')->where('id', $actor_id)->first();
-
-        if (!isAdmin() && ($standard->department_id !== $user->department_id)) {
-            throw new DomainException('Người dùng không có quyền quản lý minh chứng thuộc tiêu chuẩn này!', 'PERMISSION_DENIED');
-        }
+        $this->evidencePermissionChecker->check($request->getCriteriaId(), $actor_id);
 
         if ($this->evidenceIdExistsChecker->check($request->getId())) {
             throw new EvidenceIdExistsException();

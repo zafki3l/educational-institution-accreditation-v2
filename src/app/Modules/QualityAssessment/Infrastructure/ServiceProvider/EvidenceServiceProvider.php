@@ -8,10 +8,12 @@ use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterfac
 use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceIdExistsCheckerInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceIssuedDateEmptyCheckerInterface;
+use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
 use App\Modules\QualityAssessment\Infrastructure\Repositories\EvidenceRepository;
 use App\Modules\QualityAssessment\Infrastructure\Services\EvidenceFileUploader;
 use App\Modules\QualityAssessment\Infrastructure\Services\EvidenceIdExistsChecker;
 use App\Modules\QualityAssessment\Infrastructure\Services\EvidenceIssuedDateEmptyChecker;
+use App\Modules\QualityAssessment\Infrastructure\Services\EvidencePermissionChecker;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\CreateEvidenceRequest;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\UpdateEvidenceRequest;
 use Core\ServiceProvider;
@@ -49,6 +51,11 @@ final class EvidenceServiceProvider extends ServiceProvider
         $container->bind(
             EvidenceIssuedDateEmptyCheckerInterface::class,
             EvidenceIssuedDateEmptyChecker::class
+        );
+
+        $container->bind(
+            EvidencePermissionCheckerInterface::class,
+            EvidencePermissionChecker::class
         );
     }
 }

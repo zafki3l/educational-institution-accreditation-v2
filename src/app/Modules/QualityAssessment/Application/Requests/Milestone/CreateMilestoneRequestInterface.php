@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Application\Requests\Milestone;
 
 interface CreateMilestoneRequestInterface
 {
-    public function getOrder(): string;
+    public function getOrder(): int;
 
     public function getCriteriaId(): string;
 

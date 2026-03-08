@@ -56,7 +56,7 @@ class UpdateUserProfileUseCaseTest extends TestCase
             'email' => $request->getEmail()
         ]);
 
-        $fromDb = UserProfile::fromPersistent($actorId, 'Old', 'Name', 'old@example.com');
+        $fromDb = UserProfile::fromPersistent($actorId, 'Old', 'Name', 'old@example.com', null);
         $this->repository->method('getUserProfile')->with($actorId)->willReturn($fromDb);
 
         $this->emailChecker->method('isExists')->with($newEmail)->willReturn(false);
@@ -97,7 +97,7 @@ class UpdateUserProfileUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('Nguyen');
         $request->method('getLastName')->willReturn('An');
 
-        $fromDb = UserProfile::fromPersistent($actorId, 'Nguyen', 'An', 'old@example.com');
+        $fromDb = UserProfile::fromPersistent($actorId, 'Nguyen', 'An', 'old@example.com', null);
         $this->repository->method('getUserProfile')->willReturn($fromDb);
 
         $this->emailChecker->method('isExists')
@@ -130,7 +130,7 @@ class UpdateUserProfileUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('Nguyen');
         $request->method('getLastName')->willReturn('An');
 
-        $fromDb = UserProfile::fromPersistent($actorId, 'Nguyen', 'An', $currentEmail);
+        $fromDb = UserProfile::fromPersistent($actorId, 'Nguyen', 'An', $currentEmail, null);
         $this->repository->method('getUserProfile')->willReturn($fromDb);
 
         $this->debug('DEBUG: COMPARING EMAILS', [

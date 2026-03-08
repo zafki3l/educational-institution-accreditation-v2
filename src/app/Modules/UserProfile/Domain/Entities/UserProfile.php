@@ -12,7 +12,8 @@ class UserProfile
         private string $id,
         private string $first_name,
         private string $last_name,
-        private ?string $email
+        private ?string $email,
+        private ?string $password
     ) {}
 
     public static function create(
@@ -28,16 +29,17 @@ class UserProfile
             throw new UserNameEmptyException();
         }
 
-        return new self($id, $first_name, $last_name, null);
+        return new self($id, $first_name, $last_name, null, null);
     }
 
     public static function fromPersistent(
         string $id,
         string $first_name,
         string $last_name,
-        ?string $email
+        ?string $email,
+        ?string $password
     ) {
-        return new self($id, $first_name, $last_name, $email);
+        return new self($id, $first_name, $last_name, $email, $password);
     }
 
     public function getId(): string
@@ -60,6 +62,11 @@ class UserProfile
         return $this->email;
     }
 
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
     public function updateEmail(string $email): void
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -67,5 +74,10 @@ class UserProfile
         }
 
         $this->email = $email;
+    }
+
+    public function changePassword(string $password): void
+    {
+        $this->password = $password;
     }
 }

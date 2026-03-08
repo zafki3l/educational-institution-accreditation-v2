@@ -56,7 +56,7 @@ class UserProfileTest extends TestCase
     public function it_can_be_reconstituted_from_persistence(): void
     {
         // Giả lập dữ liệu từ DB (có thể chứa email)
-        $profile = UserProfile::fromPersistent('id-1', 'Nguyen', 'An', 'an@gmail.com');
+        $profile = UserProfile::fromPersistent('id-1', 'Nguyen', 'An', 'an@gmail.com', null);
 
         $this->assertEquals('an@gmail.com', $profile->getEmail());
     }

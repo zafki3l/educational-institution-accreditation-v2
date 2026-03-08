@@ -16,7 +16,8 @@ class UserProfileRepository implements UserProfileRepositoryInterface
             $user->id, 
             $user->first_name, 
             $user->last_name, 
-            !empty($user->email) ? $user->email : null
+            !empty($user->email) ? $user->email : null,
+            $user->password
         );
 
         return $userProfile;
@@ -43,7 +44,27 @@ class UserProfileRepository implements UserProfileRepositoryInterface
             $user->id,
             $user->first_name,
             $user->last_name,
-            !empty($user->email) ? $user->email : null
+            !empty($user->email) ? $user->email : null,
+            null
+        );
+    }
+
+    public function changePassword(string $new_password, string $actor_id): UserProfile
+    {
+        $user = User::findOrFail($actor_id);
+
+        $user->update([
+            'password' => $new_password
+        ]);
+
+        $user->refresh();
+
+        return UserProfile::fromPersistent(
+            $user->id,
+            $user->first_name,
+            $user->last_name,
+            null,
+            null
         );
     }
 }

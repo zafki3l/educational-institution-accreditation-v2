@@ -113,22 +113,36 @@
     <div class="card">
         <h2>Đổi mật khẩu</h2>
 
-        <div class="form-group">
-            <label>Mật khẩu hiện tại</label>
-            <input type="password" placeholder="Nhập mật khẩu hiện tại">
-        </div>
+        <form action="/profile/change-password" method="post">
+            <input type="hidden" name="_method" value="PATCH">
+            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
 
-        <div class="form-group">
-            <label>Mật khẩu mới</label>
-            <input type="password" placeholder="Nhập mật khẩu mới">
-        </div>
+            <div class="form-group">
+                <label>Mật khẩu hiện tại</label>
+                <input type="password" name="current_password" placeholder="Nhập mật khẩu hiện tại">
+            </div>
 
-        <div class="form-group">
-            <label>Xác nhận mật khẩu mới</label>
-            <input type="password" placeholder="Nhập lại mật khẩu mới">
-        </div>
+            <div class="form-group">
+                <label>Mật khẩu mới</label>
+                <input type="password" name="new_password" placeholder="Nhập mật khẩu mới">
+            </div>
 
-        <button class="btn">Đổi mật khẩu</button>
+            <div class="form-group">
+                <label>Xác nhận mật khẩu mới</label>
+                <input type="password" name="new_password_confirmation" placeholder="Nhập lại mật khẩu mới">
+            </div>
+
+            <?php if (!empty($_SESSION['pwd-errors'])): ?>
+                <div class="error">
+                    <?php foreach ($_SESSION['pwd-errors'] as $err): ?>
+                        <p class="error-message"><?= htmlspecialchars($err) ?></p>
+                    <?php endforeach ?>
+                </div>
+            <?php endif ?>
+
+            <button class="btn">Đổi mật khẩu</button>
+        </form>
+        
     </div>
 
 </div>
@@ -138,5 +152,5 @@
 
 
 <?php
-unset($_SESSION['errors']);
+unset($_SESSION['errors'], $_SESSION['pwd-errors']);
 ?>

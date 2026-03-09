@@ -6,6 +6,7 @@
             <th>QUyết định</th>
             <th>Ngày văn bản</th>
             <th>Nơi phát hành</th>
+            <th class="right">Đáp ứng các tiêu chí</th>
             <th class="right">Xem minh chứng</th>
             <th class="right">Thao tác</th>
         </tr>
@@ -14,7 +15,7 @@
         <?php foreach ($criteria->milestones as $milestone): ?>
             <tr class="standard-row"
                 data-milestone-id="<?= $milestone->id ?>">
-                <td colspan="7">
+                <td colspan="8">
                     <span style="font-weight: 600;">
                         Mốc đánh giá <?= $milestone->code ?>:
                         <?= htmlspecialchars($milestone->name) ?>
@@ -41,6 +42,16 @@
                     <td><?= htmlspecialchars($evidence->document_number) ?></td>
                     <td><?= htmlspecialchars($evidence->issued_date) ?></td>
                     <td><?= htmlspecialchars($evidence->issuing_authority) ?></td>
+                    <td class="right">
+                        <button
+                            class="criteria-btn"
+                            data-id="<?= htmlspecialchars($evidence->id) ?>"
+                            data-name="<?= htmlspecialchars($evidence->name) ?>"
+                            data-main-criteria="<?= $evidence->milestone->criteria->id ?>"
+                        >
+                            Xem
+                        </button>
+                    </td>
                     <td class="right"><a href="/evidences/<?= htmlspecialchars($evidence->id) ?>/show"><span class="material-symbols-outlined">visibility</span></a></td>
                     <td class="right">
                         <div class="action-group">

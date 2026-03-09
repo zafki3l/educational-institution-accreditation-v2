@@ -1,39 +1,23 @@
 <div id="deleteUserModal" class="modal">
     <div class="modal-overlay"></div>
-
-    <div class="modal-content modal-sm">
-
-        <div class="modal-header delete-header">
-            <div class="delete-header-left">
-                <div class="delete-icon">
-                    <span class="material-symbols-outlined">warning</span>
-                </div>
-                <h2>Xác Nhận Xóa</h2>
-            </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Xác nhận xóa</h2>
+            <button class="modal-close" id="closeDeleteModal">
+                <span class="material-symbols-outlined">close</span>
+            </button>
         </div>
-
-        <div class="modal-body delete-body">
-            <p>
-                Bạn có chắc chắn muốn xóa người dùng 
-                <strong id="delete_user_name"></strong>?
-            </p>
-
-            <p class="text-muted">
-                Hành động này không thể hoàn tác và dữ liệu sẽ bị xóa vĩnh viễn.
-            </p>
+        <div class="modal-body">
+            <p>Bạn có chắc chắn muốn xóa người dùng này?</p>
+            <p class="criteria-delete-name" id="delete_user_name"></p>
+            <p class="warning-text">Hành động này không thể hoàn tác.</p>
 
             <input type="hidden" id="delete_user_id">
+            <input type="hidden" id="delete_csrf_token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
         </div>
-
-        <div class="modal-actions">
-            <button type="button" class="btn-outline" id="cancelDeleteModal">
-                Hủy
-            </button>
-
-            <button type="button" class="btn-danger" id="confirmDeleteBtn">
-                Xác Nhận Xóa
-            </button>
+        <div class="modal-footer">
+            <button type="button" class="btn-outline" id="cancelDeleteModal">Hủy</button>
+            <button type="button" class="btn-danger" id="confirmDeleteBtn">Xóa</button>
         </div>
-
     </div>
 </div>

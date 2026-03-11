@@ -24,6 +24,21 @@ class DepartmentRepository implements DepartmentRepositoryInterface
         return DepartmentMapper::toDomain($modelsDepartment);
     }
 
+    public function existsByNameExcludingId(string $name, string $excludeId): bool
+    {
+        return ModelsDepartment::where('name', $name)
+            ->where('id', '!=', $excludeId)
+            ->exists();
+    }
+
+    public function update(EntitiesDepartment $entitiesDepartment): void
+    {
+        ModelsDepartment::where('id', $entitiesDepartment->getId())
+            ->update([
+                'name' => $entitiesDepartment->getName()
+            ]);
+    }
+
     public function delete(EntitiesDepartment $entitiesDepartment): void
     {
         ModelsDepartment::where('id', $entitiesDepartment->getId())->delete();

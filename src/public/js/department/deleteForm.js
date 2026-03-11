@@ -1,4 +1,73 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", function () {
+
+    const deleteModal = document.getElementById("deleteDepartmentModal");
+    const closeBtn = document.getElementById("closeDeleteDepartmentModal");
+    const cancelBtn = document.getElementById("cancelDeleteDepartmentModal");
+    const confirmBtn = document.getElementById("confirmDeleteDepartmentBtn");
+    const modalOverlay = deleteModal?.querySelector(".modal-overlay");
+    const deleteNameEl = document.getElementById("delete_department_name");
+
+    document.querySelectorAll(".delete-department-btn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            const departmentId = this.dataset.id;
+            const departmentName = this.dataset.name;
+
+            document.getElementById("delete_department_id").value = departmentId;
+            if (deleteNameEl) deleteNameEl.textContent = `"${departmentName}"`;
+
+            deleteModal.classList.add("active");
+        });
+    });
+
+    const closeModal = () => {
+        deleteModal?.classList.remove("active");
+    };
+
+    closeBtn?.addEventListener("click", closeModal);
+    cancelBtn?.addEventListener("click", closeModal);
+
+    modalOverlay?.addEventListener("click", function (e) {
+        if (e.target.classList.contains("modal-overlay")) {
+            closeModal();
+        }
+    });
+
+    confirmBtn.addEventListener("click", async function () {
+        const departmentId = document.getElementById("delete_department_id").value;
+        const csrfToken = document.getElementById("delete_department_csrf_token").value;
+
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = "Đang xóa...";
+
+        try {
+            const formData = new FormData();
+            formData.append('_method', 'DELETE');
+            formData.append('CSRF-token', csrfToken);
+
+            const response = await fetch(`/departments/${departmentId}`, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "application/json"
+                }
+            });
+
+            if (response.ok) {
+                window.location.replace("/departments?success=delete");
+            } else {
+                alert("Không thể xóa phòng ban.");
+            }
+
+        } catch (err) {
+            alert("Lỗi kết nối máy chủ.");
+        }
+
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = "Xóa";
+    });
+
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'delete') {
         showDepartmentToast('Xóa phòng ban thành công!');

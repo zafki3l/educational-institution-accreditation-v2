@@ -12,14 +12,23 @@
                 <td><?= htmlspecialchars($department->id) ?></td>
                 <td><?= htmlspecialchars($department->name) ?></td>
                 <td class="right">
-                <form action="/departments/<?= htmlspecialchars($department->id) ?>" method="post">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
+                    <div class="action-group">
+                        <button class="icon-btn edit-department-btn"
+                                type="button"
+                                title="Chỉnh sửa"
+                                data-id="<?= htmlspecialchars($department->id) ?>"
+                                data-name="<?= htmlspecialchars($department->name) ?>">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
 
-                    <button class="icon-btn danger" title="Xóa" type="submit">
-                        <span class="material-symbols-outlined">delete</span>
-                    </button>
-                </form>
+                        <button class="icon-btn danger delete-department-btn" 
+                                type="button" 
+                                title="Xóa" 
+                                data-id="<?= htmlspecialchars($department->id) ?>" 
+                                data-name="<?= htmlspecialchars($department->name) ?>">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </div>
                 </td>
             </tr>
         <?php endforeach; ?>

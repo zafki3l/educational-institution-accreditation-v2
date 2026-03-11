@@ -34,8 +34,11 @@
 </div>
 
 <?php include 'partials/createForm.php' ?>
+<?php include 'partials/editForm.php' ?>
+<?php include 'partials/deleteForm.php' ?>
 
 <script src="/js/department/createForm.js"></script>
+<script src="/js/department/editForm.js"></script>
 <script src="/js/department/deleteForm.js"></script>
 
 <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;"></div>

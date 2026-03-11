@@ -25,6 +25,15 @@ class Department
         return new self($id, $name);
     }
 
+    public function update(string $name): void
+    {
+        if (empty($name)) {
+            throw new EmptyDepartmentNameException();
+        }
+
+        $this->name = $name;
+    }
+
     public function getId(): string { return $this->id; }
 
     public function getName(): string { return $this->name; }

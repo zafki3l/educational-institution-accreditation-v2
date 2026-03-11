@@ -8,9 +8,7 @@ interface DepartmentRepositoryInterface
 {
     public function create(EntitiesDepartment $entitiesDepartment): void;
 
-    public function findOrFail(string $id): EntitiesDepartment;
-
-    public function existsByNameExcludingId(string $name, string $excludeId): bool;
+    public function findOrFail(string $id): ?EntitiesDepartment;
 
     public function update(EntitiesDepartment $entitiesDepartment): void;
 

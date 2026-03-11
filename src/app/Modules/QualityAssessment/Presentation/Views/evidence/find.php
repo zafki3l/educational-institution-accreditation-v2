@@ -26,7 +26,7 @@
                 <div class="header">
                     <h1>TÌM KIẾM MINH CHỨNG</h1>
                     <p>
-                        Tìm kiếm minh chứng đánh giá theo tiêu chuẩn, tiêu chí.
+                        Tìm kiếm minh chứng đánh giá theo tiêu chuẩn, tiêu chí, mốc đánh giá.
                     </p>
                 </div>
 

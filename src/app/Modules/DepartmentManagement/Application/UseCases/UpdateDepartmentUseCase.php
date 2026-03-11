@@ -3,9 +3,8 @@
 namespace App\Modules\DepartmentManagement\Application\UseCases;
 
 use App\Modules\DepartmentManagement\Application\Requests\UpdateDepartmentRequestInterface;
-use App\Modules\DepartmentManagement\Domain\Entities\Department;
+use App\Modules\DepartmentManagement\Domain\Exception\DepartmentNotFoundException;
 use App\Modules\DepartmentManagement\Domain\Repositories\DepartmentRepositoryInterface;
-use App\Shared\Exception\DomainException;
 use App\Shared\Logging\LoggerInterface;
 
 final class UpdateDepartmentUseCase 
@@ -17,14 +16,10 @@ final class UpdateDepartmentUseCase
 
     public function execute(string $id, UpdateDepartmentRequestInterface $request, string $actor_id): void
     {
-        try {
-            $department = $this->repository->findOrFail($id);
-        } catch (\Exception $e) {
-            throw new DomainException("Phòng ban không tồn tại.");
-        }
+        $department = $this->repository->findOrFail($id);
 
-        if ($this->repository->existsByNameExcludingId($request->getName(), $id)) {
-            throw new DomainException("Tên phòng ban đã tồn tại.");
+        if (!$department) {
+            throw new DepartmentNotFoundException();
         }
 
         $department->update(

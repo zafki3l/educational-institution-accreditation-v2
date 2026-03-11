@@ -28,7 +28,7 @@ final class LoginController extends AuthController
         $auth_user = $this->loginUseCase->execute($request);
 
         if (!$auth_user) {
-            $_SESSION['login_errors'] = 'Mã xác thực hoặc mật khẩu không hợp lệ!';
+            $_SESSION['login_errors'] = 'Tài khoản hoặc mật khẩu không hợp lệ!';
 
             $this->redirect(HOST . '/login');
         }

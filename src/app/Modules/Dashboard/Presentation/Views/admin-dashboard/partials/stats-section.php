@@ -2,7 +2,7 @@
     <div class="stats-card large">
         <div class="stats-card-header">
             <div>
-                <h4>Thống kê số lượng tiêu chuẩn theo phòng ban quản lý</h4>
+                <h4>Thống kê số lượng tiêu chuẩn, tiêu chí, và minh chứng theo phòng ban quản lý</h4>
             </div>
         </div>
 

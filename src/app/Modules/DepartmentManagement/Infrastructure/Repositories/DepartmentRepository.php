@@ -17,18 +17,11 @@ class DepartmentRepository implements DepartmentRepositoryInterface
         ]);
     }
 
-    public function findOrFail(string $id): EntitiesDepartment
+    public function findOrFail(string $id): ?EntitiesDepartment
     {
         $modelsDepartment = ModelsDepartment::findOrFail($id);
 
         return DepartmentMapper::toDomain($modelsDepartment);
-    }
-
-    public function existsByNameExcludingId(string $name, string $excludeId): bool
-    {
-        return ModelsDepartment::where('name', $name)
-            ->where('id', '!=', $excludeId)
-            ->exists();
     }
 
     public function update(EntitiesDepartment $entitiesDepartment): void

@@ -14,6 +14,6 @@ final class CreateDepartmentController extends DepartmentController
     {
         $this->createDepartmentUseCase->execute($request, AuthSession::getUserId());
 
-        $this->redirect('/departments');
+        $this->redirect('/departments?success=create');
     }
 }

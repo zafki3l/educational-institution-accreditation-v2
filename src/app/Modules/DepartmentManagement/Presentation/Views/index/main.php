@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/index/index.css">
+    <link rel="stylesheet" href="/css/index/createUser.css">
+    <link rel="stylesheet" href="/css/components/modal.css">
 </head>
 <body>
 
@@ -19,16 +21,9 @@
         <div class="container">
             <div class="page-header">
                 <h1>Quản lý phòng ban</h1>
-                <form action="/departments" method="post">
-                    <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
-
-                    <input type="text" name="id" placeholder="Nhập mã phòng ban" class="text-input">
-                    <input type="text" name="name" placeholder="Nhập tên phòng ban" class="text-input">
-
-                    <button class="primary-btn" type="submit">
-                        </span>THÊM PHÒNG BAN
-                    </button>
-                </form>
+                <button class="primary-btn" id="openDepartmentModal">
+                    </span>THÊM PHÒNG BAN MỚI
+                </button>
             </div>
 
             <div class="table-box">
@@ -36,6 +31,10 @@
             </div>
         </div>
     </main>
+</div>
+
+<?php include 'partials/createForm.php' ?>
+
 <script src="/js/department/createForm.js"></script>
 <script src="/js/department/deleteForm.js"></script>
 

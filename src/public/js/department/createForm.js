@@ -1,4 +1,54 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const createDepartmentForm = document.getElementById('createDepartmentForm');
+    const createDepartmentModal = document.getElementById('createDepartmentModal');
+    const openBtn = document.getElementById('openDepartmentModal');
+    const closeBtn = document.getElementById('closeDepartmentModal');
+    const cancelBtn = document.getElementById('cancelDepartmentModal');
+
+    if (!createDepartmentForm || !createDepartmentModal || !openBtn) return;
+
+    openBtn.addEventListener('click', () => {
+        createDepartmentModal.classList.add('active');
+    });
+
+    const close = () => {
+        createDepartmentModal.classList.remove('active');
+        clearErrors();
+        createDepartmentForm.reset();
+    }
+
+    closeBtn?.addEventListener('click', close);
+    cancelBtn?.addEventListener('click', close);
+
+    createDepartmentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const response = await fetch(createDepartmentForm.action, {
+            method: 'POST',
+            body: new FormData(createDepartmentForm),
+            headers: { Accept: 'application/json' }
+        });
+
+        const text = await response.text();
+
+        let data = {};
+        try {
+            data = JSON.parse(text);
+        } catch {
+            console.error('Invalid JSON:', text);
+            return;
+        }
+
+        if (response.ok && !data.errors) {
+            close();
+            window.location.replace("/departments?success=create");
+            return;
+        }
+
+        renderErrors(data.errors);
+        createDepartmentModal.classList.add('active');
+    });
+
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'create') {
         showDepartmentToast('Thêm phòng ban thành công!');
@@ -54,4 +104,24 @@ if (!window.showDepartmentToast) {
             }
         }, 4000);
     };
+}
+
+function renderErrors(errors = []) {
+    const box = document.getElementById('formErrors');
+    if (!box) return;
+
+    box.innerHTML = '';
+
+    errors.forEach(err => {
+        const span = document.createElement('span');
+        span.className = 'error-message';
+        span.textContent = `- ${err}`;
+        box.appendChild(span);
+    });
+}
+
+function clearErrors() {
+    const box = document.getElementById('formErrors');
+    if (!box) return;
+    box.innerHTML = '';
 }

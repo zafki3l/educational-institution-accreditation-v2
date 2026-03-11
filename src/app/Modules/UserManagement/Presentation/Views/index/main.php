@@ -47,7 +47,6 @@
 <script src="/js/user/editForm.js"></script>
 <script src="/js/user/deleteForm.js"></script>
 
-<!-- Global Toast Notification System -->
 <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;"></div>
 
 </body>

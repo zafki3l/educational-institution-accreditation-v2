@@ -10,5 +10,9 @@ interface DepartmentRepositoryInterface
 
     public function findOrFail(string $id): EntitiesDepartment;
 
+    public function existsByNameExcludingId(string $name, string $excludeId): bool;
+
+    public function update(EntitiesDepartment $entitiesDepartment): void;
+
     public function delete(EntitiesDepartment $entitiesDepartment): void;
 }

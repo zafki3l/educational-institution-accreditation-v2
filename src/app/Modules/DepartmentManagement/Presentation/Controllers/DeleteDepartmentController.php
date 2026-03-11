@@ -13,6 +13,6 @@ final class DeleteDepartmentController extends DepartmentController
     {
         $this->deleteDepartmentUseCase->execute($id, AuthSession::getUserId());
 
-        $this->redirect('/departments');
+        $this->redirect('/departments?success=delete');
     }
 }

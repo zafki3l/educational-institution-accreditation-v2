@@ -44,12 +44,15 @@
                     <td><?= htmlspecialchars($evidence->issuing_authority) ?></td>
                     <td class="right">
                         <button
-                            class="criteria-btn"
+                            class="evidence-milestones-btn milestone-btn"
                             data-id="<?= htmlspecialchars($evidence->id) ?>"
                             data-name="<?= htmlspecialchars($evidence->name) ?>"
-                            data-main-criteria="<?= $evidence->milestone->criteria->id ?>"
+                            data-milestone-name="<?= htmlspecialchars($milestone->name) ?>"
+                            data-criteria-id="<?= htmlspecialchars($milestone->criteria_id) ?>"
+                            data-criteria-name="<?= htmlspecialchars($milestone->criteria->name ?? '') ?>"
+                            type="button"
                         >
-                            Xem
+                            <span class="material-symbols-outlined">fact_check</span>
                         </button>
                     </td>
                     <td class="right"><a href="/evidences/<?= htmlspecialchars($evidence->id) ?>/show"><span class="material-symbols-outlined">visibility</span></a></td>
@@ -78,5 +81,8 @@
 </table>
 
 <?php include 'deleteModal.php' ?>
+<?php include 'evidenceMilestonesModal.php' ?>
+
 
 <script src="/js/evidence/EvidenceTable.js"></script>
+<script src="/js/evidence/EvidenceMilestonesModal.js"></script>

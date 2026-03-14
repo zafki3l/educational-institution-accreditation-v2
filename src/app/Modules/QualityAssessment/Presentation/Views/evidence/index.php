@@ -42,5 +42,7 @@
     </main>
 </div>
 
+<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;"></div>
+
 </body>
 </html>

@@ -1,11 +1,5 @@
-/* =====================
-   GLOBAL STATE
-===================== */
 let currentCriteriaId = null;
 
-/* =====================
-   ELEMENTS
-===================== */
 const modal = document.getElementById('criteriasModal');
 const form = document.getElementById('addCriteriaForm');
 const orderInput = document.getElementById('newCriteriaOrder');
@@ -13,9 +7,6 @@ const nameInput = document.getElementById('newCriteriaName');
 const csrfToken = document.querySelector('input[name="CSRF-token"]')?.value;
 const addCriteriaBtn = document.getElementById('addCriteriaBtn');
 
-/* =====================
-   FETCH
-===================== */
 async function fetchCriterias(criteriaId) {
     const res = await fetch(`/criterias/${criteriaId}`);
     if (!res.ok) throw new Error(res.status);
@@ -24,9 +15,6 @@ async function fetchCriterias(criteriaId) {
     return data.criteria.children ?? [];
 }
 
-/* =====================
-   OPEN MODAL
-===================== */
 document.addEventListener('click', async (e) => {
 
     const btn = e.target.closest('.criteria-btn');
@@ -47,9 +35,6 @@ document.addEventListener('click', async (e) => {
 
 });
 
-/* =====================
-   RENDER TABLE
-===================== */
 function renderCriteriasTable(criterias) {
 
     const tbody = document.getElementById('criteriasTableBody');
@@ -77,9 +62,6 @@ function renderCriteriasTable(criterias) {
     `).join('');
 }
 
-/* =====================
-   DELETE CRITERIA
-===================== */
 document.addEventListener('click', async (e) => {
 
     const btn = e.target.closest('.delete-criteria-btn');
@@ -121,10 +103,6 @@ document.addEventListener('click', async (e) => {
 
 });
 
-/* =====================
-   MODAL CONTROL
-===================== */
-
 function openCriteriasModal() {
     document
         .getElementById('criteriasModal')
@@ -147,10 +125,6 @@ document.getElementById('closeCriteriasBtn')
 document
 .querySelector('#criteriasModal .modal-overlay')
 ?.addEventListener('click', closeCriteriasModal);
-
-/* =====================
-   SUBMIT FORM
-===================== */
 
 form.addEventListener('submit', async (e) => {
 
@@ -185,10 +159,6 @@ form.addEventListener('submit', async (e) => {
 
 });
 
-/* =====================
-   INPUT STATE
-===================== */
-
 form.addEventListener('input', () => {
 
     addCriteriaBtn.disabled =
@@ -196,10 +166,6 @@ form.addEventListener('input', () => {
         !nameInput.value.trim();
 
 });
-
-/* =====================
-   HELPERS
-===================== */
 
 function appendCriteriaRow(c) {
 
@@ -231,10 +197,6 @@ function escapeHtml(text = '') {
         .replace(/'/g, "&#039;");
 
 }
-
-/* =====================
-   ERROR UI
-===================== */
 
 function renderCriteriaErrors(errors = []) {
 

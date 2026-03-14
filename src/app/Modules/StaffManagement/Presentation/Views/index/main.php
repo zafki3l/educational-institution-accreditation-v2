@@ -14,6 +14,8 @@
 </head>
 <body>
 
+<div id="toast-container" style="position: fixed; top: 24px; right: 24px; display: flex; flex-direction: column; gap: 10px; z-index: 9999;"></div>
+
 <div class="layout">
     <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/user-management/sidebar.php' ?>
 
@@ -40,10 +42,12 @@
 
 <?php include 'partials/createForm.php' ?>
 <?php include 'partials/editForm.php' ?>
+<?php include 'partials/deleteForm.php' ?>
 
 
 <script src="/js/staff/createForm.js"></script>
 <script src="/js/staff/editForm.js"></script>
+<script src="/js/staff/deleteForm.js"></script>
 
 </body>
 </html>

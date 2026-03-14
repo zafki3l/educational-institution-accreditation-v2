@@ -12,7 +12,13 @@ final class DeleteStaffController extends StaffController
     public function destroy(string $id)
     {
         $this->deleteUserUseCase->execute($id, AuthSession::getUserId());
-        
-        $this->redirect('/staffs');
+
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+            header('Content-Type: application/json');
+            echo json_encode([]);
+            exit;
+        }
+
+        $this->redirect('/staffs?success=delete');
     }
 }

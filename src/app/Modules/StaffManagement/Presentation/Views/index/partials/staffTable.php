@@ -24,14 +24,13 @@
                             <span class="material-symbols-outlined">edit</span>
                         </button>
 
-                        <form action="/staffs/<?= htmlspecialchars($staff->id) ?>" method="post">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
-
-                            <button class="icon-btn danger" title="Xóa" type="submit">
-                                <span class="material-symbols-outlined">delete</span>
-                            </button>
-                        </form>
+                        <button class="icon-btn danger delete-staff-btn" 
+                                title="Xóa" 
+                                type="button"
+                                data-id="<?= $staff->id ?>"
+                                data-name="<?= htmlspecialchars("{$staff->first_name} {$staff->last_name}") ?>">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
                     </div>
                 </td>
             </tr>

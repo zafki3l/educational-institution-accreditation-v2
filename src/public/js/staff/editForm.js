@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (response.ok && !data.errors) {
             editStaffModal.classList.remove("active");
-            location.reload();
+            window.location.replace('/staffs?success=edit');
             return;
         }
 
@@ -59,6 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     closeEditModal?.addEventListener("click", closeEditForm);
     cancelEditModal?.addEventListener("click", closeEditForm);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'edit') {
+        showStaffToast('Cập nhật nhân viên thành công!');
+        window.history.replaceState(null, '', window.location.pathname);
+    }
 });
 
 const fillStaffForm = (staff) => {
@@ -87,3 +93,54 @@ const clearEditErrors = () => {
     const box = document.getElementById("editFormErrors");
     if (box) box.innerHTML = "";
 };
+
+if (!window.showStaffToast) {
+    window.showStaffToast = function(message) {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            background-color: #2e7d32;
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            min-width: 250px;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            margin-bottom: 10px;
+        `;
+        
+        toast.innerHTML = `
+            <div style="background-color: rgba(255,255,255,0.2); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <span class="material-symbols-outlined" style="font-size: 18px; color: white; font-weight: bold;">check</span>
+            </div>
+            <span>${message}</span>
+        `;
+        container.appendChild(toast);
+        
+        requestAnimationFrame(() => toast.style.transform = 'translateX(0)');
+        
+        toast.addEventListener('click', () => {
+            toast.style.transform = 'translateX(120%)';
+            setTimeout(() => toast.remove(), 400);
+        });
+        
+        setTimeout(() => {
+            if (document.body.contains(toast)) {
+                toast.style.transform = 'translateX(120%)';
+                setTimeout(() => {
+                    if (document.body.contains(toast)) toast.remove();
+                }, 400); 
+            }
+        }, 4000);
+    };
+}

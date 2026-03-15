@@ -23,6 +23,13 @@ final class RoleRepository implements RoleRepositoryInterface
         ]);   
     }
 
+    public function update(EntitiesRole $entitiesRole): void
+    {
+        ModelsRole::where('id', $entitiesRole->getId())->update([
+            'name' => $entitiesRole->getName()
+        ]);
+    }
+
     public function delete(EntitiesRole $role): void
     {
         ModelsRole::where('id', $role->getId())->delete();

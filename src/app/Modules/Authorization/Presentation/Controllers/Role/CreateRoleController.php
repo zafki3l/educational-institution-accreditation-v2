@@ -15,6 +15,6 @@ final class CreateRoleController extends AuthorizationController
     {        
         $this->createRoleUseCase->execute($request, AuthSession::getUserId());
 
-        $this->redirect(ROOT_URL . '/roles');
+        $this->redirect(ROOT_URL . '/roles?success=create');
     }
 }

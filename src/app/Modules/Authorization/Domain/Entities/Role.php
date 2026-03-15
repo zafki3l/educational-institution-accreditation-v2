@@ -40,4 +40,13 @@ class Role
     public function getId(): ?int { return $this->id; }
 
     public function getName(): string { return $this->name; }
+
+    public function rename(string $newName): void
+    {
+        if (empty($newName)) {
+            throw new EmptyRoleNameException();
+        }
+
+        $this->name = $newName;
+    }
 }

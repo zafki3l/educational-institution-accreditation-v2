@@ -10,5 +10,7 @@ interface RoleRepositoryInterface
 
     public function create(EntitiesRole $role): void;
 
+    public function update(EntitiesRole $role): void;
+
     public function delete(EntitiesRole $role): void;
 }

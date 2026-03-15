@@ -1,3 +1,3 @@
 <section class="banner">
-    <img src="<?= HOST ?>/assets/banner/Website-2.webp" alt="">
+    <img src="<?= HOST ?>/assets/banner/homepage-banner.png" alt="">
 </section>

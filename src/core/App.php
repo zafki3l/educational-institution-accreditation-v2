@@ -5,12 +5,9 @@ namespace Core;
 use Illuminate\Container\Container;
 
 /**
- * Class App
- * 
  * This class serves as the main container for the application, managing dependency injection
  * and service resolution throughout the application lifecycle. It provides a centralized
  * way to handle service container functionality and dependency management.
- * 
  */
 class App
 {

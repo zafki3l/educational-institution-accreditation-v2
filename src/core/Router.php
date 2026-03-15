@@ -6,9 +6,7 @@ use App\Shared\Middlewares\CSRF_Authenticator;
 use Exception;
 use ReflectionMethod;
 
-/**
- * Class Router
- * 
+/** 
  * Handles route registration and request dispatching
  * Supports GET, POST, PUT, PATCH, DELETE HTTP methods
  */

@@ -36,7 +36,6 @@ services:
   mongo:
     image: mongo:7
     container_name: mongo_eia
-    restart: always
     ports:
       - "27020:27017"
     volumes:

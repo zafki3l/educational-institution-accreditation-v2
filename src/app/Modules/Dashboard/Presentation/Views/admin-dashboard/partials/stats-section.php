@@ -4,6 +4,11 @@
             <div>
                 <h4>Thống kê số lượng tiêu chuẩn, tiêu chí, và minh chứng theo phòng ban quản lý</h4>
             </div>
+            <div class="chart-legend">
+                <span class="legend-item"><span class="legend-dot standards-dot"></span>Tiêu chuẩn</span>
+                <span class="legend-item"><span class="legend-dot criterias-dot"></span>Tiêu chí</span>
+                <span class="legend-item"><span class="legend-dot evidences-dot"></span>Minh chứng</span>
+            </div>
         </div>
 
         <div id="custom-bar-chart-container" class="custom-bar-chart">

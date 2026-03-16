@@ -4,6 +4,7 @@ namespace App\Modules\Report\Presentation\Controllers;
 
 use App\Modules\DepartmentManagement\Infrastructure\Models\Department;
 use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
+use App\Modules\UserManagement\Infrastructure\Models\User;
 use App\Shared\Response\JsonResponse;
 
 final class TotalStandardByDepartmentController extends ReportController
@@ -64,5 +65,41 @@ final class TotalStandardByDepartmentController extends ReportController
             'departments' => $data,
             'total_standards' => $totalStandards
         ]);
+    }
+
+    public function standardsByStaffDepartment(): JsonResponse
+    {
+        $user_id = $_SESSION['auth_user']['user_id'] ?? null;
+        if (!$user_id) {
+            return new JsonResponse(['error' => 'Unauthenticated'], 401);
+        }
+
+        $user = User::find($user_id);
+        if (!$user || !$user->department_id) {
+            return new JsonResponse(['standards' => []]);
+        }
+
+        $department_id = $user->department_id;
+
+        $standards = Standard::where('department_id', $department_id)
+            ->withCount([
+                'criteria',
+                'criteria as evidences_count' => function ($q) {
+                    $q->join('milestones', 'milestones.criteria_id', '=', 'criterias.id')
+                        ->join('evidences', 'evidences.milestone_id', '=', 'milestones.id');
+                }
+            ])
+            ->get();
+
+        $data = $standards->map(function ($s) {
+            return [
+                'id'              => $s->id,
+                'name'            => $s->name,
+                'criteria_count'  => $s->criteria_count ?? 0,
+                'evidences_count' => $s->evidences_count ?? 0,
+            ];
+        });
+
+        return new JsonResponse(['standards' => $data]);
     }
 }

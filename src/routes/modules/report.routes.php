@@ -17,3 +17,6 @@ $route->middleware([EnsureAuth::class, EnsureStaff::class])
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->get('/api/evidences/without-file', [EvidenceWithoutFileController::class, 'totalWithoutFile']);
+
+$route->middleware([EnsureAuth::class, EnsureStaff::class])
+    ->get('/api/staff/standards', [TotalStandardByDepartmentController::class, 'standardsByStaffDepartment']);

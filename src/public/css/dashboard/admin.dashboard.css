@@ -132,6 +132,31 @@ a {
     margin-bottom: 5px;
 }
 
+.chart-legend {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.standards-dot { background: #1c3e95; }
+.criterias-dot { background: #B8040E; }
+.evidences-dot { background: #fea120; }
+
 .increase{
     text-align: right;
 }

@@ -14,7 +14,6 @@ services:
     build:
       context: .
       dockerfile: php/Dockerfile
-    container_name: php_eia
     volumes:
       - ./:/var/www/html 
     depends_on:
@@ -35,7 +34,6 @@ services:
 
   mongo:
     image: mongo:7
-    container_name: mongo_eia
     ports:
       - "27020:27017"
     volumes:

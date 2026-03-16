@@ -9,6 +9,7 @@
 
     <main class="layout">
         <section class="card-grid">
+            <?php include 'partials/user-info-section.php' ?>
             <?php include 'partials/quality-assessment-section.php' ?>
         </section>
 

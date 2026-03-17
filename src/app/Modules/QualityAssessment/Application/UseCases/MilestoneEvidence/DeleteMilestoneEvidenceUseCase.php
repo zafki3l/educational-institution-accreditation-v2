@@ -2,32 +2,25 @@
 
 namespace App\Modules\QualityAssessment\Application\UseCases\MilestoneEvidence;
 
-use App\Modules\QualityAssessment\Application\Requests\MilestoneEvidence\CreateMilestoneEvidenceRequestInterface;
-use App\Modules\QualityAssessment\Domain\Entities\MilestoneEvidence;
+use App\Modules\QualityAssessment\Application\Requests\MilestoneEvidence\DeleteMilestoneEvidenceRequestInterface;
 use App\Modules\QualityAssessment\Domain\Repositories\MilestoneEvidenceRepositoryInterface;
-use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
 use App\Shared\Logging\LoggerInterface;
 
-final class CreateMilestoneEvidenceUseCase
+final class DeleteMilestoneEvidenceUseCase
 {
     public function __construct(
         private MilestoneEvidenceRepositoryInterface $repository,
         private LoggerInterface $logger
     ) {}
 
-    public function execute(CreateMilestoneEvidenceRequestInterface $request, string $actor_id): void
+    public function execute(DeleteMilestoneEvidenceRequestInterface $request, string $actor_id): void
     {
-        $milestoneEvidence = MilestoneEvidence::create(
-            EvidenceId::fromString($request->getEvidenceId()),
-            $request->getMilestoneId()
-        );
+        $this->repository->delete($request->getEvidenceId(), $request->getMilestoneId());
 
-        $this->repository->create($milestoneEvidence);
-        
         $this->writeLog($request, $actor_id);
     }
 
-    private function writeLog(CreateMilestoneEvidenceRequestInterface $request, string $actor_id): void
+    private function writeLog(DeleteMilestoneEvidenceRequestInterface $request, string $actor_id): void
     {
         $this->logger->write(
             'info',

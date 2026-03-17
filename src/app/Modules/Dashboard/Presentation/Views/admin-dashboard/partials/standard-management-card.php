@@ -29,7 +29,7 @@
             
             <a href="/criterias/1.1/evidences">
                 <div class="item">
-                    <h4>Cập nhật minh chứng</h4>
+                    <h4>Quản lý minh chứng</h4>
                     <span><?= htmlspecialchars($total_evidences) ?> Minh chứng</span>
                 </div>
             </a>

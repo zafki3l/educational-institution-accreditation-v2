@@ -11,4 +11,6 @@ interface EvidenceRepositoryInterface
     public function delete(string $id): string;
 
     public function update(EntitiesEvidence $entitiesEvidence): string;
+
+    public function attachMilestone(string $evidence_id, string $milestone_id): void;
 }

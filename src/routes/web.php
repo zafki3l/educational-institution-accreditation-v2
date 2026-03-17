@@ -13,3 +13,4 @@ require_once 'modules/milestone.routes.php';
 require_once 'modules/evidence.routes.php';
 require_once 'modules/user_profile.routes.php';
 require_once 'modules/report.routes.php';
+require_once 'modules/milestones_evidences.routes.php';

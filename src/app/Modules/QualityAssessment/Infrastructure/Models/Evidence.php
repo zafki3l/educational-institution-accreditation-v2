@@ -31,4 +31,14 @@ class Evidence extends Model
     {
         return $this->belongsTo(Milestone::class);
     }
+
+    public function allMilestones()
+    {
+        return $this->belongsToMany(
+            Milestone::class, 
+            'milestones_evidences', 
+            'evidence_id', 
+            'milestone_id'
+        );
+    }
 }

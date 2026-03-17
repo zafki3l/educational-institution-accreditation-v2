@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OtherMilestone extends Model
 {
-    protected $table = 'other_milestones';
+    protected $table = 'evidences_milestones';
 
     protected $primaryKey = 'id';
 

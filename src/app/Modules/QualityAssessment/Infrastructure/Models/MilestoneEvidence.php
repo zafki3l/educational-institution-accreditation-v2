@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MilestoneEvidence extends Model
 {
+    protected $table = 'milestones_evidences';
     protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'int';

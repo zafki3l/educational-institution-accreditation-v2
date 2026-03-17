@@ -24,7 +24,7 @@ final class CSRF_Authenticator
         }
 
         if (!$this->verifyToken($sessionToken, $token)) {
-            throw new Exception('Token invalid!');
+            throw new Exception('Token invalid! Please reload page!');
         }
 
         if ($this->isTokenExpire()) {

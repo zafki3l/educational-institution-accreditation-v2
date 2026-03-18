@@ -40,7 +40,7 @@ final class UpdateEvidenceController extends QualityAssessmentController
         try {
             $criteria_id = $this->updateEvidenceUseCase->execute($request, AuthSession::getUserId());
 
-            $this->redirect("/criterias/{$criteria_id}/evidences");
+            $this->redirect("/criterias/{$criteria_id}/evidences?success=updated");
         } catch (DomainException $e) {
             $_SESSION['errors'] = [$e->getMessage()];
 

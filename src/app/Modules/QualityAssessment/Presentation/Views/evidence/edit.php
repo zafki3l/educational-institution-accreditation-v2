@@ -62,14 +62,14 @@ if (!empty($evidence->issued_date)) {
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="id" value="<?= htmlspecialchars($evidence['id']) ?>">
 
-                        
+                        <!-- Row 1 -->
                         <div class="grid-2">
 
                             <div class="form-group">
                                 <label>Mã minh chứng </label>
                                 <div class="input-icon">
                                     <span class="material-icons-round">qr_code</span>
-                                    
+                                    <!-- Prefix tự nhập -->
                                     <input type="text" id="prefixInput" value="<?= $prefix ?>" readonly>
 
                                     <input type="text" id="autoCode" value="<?= $mainCode ?>" readonly>
@@ -88,7 +88,7 @@ if (!empty($evidence->issued_date)) {
 
                         </div>
 
-                        
+                        <!-- Select -->
                         <div class="form-group">
                             <label>Tiêu chuẩn</label>
                             <select name="standard_id" id="standardSelect"  disabled>
@@ -128,10 +128,10 @@ if (!empty($evidence->issued_date)) {
                                 name="milestone_id" 
                                 value="<?= $evidence['milestone_id'] ?>">
 
-                        
+                        <!-- Divider -->
                         <div class="divider"></div>
 
-                        
+                        <!-- Row 2 -->
                         <div class="grid-3">
 
                             <div class="form-group">
@@ -162,7 +162,7 @@ if (!empty($evidence->issued_date)) {
 
                         </div>
 
-                        
+                        <!-- Upload -->
                         <div class="form-group">
                             <label>Đính kèm minh chứng</label>
 
@@ -175,7 +175,7 @@ if (!empty($evidence->issued_date)) {
                             </div>
                         </div>
 
-                        
+                        <!-- Buttons -->
                         <div class="form-actions">
                             <button type="button" class="btn-cancel" onclick="history.back()">
                                 Hủy bỏ
@@ -230,12 +230,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let mainCode = '';
 
-        
+        // Có tiêu chí: 11.1 → 11.01
         if (criteria) {
             const [std, cri] = criteria.split('.');
             mainCode = `${pad2(std)}.${pad2(cri)}`;
         }
-        
+        // Chỉ có tiêu chuẩn: 1 → 01
         else if (standard) {
             mainCode = pad2(standard);
         }

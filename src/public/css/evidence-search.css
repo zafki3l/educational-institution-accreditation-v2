@@ -28,7 +28,7 @@
     color: #64748b;
 }
 
-
+/* SEARCH BOX */
 
 .search-box {
     display: flex;
@@ -74,7 +74,7 @@
     background: #1d4ed8;
 }
 
-
+/* ===== FILTER CONTAINER ===== */
 
 .filters {
     display: flex;
@@ -89,7 +89,7 @@
     border: 1px solid #e2e8f0;
 }
 
-
+/* LABEL */
 
 .filters .label {
     font-size: 13px;
@@ -99,7 +99,7 @@
     letter-spacing: 0.5px;
 }
 
-
+/* SELECT BASE */
 
 .filters select {
     min-width: 220px;
@@ -120,14 +120,14 @@
     text-overflow: ellipsis;
 }
 
-
+/* Hover */
 
 .filters select:hover {
     border-color: #2563eb;
     background-color: #ffffff;
 }
 
-
+/* Focus */
 
 .filters select:focus {
     outline: none;
@@ -136,7 +136,7 @@
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-
+/* Disabled state */
 
 .filters select:disabled {
     background-color: #e2e8f0;
@@ -144,7 +144,7 @@
     cursor: not-allowed;
 }
 
-
+/* Responsive */
 
 @media (max-width: 768px) {
     .filters {
@@ -172,7 +172,7 @@
     color: #1d4ed8;
 }
 
-
+/* RECENT */
 
 .recent {
     display: flex;

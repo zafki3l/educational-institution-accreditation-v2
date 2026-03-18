@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="/css/evidence-search.css">
 
     <style>
-        
+        /* ===== SEARCH RESULT ===== */
 
 .search-results {
     margin-top: 40px;
 }
 
-
+/* Meta */
 
 .result-meta {
     font-size: 13px;
-    color: 
+    color: #64748b;
     margin-bottom: 20px;
 }
 
-
+/* List */
 
 .result-list {
     display: flex;
@@ -38,19 +38,19 @@
     gap: 26px;
 }
 
-
+/* Item */
 
 .result-item {
     padding-bottom: 20px;
-    border-bottom: 1px solid 
+    border-bottom: 1px solid #e2e8f0;
 }
 
-
+/* Title */
 
 .result-title {
     font-size: 20px;
     font-weight: 700;
-    color: 
+    color: #1e40af;
     margin-bottom: 6px;
     cursor: pointer;
 }
@@ -59,24 +59,24 @@
     text-decoration: underline;
 }
 
-
+/* Path */
 
 .result-path {
     font-size: 13px;
-    color: 
+    color: #475569;
     margin-bottom: 8px;
 }
 
-
+/* Snippet */
 
 .result-snippet {
     font-size: 15px;
-    color: 
+    color: #334155;
     line-height: 1.6;
     max-width: 800px;
 }
 
-
+/* Actions */
 
 .result-actions {
     margin-top: 8px;
@@ -88,7 +88,7 @@
 .view-link {
     font-size: 14px;
     font-weight: 600;
-    color: 
+    color: #2563eb;
     text-decoration: none;
 }
 
@@ -98,7 +98,7 @@
 
 .year {
     font-size: 12px;
-    color: 
+    color: #64748b;
 }
     </style>
 </head>

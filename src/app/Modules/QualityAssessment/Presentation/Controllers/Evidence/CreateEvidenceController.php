@@ -71,7 +71,7 @@ final class CreateEvidenceController extends QualityAssessmentController
         try {
             $this->createEvidenceUseCase->execute($request, AuthSession::getUserId());
 
-            $this->redirect("/criterias/{$request->getCriteriaId()}/evidences");
+            $this->redirect("/criterias/{$request->getCriteriaId()}/evidences?success=created");
         } catch (DomainException $e) {
             $_SESSION['errors'] = [$e->getMessage()];
 

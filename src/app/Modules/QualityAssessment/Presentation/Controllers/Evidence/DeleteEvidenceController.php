@@ -14,6 +14,6 @@ final class DeleteEvidenceController extends QualityAssessmentController
     {
         $criteria_id = $this->deleteEvidenceUseCase->execute($id, AuthSession::getUserId());
         
-        $this->redirect("/criterias/{$criteria_id}/evidences"); 
+        $this->redirect("/criterias/{$criteria_id}/evidences?success=deleted"); 
     }
 }

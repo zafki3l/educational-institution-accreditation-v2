@@ -44,5 +44,33 @@
 
 <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;"></div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+        if (success) {
+            let message = '';
+            switch (success) {
+                case 'created':
+                    message = 'Thêm minh chứng thành công!';
+                    break;
+                case 'updated':
+                    message = 'Cập nhật minh chứng thành công!';
+                    break;
+                case 'deleted':
+                    message = 'Xóa minh chứng thành công!';
+                    break;
+            }
+            if (message && typeof showEvidenceToast === 'function') {
+                showEvidenceToast(message);
+
+                const url = new URL(window.location);
+                url.searchParams.delete('success');
+                window.history.replaceState({}, document.title, url);
+            }
+        }
+    });
+</script>
+
 </body>
 </html>

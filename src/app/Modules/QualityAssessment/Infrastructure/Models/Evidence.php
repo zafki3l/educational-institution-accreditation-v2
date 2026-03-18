@@ -3,7 +3,6 @@
 namespace App\Modules\QualityAssessment\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Evidence extends Model
 {
@@ -27,17 +26,17 @@ class Evidence extends Model
 
     public $timestamps = true;
 
-    public function milestone(): BelongsTo
+    public function milestone()
     {
-        return $this->belongsTo(Milestone::class);
+        return $this->belongsTo(Milestone::class, 'milestone_id');
     }
 
-    public function allMilestones()
+    public function milestones()
     {
         return $this->belongsToMany(
-            Milestone::class, 
-            'milestones_evidences', 
-            'evidence_id', 
+            Milestone::class,
+            'milestones_evidences',
+            'evidence_id',
             'milestone_id'
         );
     }

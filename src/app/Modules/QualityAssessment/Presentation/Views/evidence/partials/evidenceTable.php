@@ -31,7 +31,7 @@
                 </td>
             </tr>
 
-            <?php foreach ($milestone->evidences as $evidence): ?>
+            <?php foreach ($evidencesByMilestone[$milestone->id] as $evidence): ?>
                 <tr class="criteria-row"
                     data-parent-milestone="<?= htmlspecialchars($milestone->code) ?>">
                     <td><?= htmlspecialchars($evidence->id) ?></td>

@@ -4,6 +4,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Evidence;
 
 use App\Modules\DepartmentManagement\Infrastructure\Models\Department;
 use App\Modules\QualityAssessment\Infrastructure\Models\Criteria;
+use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\UserManagement\Infrastructure\Models\User;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
@@ -21,7 +22,40 @@ final class IndexEvidenceController extends QualityAssessmentController
 
         $standards = $this->standardReader->withCriteria();
         $sidebarStandards = $this->renderSidebarStandards($this->standardReader);
-        $criteria = Criteria::with(['milestones', 'milestones.criteria', 'milestones.evidences'])->findOrFail($criteria_id);
+        $criteria = Criteria::with('milestones.criteria')->findOrFail($criteria_id);
+
+        // lấy all evidences liên quan
+        $evidences = Evidence::with('milestones')
+            ->whereIn(
+                'milestone_id',
+                $criteria->milestones->pluck('id')
+            )->orWhereHas('milestones', function ($q) use ($criteria) {
+                $q->whereIn('milestones.id', $criteria->milestones->pluck('id'));
+            })->get();
+
+        // group raw trước
+        $grouped = [];
+
+        foreach ($evidences as $e) {
+            // primary
+            if ($e->milestone_id) {
+                $grouped[$e->milestone_id][] = $e;
+            }
+
+            // pivot
+            foreach ($e->milestones as $m) {
+                $grouped[$m->id][] = $e;
+            }
+        }
+
+        // map sang structure cho view
+        $evidencesByMilestone = [];
+
+        foreach ($criteria->milestones as $milestone) {
+            $evidencesByMilestone[$milestone->id] = collect($grouped[$milestone->id] ?? [])
+                ->unique('id')
+                ->values();
+        }
 
         return new ViewResponse(
             self::MODULE_NAME,
@@ -33,7 +67,8 @@ final class IndexEvidenceController extends QualityAssessmentController
                 'criteria' => $criteria,
                 'criteriaId' => $criteria->id,
                 'criteriaName' => $criteria->name,
-                'sidebarStandards' => $sidebarStandards
+                'sidebarStandards' => $sidebarStandards,
+                'evidencesByMilestone' => $evidencesByMilestone
             ]
         );
     }

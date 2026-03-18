@@ -16,8 +16,11 @@ class EvidenceReader
         $milestone_id = $request->getMilestoneId();
 
         $query = Evidence::query()
-                        ->with('milestone.criteria.standard')
-                        ->orderByDesc('created_at');
+            ->with([
+                'milestone.criteria.standard',
+                'milestones.criteria.standard'
+            ])
+            ->orderByDesc('created_at');
         
         if (!empty($keyword)) {
             $query->where(function ($q) use ($keyword) {
@@ -26,25 +29,39 @@ class EvidenceReader
         }
 
         if (!empty($milestone_id)) {
-            $query->where('milestone_id', $milestone_id);
+            $query->where(function ($q) use ($milestone_id) {
+                $q->where('milestone_id', $milestone_id)
+                ->orWhereHas('milestones', function ($q2) use ($milestone_id) {
+                    $q2->where('milestones.id', $milestone_id);
+                });
+            });
         }
 
         if (!empty($criteria_id)) {
-            $query->whereHas('milestone', function ($q) use ($criteria_id) {
-                $q->where('criteria_id', $criteria_id);
+            $query->where(function ($q) use ($criteria_id) {
+                $q->whereHas('milestone', function ($q2) use ($criteria_id) {
+                    $q2->where('criteria_id', $criteria_id);
+                })
+                ->orWhereHas('milestones', function ($q2) use ($criteria_id) {
+                    $q2->where('criteria_id', $criteria_id);
+                });
             });
         }
 
         if (!empty($standard_id)) {
-            $query->whereHas('milestone.criteria', function ($q) use ($standard_id) {
-                $q->where('standard_id', $standard_id);
+            $query->where(function ($q) use ($standard_id) {
+                $q->whereHas('milestone.criteria', function ($q2) use ($standard_id) {
+                    $q2->where('standard_id', $standard_id);
+                })
+                ->orWhereHas('milestones.criteria', function ($q2) use ($standard_id) {
+                    $q2->where('standard_id', $standard_id);
+                });
             });
         }
 
         $paginator = $query->paginate(10, [
             'id',
             'name',
-            'milestone_id',
             'document_number',
             'issued_date',
             'issuing_authority',

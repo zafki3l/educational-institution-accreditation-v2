@@ -2,7 +2,6 @@
 
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\CreateEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\DeleteEvidenceController;
-use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\EvidenceMilestoneController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\FindEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\IndexEvidenceController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Evidence\ShowEvidenceController;
@@ -30,15 +29,6 @@ $route->middleware([EnsureAuth::class])
 
 $route->middleware([EnsureAuth::class])
     ->get('/api/criterias/{criteria_id}/milestones', [CreateEvidenceController::class, 'getAllMilestonesByCriteria']);
-
-$route->middleware([EnsureAuth::class, EnsureStaff::class])
-    ->get('/api/evidences/{id}/milestones', [EvidenceMilestoneController::class, 'getMilestones']);
-
-$route->middleware([EnsureAuth::class, EnsureStaff::class])
-    ->post('/api/evidences/{id}/milestones', [EvidenceMilestoneController::class, 'addMilestone']);
-
-$route->middleware([EnsureAuth::class, EnsureStaff::class])
-    ->delete('/api/evidences/{id}/milestones/{mapping_id}', [EvidenceMilestoneController::class, 'removeMilestone']);
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->get('/evidences/{id}/edit', [UpdateEvidenceController::class, 'edit']);

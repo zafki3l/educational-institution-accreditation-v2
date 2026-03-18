@@ -9,67 +9,60 @@ use App\Modules\QualityAssessment\Infrastructure\Models\MilestoneEvidence;
 
 class EvidenceRepository implements EvidenceRepositoryInterface
 {
-    public function create(EntitiesEvidence $entitiesEvidence): void
+    public function create(EntitiesEvidence $e): void
     {
         ModelsEvidence::create([
-            'id' => $entitiesEvidence->getId()->value(),
-            'name' => $entitiesEvidence->getName(),
-            'milestone_id' => $entitiesEvidence->getMilestoneId(),
-            'document_number' => $entitiesEvidence->getDocumentNumber() ?: null,
-            'issued_date' => $entitiesEvidence->getIssuedDate() 
-                ? $entitiesEvidence->getIssuedDate()->format('Y-m-d') 
-                : null,
-            'issuing_authority' => $entitiesEvidence->getIssuingAuthority(),
-            'file_url' => $entitiesEvidence->getFileUrl()
+            'id' => $e->getId()->value(),
+            'name' => $e->getName(),
+            'milestone_id' => $e->getMilestoneId(),
+            'document_number' => $e->getDocumentNumber() ?: null,
+            'issued_date' => $e->getIssuedDate()?->format('Y-m-d'),
+            'issuing_authority' => $e->getIssuingAuthority(),
+            'file_url' => $e->getFileUrl()
         ]);
     }
 
     public function delete(string $id): string
     {
-        $evidence = ModelsEvidence::with('milestone')
-                        ->select('id', 'milestone_id', 'name')
-                        ->findOrFail($id);
+        $evidence = ModelsEvidence::with('milestone.criteria')
+            ->findOrFail($id);
 
-        $criteria_id = $evidence->milestone->criteria_id;
+        $criteriaId = $evidence->milestone->criteria->id;
 
-        MilestoneEvidence::where('evidence_id', $evidence->id)
-            ->where('milestone_id', $evidence->milestone_id)
-            ->delete();
+        // delete pivot
+        MilestoneEvidence::where('evidence_id', $id)->delete();
 
         $evidence->delete();
 
-        return $criteria_id;
+        return $criteriaId;
     }
 
-    public function update(EntitiesEvidence $entitiesEvidence): string
+    public function update(EntitiesEvidence $e): string
     {
-        $evidence = ModelsEvidence::with(['milestone.criteria.standard'])->findOrFail($entitiesEvidence->getId()->value());
+        $evidence = ModelsEvidence::with('milestone.criteria')
+            ->findOrFail($e->getId()->value());
 
         $data = [
-            'name' => $entitiesEvidence->getName(),
-            'document_number' => $entitiesEvidence->getDocumentNumber() ?: null,
-            'issued_date' => $entitiesEvidence->getIssuedDate() 
-                ? $entitiesEvidence->getIssuedDate()->format('Y-m-d') 
-                : null,
-            'issuing_authority' => $entitiesEvidence->getIssuingAuthority()
+            'name' => $e->getName(),
+            'document_number' => $e->getDocumentNumber() ?: null,
+            'issued_date' => $e->getIssuedDate()?->format('Y-m-d'),
+            'issuing_authority' => $e->getIssuingAuthority()
         ];
 
-        if (!empty($entitiesEvidence->getFileUrl())) {
-            $data['file_url'] = $entitiesEvidence->getFileUrl();
+        if ($e->getFileUrl()) {
+            $data['file_url'] = $e->getFileUrl();
         }
 
         $evidence->update($data);
 
-        $evidence->refresh();   
-
         return $evidence->milestone->criteria->id;
     }
 
-    public function attachMilestone(string $evidence_id, string $milestone_id): void
+    public function attachMilestone(string $evidenceId, string $milestoneId): void
     {
         MilestoneEvidence::create([
-            'evidence_id' => $evidence_id,
-            'milestone_id' => $milestone_id
+            'evidence_id' => $evidenceId,
+            'milestone_id' => $milestoneId
         ]);
     }
 }

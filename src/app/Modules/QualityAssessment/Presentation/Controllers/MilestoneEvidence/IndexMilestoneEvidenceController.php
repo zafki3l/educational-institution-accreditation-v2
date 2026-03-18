@@ -10,45 +10,59 @@ final class IndexMilestoneEvidenceController extends QualityAssessmentController
 {
     public function index(string $id): JsonResponse
     {
-        $evidence = Evidence::with(['milestone.criteria', 'allMilestones.criteria'])->findOrFail($id);
+        $evidence = Evidence::with([
+            'milestone.criteria',
+            'milestones.criteria'
+        ])->findOrFail($id);
 
-        $milestonesList = collect();
-        if ($evidence->milestone) {
-            $pm = $evidence->milestone;
-            $pm->is_primary = true;
-            $milestonesList->push($pm);
-        }
-        foreach ($evidence->allMilestones as $am) {
-            if ($evidence->milestone_id === $am->id) {
-                continue;
-            }
-            $am->is_primary = false;
-            $milestonesList->push($am);
-        }
+        $milestones = $this->buildMilestones($evidence);
 
-        $grouped = $milestonesList
+        $grouped = $milestones
             ->groupBy(fn($m) => $m->criteria->id)
-            ->map(function ($milestones, $criteriaId) {
-                $criteria = $milestones->first()->criteria;
-
-                return [
-                    'id' => $criteria->id,
-                    'standard_id' => $criteria->standard_id,
-                    'name' => $criteria->name,
-                    'milestones' => $milestones->map(fn($m) => [
-                        'id' => $m->id,
-                        'criteria_id' => $m->criteria_id,
-                        'code' => $m->code,
-                        'order' => $m->order,
-                        'name' => $m->name,
-                        'is_primary' => $m->is_primary ?? false
-                    ])->values()
-                ];
-            })
+            ->map(fn($group) => $this->formatCriteria($group))
             ->values();
 
         return new JsonResponse([
             'allCriterias' => $grouped
         ]);
+    }
+
+    private function buildMilestones($evidence)
+    {
+        $list = $evidence->milestones->map(function ($m) use ($evidence) {
+            $m->is_primary = $m->id === $evidence->milestone_id;
+            return $m;
+        });
+
+        // ensure primary always exists
+        if (
+            $evidence->milestone &&
+            !$list->contains('id', $evidence->milestone_id)
+        ) {
+            $pm = $evidence->milestone;
+            $pm->is_primary = true;
+            $list->push($pm);
+        }
+
+        return $list;
+    }
+
+    private function formatCriteria($milestones)
+    {
+        $criteria = $milestones->first()->criteria;
+
+        return [
+            'id' => $criteria->id,
+            'standard_id' => $criteria->standard_id,
+            'name' => $criteria->name,
+            'milestones' => $milestones->map(fn($m) => [
+                'id' => $m->id,
+                'criteria_id' => $m->criteria_id,
+                'code' => $m->code,
+                'order' => $m->order,
+                'name' => $m->name,
+                'is_primary' => $m->is_primary ?? false
+            ])->values()
+        ];
     }
 }

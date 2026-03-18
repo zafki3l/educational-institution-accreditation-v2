@@ -16,8 +16,8 @@ class Evidence
     private function __construct(
         private EvidenceId $id,
         private string $name,
-        private string $document_number,
-        private DateTimeImmutable $issued_date,
+        private ?string $document_number,
+        private ?DateTimeImmutable $issued_date,
         private string $issuing_authority,
         private ?string $file_url,
         private string $milestone_id
@@ -27,7 +27,7 @@ class Evidence
         EvidenceId $id,
         string $name,
         string $document_number,
-        DateTimeImmutable $issued_date,
+        ?DateTimeImmutable $issued_date,
         string $issuing_authority,
         string $milestone_id
     ): self {
@@ -36,8 +36,6 @@ class Evidence
         self::checkNameEmpty($name);
 
         self::checkMilestoneIdEmpty($milestone_id);
-
-        self::checkDocumentNumberEmpty($document_number);
 
         self::checkIssuingAuthorityEmpty($issuing_authority);
 
@@ -54,12 +52,12 @@ class Evidence
         return $this->name;
     }
 
-    public function getDocumentNumber(): string
+    public function getDocumentNumber(): ?string
     {
         return $this->document_number;
     }
 
-    public function getIssuedDate(): DateTimeImmutable
+    public function getIssuedDate(): ?DateTimeImmutable
     {
         return $this->issued_date;
     }

@@ -15,8 +15,10 @@ class EvidenceRepository implements EvidenceRepositoryInterface
             'id' => $entitiesEvidence->getId()->value(),
             'name' => $entitiesEvidence->getName(),
             'milestone_id' => $entitiesEvidence->getMilestoneId(),
-            'document_number' => $entitiesEvidence->getDocumentNumber(),
-            'issued_date' => $entitiesEvidence->getIssuedDate()->format('Y-m-d'),
+            'document_number' => $entitiesEvidence->getDocumentNumber() ?: null,
+            'issued_date' => $entitiesEvidence->getIssuedDate() 
+                ? $entitiesEvidence->getIssuedDate()->format('Y-m-d') 
+                : null,
             'issuing_authority' => $entitiesEvidence->getIssuingAuthority(),
             'file_url' => $entitiesEvidence->getFileUrl()
         ]);
@@ -45,8 +47,10 @@ class EvidenceRepository implements EvidenceRepositoryInterface
 
         $data = [
             'name' => $entitiesEvidence->getName(),
-            'document_number' => $entitiesEvidence->getDocumentNumber(),
-            'issued_date' => $entitiesEvidence->getIssuedDate(),
+            'document_number' => $entitiesEvidence->getDocumentNumber() ?: null,
+            'issued_date' => $entitiesEvidence->getIssuedDate() 
+                ? $entitiesEvidence->getIssuedDate()->format('Y-m-d') 
+                : null,
             'issuing_authority' => $entitiesEvidence->getIssuingAuthority()
         ];
 

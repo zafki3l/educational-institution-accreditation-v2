@@ -133,7 +133,9 @@
 
                         <!-- Buttons -->
                         <div class="form-actions">
-                            <button type="button" class="btn-cancel">Hủy bỏ</button>
+                            <button type="button" class="btn-cancel" onclick="history.back()">
+                                Hủy bỏ
+                            </button>
 
                             <button type="submit" class="btn-primary">
                                 <span class="material-icons-round">save</span>

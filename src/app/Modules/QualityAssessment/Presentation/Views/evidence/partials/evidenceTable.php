@@ -39,8 +39,8 @@
                         title="<?= htmlspecialchars($evidence->name) ?>">
                         <?= htmlspecialchars($evidence->name) ?>
                     </td>
-                    <td><?= htmlspecialchars($evidence->document_number) ?></td>
-                    <td><?= htmlspecialchars($evidence->issued_date) ?></td>
+                    <td><?= htmlspecialchars($evidence->document_number ?? '') ?></td>
+                    <td><?= htmlspecialchars($evidence->issued_date ?? '') ?></td>
                     <td><?= htmlspecialchars($evidence->issuing_authority) ?></td>
                     <td class="right">
                         <button

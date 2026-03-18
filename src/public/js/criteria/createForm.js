@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     criteriaInput.addEventListener('keydown', (e) => {
-        
+        // chặn backspace xóa prefix
         if (
             e.key === 'Backspace' &&
             criteriaInput.selectionStart <= prefix.length
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     criteriaInput.addEventListener('input', () => {
-        
+        // nếu ai đó paste / sửa bậy
         if (!criteriaInput.value.startsWith(prefix)) {
             criteriaInput.value = prefix;
             criteriaInput.setSelectionRange(prefix.length, prefix.length);
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     criteriaInput.addEventListener('click', () => {
-        
+        // không cho click vào trước prefix
         if (criteriaInput.selectionStart < prefix.length) {
             criteriaInput.setSelectionRange(prefix.length, prefix.length);
         }

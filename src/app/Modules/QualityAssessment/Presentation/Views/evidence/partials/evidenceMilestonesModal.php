@@ -2,7 +2,7 @@
     <div class="modal-overlay"></div>
 
     <div class="modal-box">
-        
+        <!-- Header -->
         <div class="modal-header">
             <div class="modal-header-left">
                 <div class="modal-icon">
@@ -19,7 +19,7 @@
             </button>
         </div>
 
-        
+        <!-- Selection Bar -->
         <div class="modal-body">
             <?php if (isAdmin()): ?>
                 <div class="add-milestone-bar">
@@ -55,14 +55,14 @@
                 <tbody id="evidenceMilestonesTableBody"></tbody>
             </table>
 
-            
+            <!-- Empty -->
             <div id="emptyEvidenceMilestonesState" class="empty-state">
                 <span class="material-icons-round">fact_check</span>
                 <p>Chưa có tiêu chí nào được gán</p>
             </div>
         </div>
 
-        
+        <!-- Footer -->
         <div class="modal-footer">
             <button type="button" class="btn-outline" id="closeEvidenceMilestonesBtn">Đóng</button>
         </div>

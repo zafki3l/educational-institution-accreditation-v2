@@ -1,6 +1,6 @@
+/* Staff Dashboard Styles */
 
-
-
+/* User Info Section */
 .user-info-card {
     border: none;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -35,7 +35,7 @@
 .avatar-box {
     width: 100px;
     height: 100px;
-    background: #4A90E2; 
+    background: #4A90E2; /* Matches image blue */
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -117,7 +117,7 @@
     margin: 0;
 }
 
-
+/* Stats Section Chart */
 .chart-legend {
     display: flex;
     gap: 16px;
@@ -142,7 +142,7 @@
 .criterias-dot { background: #B8040E; }
 .evidences-dot { background: #fea120; }
 
-
+/* Dashboard Grid Overrides if needed */
 .card-grid {
     gap: 30px;
 }

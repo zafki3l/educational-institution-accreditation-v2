@@ -205,6 +205,7 @@ addMappingBtn?.addEventListener('click', async () => {
     }
 });
 
+// Tìm đến đoạn xử lý click xóa (delete-evidence-mapping-btn)
 const deleteMappingModal = document.getElementById('deleteMappingModal');
 const confirmDeleteMappingBtn = document.getElementById('confirmDeleteMappingBtn');
 const cancelDeleteMappingModal = document.getElementById('cancelDeleteMappingModal');
@@ -222,8 +223,8 @@ document.addEventListener('click', async (e) => {
     e.preventDefault();
 
     const row = btn.closest('tr');
-    const milestoneId = row?.dataset.mappingId; 
-    const criteriaId = row?.children[0].textContent.trim(); 
+    const milestoneId = row?.dataset.mappingId; // Đây là milestone_id
+    const criteriaId = row?.children[0].textContent.trim(); // Lấy ID tiêu chí từ cột đầu tiên
     const milestoneName = row?.children[2].textContent.trim();
 
     if (!milestoneId || !currentEvidenceId) return;
@@ -253,7 +254,8 @@ confirmDeleteMappingBtn?.addEventListener('click', async () => {
         formData.append('evidence_id', currentEvidenceId);
         formData.append('criteria_id', criteriaId);
         formData.append('milestone_id', milestoneId);
-        formData.append('_method', 'DELETE'); 
+        formData.append('_method', 'DELETE'); // Method spoofing cho PHP
+
         if (evCsrfToken) {
             formData.append('CSRF-token', evCsrfToken);
         }

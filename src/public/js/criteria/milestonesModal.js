@@ -1,7 +1,11 @@
-
+/* =====================
+   GLOBAL STATE
+===================== */
 let currentCriteriaId = null;
 
-
+/* =====================
+   ELEMENTS
+===================== */
 const modal = document.getElementById('milestonesModal');
 const form = document.getElementById('addMilestoneForm');
 const orderInput = document.getElementById('newMilestoneOrder');
@@ -9,7 +13,9 @@ const nameInput = document.getElementById('newMilestoneName');
 const csrfToken = document.querySelector('input[name="CSRF-token"]')?.value;
 const addMilestoneBtn = document.getElementById('addMilestoneBtn');
 
-
+/* =====================
+   FETCH
+===================== */
 async function fetchMilestones(criteriaId) {
     const res = await fetch(`/criterias/${criteriaId}/milestones`);
     if (!res.ok) throw new Error(res.status);
@@ -17,7 +23,9 @@ async function fetchMilestones(criteriaId) {
     return data.criteria.milestones ?? [];
 }
 
-
+/* =====================
+   OPEN MODAL
+===================== */
 document.addEventListener('click', async (e) => {
     const btn = e.target.closest('.milestone-btn');
     if (!btn) return;
@@ -42,7 +50,9 @@ document.addEventListener('click', async (e) => {
     }
 });
 
-
+/* =====================
+   RENDER TABLE
+===================== */
 function renderMilestonesTable(milestones) {
     const tbody = document.getElementById('milestonesTableBody');
     const emptyState = document.getElementById('emptyMilestonesState');
@@ -96,10 +106,10 @@ document.addEventListener('click', async (e) => {
             throw new Error(res.status);
         }
 
-        
+        // Xóa dòng khỏi table
         btn.closest('tr').remove();
 
-        
+        // Nếu hết milestone → hiện empty state
         const tbody = document.getElementById('milestonesTableBody');
         if (!tbody.children.length) {
             document.getElementById('emptyMilestonesState').style.display = 'block';
@@ -110,7 +120,9 @@ document.addEventListener('click', async (e) => {
     }
 });
 
-
+/* =====================
+   MODAL CONTROL
+===================== */
 function openMilestonesModal() {
     modal.classList.add('show');
 }
@@ -125,7 +137,9 @@ document.getElementById('closeMilestonesModal')?.addEventListener('click', close
 document.getElementById('closeMilestonesBtn')?.addEventListener('click', closeMilestonesModal);
 modal.querySelector('.modal-overlay')?.addEventListener('click', closeMilestonesModal);
 
-
+/* =====================
+   SUBMIT FORM
+===================== */
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -153,13 +167,17 @@ form.addEventListener('submit', async (e) => {
     orderInput.focus();
 });
 
-
+/* =====================
+   INPUT STATE
+===================== */
 form.addEventListener('input', () => {
     addMilestoneBtn.disabled =
         !orderInput.value.trim() || !nameInput.value.trim();
 });
 
-
+/* =====================
+   HELPERS
+===================== */
 function appendMilestoneRow(m) {
     document.getElementById('emptyMilestonesState').style.display = 'none';
     document.getElementById('milestonesTableBody')

@@ -11,7 +11,7 @@
     </thead>
     <tbody>
         <?php foreach ($standards as $standard): ?>
-            
+            <!-- STANDARD HEADER ROW -->
             <tr class="standard-row"
                 data-standard-id="<?= $standard->id ?>">
                 <td colspan="4">
@@ -30,7 +30,7 @@
                 </td>
             </tr>
 
-            
+            <!-- CRITERIA ROWS -->
             <?php foreach ($standard->criteria as $criteria): ?>
                 <tr class="criteria-row"
                     data-parent-standard="<?= $standard->id ?>">

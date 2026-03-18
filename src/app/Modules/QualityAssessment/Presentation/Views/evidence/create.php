@@ -35,14 +35,14 @@
                     <form class="form" action="/evidences" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
 
-                        
+                        <!-- Row 1 -->
                         <div class="grid-2">
 
                             <div class="form-group">
                                 <label>Mã minh chứng </label>
                                 <div class="input-icon">
                                     <span class="material-icons-round">qr_code</span>
-                                    
+                                    <!-- Prefix tự nhập -->
                                     <input type="text" id="prefixInput" placeholder="H1">
                                     <input type="text" id="autoCode" placeholder="01.01" readonly>
                                     <input type="text" id="lastCode" placeholder="01">
@@ -61,7 +61,7 @@
 
                         </div>
 
-                        
+                        <!-- Select -->
                         <div class="form-group">
                             <label>Tiêu chuẩn</label>
                             <select name="standard_id" id="standardSelect"  >
@@ -83,11 +83,11 @@
                             </select>
                         </div>
 
-                        
+                        <!-- Divider -->
                         <div class="divider"></div>
 
-                        
-                        
+                        <!-- Row 2 -->
+                        <!-- Row 2 -->
                         <div class="grid-3">
 
                             <div class="form-group">
@@ -118,7 +118,7 @@
 
                         </div>
 
-                        
+                        <!-- Upload -->
                         <div class="form-group">
                             <label>Đính kèm minh chứng</label>
 
@@ -131,7 +131,7 @@
                             </div>
                         </div>
 
-                        
+                        <!-- Buttons -->
                         <div class="form-actions">
                             <button type="button" class="btn-cancel" onclick="history.back()">
                                 Hủy bỏ
@@ -186,12 +186,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let mainCode = '';
 
-        
+        // Có tiêu chí: 11.1 → 11.01
         if (criteria) {
             const [std, cri] = criteria.split('.');
             mainCode = `${pad2(std)}.${pad2(cri)}`;
         }
-        
+        // Chỉ có tiêu chuẩn: 1 → 01
         else if (standard) {
             mainCode = pad2(standard);
         }

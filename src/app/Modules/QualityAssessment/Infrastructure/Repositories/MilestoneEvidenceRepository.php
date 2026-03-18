@@ -35,11 +35,8 @@ class MilestoneEvidenceRepository implements MilestoneEvidenceRepositoryInterfac
 
     public function getPrimaryCriteriaIdByEvidence(string $evidenceId): ?string
     {
-        $primaryMapping = ModelsMilestoneEvidence::where('evidence_id', $evidenceId)
-            ->where('is_primary', true)
-            ->with('milestone')
-            ->first();
+        $evidence = Evidence::with('milestone')->find($evidenceId);
 
-        return $primaryMapping?->milestone?->criteria_id;
+        return $evidence?->milestone?->criteria_id;
     }
 }

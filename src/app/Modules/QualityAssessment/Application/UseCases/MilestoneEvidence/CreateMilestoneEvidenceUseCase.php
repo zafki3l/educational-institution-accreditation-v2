@@ -23,7 +23,7 @@ final class CreateMilestoneEvidenceUseCase
 
         $primaryCriteriaId = $this->repository->getPrimaryCriteriaIdByEvidence($evidenceId);
 
-        if ($primaryCriteriaId !== null && $primaryCriteriaId === $targetCriteriaId) {
+        if ($primaryCriteriaId !== null && (string)$primaryCriteriaId === (string) $targetCriteriaId) {
             throw new DomainException('Không thể thêm mốc đánh giá vì tiêu chí này đã chứa mốc đánh giá chính của minh chứng.');
         }
 

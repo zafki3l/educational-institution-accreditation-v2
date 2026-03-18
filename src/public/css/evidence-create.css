@@ -261,10 +261,10 @@ select:focus {
 
 .upload-box input[type="file"] {
     position: absolute;
-    inset: 0;        /* top:0 right:0 bottom:0 left:0 */
+    inset: 0;        
     width: 100%;
     height: 100%;
-    opacity: 0;      /* ẩn đi */
+    opacity: 0;      
     cursor: pointer;
 }
 
@@ -279,7 +279,7 @@ select:focus {
     gap: 6px;
 }
 
-/* icon */
+
 .input-icon .material-icons-round {
     position: absolute;
     left: 10px;
@@ -290,7 +290,7 @@ select:focus {
     pointer-events: none;
 }
 
-/* input chung */
+
 .input-icon input {
     border: none;
     outline: none;
@@ -299,12 +299,12 @@ select:focus {
     background: transparent;
 }
 
-/* tạo đường ngăn giữa input */
+
 .input-icon input:not(:last-child) {
     border-right: 1px solid #e5e7eb;
 }
 
-/* focus sáng cả khối */
+
 .input-icon:focus-within {
     border-color: #3b82f6;
     box-shadow: 0 0 0 2px rgba(59,130,246,0.15);

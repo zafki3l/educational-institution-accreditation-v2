@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data = JSON.parse(text);
         } catch {
             console.error('Invalid JSON:', text);
-            // Optionally show general error in errorBox
+            
             errorBox.innerHTML = '<span class="error-message">- Có lỗi hệ thống xảy ra. Vui lòng thử lại sau.</span>';
             return;
         }

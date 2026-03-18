@@ -47,7 +47,7 @@
     width: 36px;
     height: 36px;
 
-    background: rgba(59, 130, 246, 0.08); /* xanh rất nhạt */
+    background: rgba(59, 130, 246, 0.08); 
     border: none;
     border-radius: 8px;
 
@@ -61,7 +61,7 @@
 
 .milestone-btn .material-symbols-outlined {
     font-size: 20px;
-    color: #2563eb; /* xanh action */
+    color: #2563eb; 
 }
 
 

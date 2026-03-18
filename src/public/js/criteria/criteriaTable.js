@@ -42,7 +42,7 @@ document.querySelectorAll('.criteria-name').forEach(el => {
     });
 });
 
-// Delete Modal Functionality
+
 document.addEventListener('DOMContentLoaded', () => {
     const deleteModal = document.getElementById('deleteConfirmModal');
     const closeDeleteBtn = document.getElementById('closeDeleteModal');
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalOverlay = deleteModal?.querySelector('.modal-overlay');
     let deleteId = null;
 
-    // Open delete modal
+    
     document.querySelectorAll('.delete-criteria-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Close modal
+    
     const closeModal = () => {
         deleteModal.classList.remove('active');
         deleteId = null;
@@ -72,17 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
     closeDeleteBtn.addEventListener('click', closeModal);
     cancelDeleteBtn.addEventListener('click', closeModal);
 
-    // Close modal when clicking overlay
+    
     modalOverlay?.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal-overlay')) {
             closeModal();
         }
     });
 
-    // Confirm delete
+    
     confirmDeleteBtn.addEventListener('click', () => {
         if (deleteId) {
-            // Create form and submit
+            
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = `/criterias/${deleteId}`;

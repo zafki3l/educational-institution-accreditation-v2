@@ -171,7 +171,7 @@ a {
     color: #1e40af;
 }
 
-/* ===== BAR CHART ===== */
+
 
 .custom-bar-chart{
     width:100%;
@@ -245,7 +245,7 @@ a {
     transition: height .8s ease;
 }
 
-/* COLORS */
+
 
 .chart-bar-fill.standards{
     background:#1c3e95;
@@ -269,11 +269,11 @@ a {
     word-break:break-word;
 }
 
-/* Custom Tooltip Styling */
+
 #chart-tooltip {
     position: absolute;
     z-index: 10000;
-    pointer-events: none !important; /* Extremely important to prevent hover jitter */
+    pointer-events: none !important; 
     opacity: 0;
     transition: opacity 0.2s ease, transform 0.1s ease;
     background-color: #0f172a;

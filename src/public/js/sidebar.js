@@ -2,7 +2,7 @@ const sidebarItems = document.querySelectorAll('.sidebar-item');
 const criteriaLinks = document.querySelectorAll('.sidebar-criteria-link');
 const ACTIVE_KEY = 'activeSidebar';
 
-// Đánh dấu menu hiện tại (các link sidebar-item có href)
+
 sidebarItems.forEach(item => {
     item.addEventListener('click', () => {
         sidebarItems.forEach(i => i.classList.remove('active'));
@@ -13,7 +13,7 @@ sidebarItems.forEach(item => {
     });
 });
 
-// Đánh dấu khi click vào tiêu chí
+
 criteriaLinks.forEach(link => {
     link.addEventListener('click', () => {
         localStorage.setItem(ACTIVE_KEY, link.getAttribute('href'));
@@ -28,17 +28,17 @@ if (activeHref) {
         }
     });
 
-    // Khôi phục trạng thái cho tiêu chí đang chọn
+    
     criteriaLinks.forEach(link => {
         if (link.getAttribute('href') === activeHref) {
             link.classList.add('active');
 
             const criteriaList = link.closest('.sidebar-criteria-list');
             if (criteriaList) {
-                // Mở danh sách tiêu chí
+                
                 criteriaList.classList.add('open');
 
-                // Mở tiêu chuẩn chứa tiêu chí đó
+                
                 const targetId = criteriaList.id;
                 const toggle = document.querySelector(`.sidebar-standard-toggle[data-target="${targetId}"]`);
                 if (toggle) {
@@ -46,7 +46,7 @@ if (activeHref) {
                 }
             }
 
-            // Đảm bảo group "Quản lý minh chứng đánh giá" đang mở
+            
             const group = link.closest('.sidebar-group');
             if (group) {
                 group.classList.add('open');
@@ -55,7 +55,7 @@ if (activeHref) {
     });
 }
 
-// Nhóm có thể thu gọn/mở rộng (dùng cho "Phân quyền người dùng", "Quản lý minh chứng đánh giá", ...)
+
 const groupToggles = document.querySelectorAll('.sidebar-toggle');
 
 groupToggles.forEach(toggle => {
@@ -67,11 +67,11 @@ groupToggles.forEach(toggle => {
     });
 });
 
-// Xử lý sidebar dạng phân cấp Tiêu chuẩn -> Tiêu chí
+
 const STANDARD_OPEN_KEY = 'sidebarOpenStandards';
 const standardToggles = document.querySelectorAll('.sidebar-standard-toggle');
 
-// Lấy danh sách tiêu chuẩn đang mở từ localStorage
+
 let openStandards = [];
 try {
     const saved = localStorage.getItem(STANDARD_OPEN_KEY);
@@ -94,7 +94,7 @@ standardToggles.forEach(toggle => {
         return;
     }
 
-    // Khởi tạo trạng thái mở/đóng theo localStorage
+    
     if (openStandards.includes(targetId)) {
         criteriaList.classList.add('open');
         toggle.classList.add('open');

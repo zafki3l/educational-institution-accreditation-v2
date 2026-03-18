@@ -22,17 +22,17 @@
     gap: 12px;
     margin: 24px 0;
     font-size: 14px;
-    color: #475569; /* slate-600 */
+    color: #475569; 
 }
 
 .pagination-container {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #f8fafc; /* slate-50 */
+    background: #f8fafc; 
     padding: 10px 14px;
     border-radius: 12px;
-    border: 1px solid #e2e8f0; /* slate-200 */
+    border: 1px solid #e2e8f0; 
 }
 
 .pagination-nav {
@@ -49,22 +49,22 @@
     border-radius: 8px;
     border: 1px solid #e2e8f0;
     background: #ffffff;
-    color: #334155; /* slate-700 */
+    color: #334155; 
     text-decoration: none;
     cursor: pointer;
     transition: all 0.15s ease;
 }
 
 .pagination-btn:hover {
-    background: #e0f2fe; /* sky-100 */
-    border-color: #38bdf8; /* sky-400 */
-    color: #0369a1; /* sky-700 */
+    background: #e0f2fe; 
+    border-color: #38bdf8; 
+    color: #0369a1; 
 }
 
 .pagination-btn.disabled {
     opacity: 0.45;
     cursor: not-allowed;
-    background: #f1f5f9; /* slate-100 */
+    background: #f1f5f9; 
 }
 
 .pagination-numbers {
@@ -95,7 +95,7 @@
 }
 
 .pagination-number.active {
-    background: #2563eb; /* blue-600 */
+    background: #2563eb; 
     border-color: #2563eb;
     color: #ffffff;
     font-weight: 600;
@@ -104,13 +104,13 @@
 
 .pagination-ellipsis {
     padding: 0 6px;
-    color: #94a3b8; /* slate-400 */
+    color: #94a3b8; 
     user-select: none;
 }
 
 .pagination-info {
     font-size: 13px;
-    color: #64748b; /* slate-500 */
+    color: #64748b; 
 }
 
 .pagination-info span {

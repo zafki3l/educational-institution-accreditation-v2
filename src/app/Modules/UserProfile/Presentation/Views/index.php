@@ -17,7 +17,7 @@
         }
 
         .card {
-            background: #ffffff;
+            background: 
             padding: 25px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -44,20 +44,20 @@
             width: 100%;
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid 
             font-size: 14px;
         }
 
         input:focus {
             outline: none;
-            border-color: #333;
+            border-color: 
         }
 
         .btn {
             width: 100%;
             padding: 12px;
-            background: #1e40af;
-            color: #fff;
+            background: 
+            color: 
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -66,7 +66,7 @@
         }
 
         .btn:hover {
-            background: #183288;
+            background: 
         }
     </style>
 </head>

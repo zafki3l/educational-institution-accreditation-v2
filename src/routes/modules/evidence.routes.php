@@ -25,10 +25,10 @@ $route->middleware([EnsureAuth::class, EnsureStaff::class])
 $route->middleware([EnsureAuth::class])
     ->get('/api/standards/find', [FindEvidenceController::class, 'findFilter']);
 
-$route->middleware([EnsureAuth::class, EnsureStaff::class])
+$route->middleware([EnsureAuth::class])
     ->get('/api/standards/{standard_id}/criterias', [CreateEvidenceController::class, 'getAllCriteriasByStandard']);
 
-$route->middleware([EnsureAuth::class, EnsureStaff::class])
+$route->middleware([EnsureAuth::class])
     ->get('/api/criterias/{criteria_id}/milestones', [CreateEvidenceController::class, 'getAllMilestonesByCriteria']);
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])

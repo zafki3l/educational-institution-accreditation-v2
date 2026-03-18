@@ -6,7 +6,6 @@ use App\Modules\DepartmentManagement\Infrastructure\Models\Department;
 use App\Modules\QualityAssessment\Infrastructure\Models\Criteria;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use App\Shared\Response\ViewResponse;
 
@@ -16,7 +15,9 @@ final class IndexEvidenceController extends QualityAssessmentController
 
     public function index(string $criteria_id)
     {
-        $this->checkAllowedCriteriaIds($criteria_id);
+        if (!isAdmin()) {
+            $this->checkAllowedCriteriaIds($criteria_id);
+        }
 
         $standards = $this->standardReader->withCriteria();
         $sidebarStandards = $this->renderSidebarStandards($this->standardReader);

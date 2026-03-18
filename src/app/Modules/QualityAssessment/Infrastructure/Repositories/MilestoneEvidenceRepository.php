@@ -32,4 +32,14 @@ class MilestoneEvidenceRepository implements MilestoneEvidenceRepositoryInterfac
                                 ->where('milestone_id', $milestone_id)
                                 ->delete();
     }
+
+    public function getPrimaryCriteriaIdByEvidence(string $evidenceId): ?string
+    {
+        $primaryMapping = ModelsMilestoneEvidence::where('evidence_id', $evidenceId)
+            ->where('is_primary', true)
+            ->with('milestone')
+            ->first();
+
+        return $primaryMapping?->milestone?->criteria_id;
+    }
 }

@@ -6,22 +6,27 @@ use App\Modules\QualityAssessment\Application\UseCases\MilestoneEvidence\DeleteM
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\MilestoneEvidence\DeleteMilestoneEvidenceRequest;
 use App\Shared\Exception\DomainException;
+use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
 
 final class DeleteMilestoneEvidenceController extends QualityAssessmentController
 {
     public function __construct(private DeleteMilestoneEvidenceUseCase $deleteMilestoneEvidenceUseCase) {}
 
-    public function destroy(DeleteMilestoneEvidenceRequest $request): void
+    public function destroy(DeleteMilestoneEvidenceRequest $request): JsonResponse
     {
         try {
             $this->deleteMilestoneEvidenceUseCase->execute($request, AuthSession::getUserId());
 
-            $this->redirect("/criterias/{$request->getCriteriaId()}/evidences");
+            return new JsonResponse([
+                'success' => true, 
+                'message' => 'Xóa thành công'
+            ]);
         } catch (DomainException $e) {
-            $_SESSION['errors'] = [$e->getMessage()];
-            
-            $this->redirect("/criterias/{$request->getCriteriaId()}/evidences");
+            return new JsonResponse([
+                'success' => false, 
+                'message' => $e->getMessage()
+            ]);
         }
     }
 }

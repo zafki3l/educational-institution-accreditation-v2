@@ -11,10 +11,22 @@ const selectMilestone = document.getElementById('selectMilestone');
 const addMappingBtn = document.getElementById('addEvidenceMappingBtn');
 
 async function fetchEvidenceMilestones(evidenceId) {
-    const res = await fetch(`/api/evidences/${evidenceId}/milestones`);
-    if (!res.ok) throw new Error('Failed to fetch milestones');
+    const res = await fetch(`/api/evidences/${evidenceId}/criterias`);
+    if (!res.ok) throw new Error('Failed to fetch');
+
     const data = await res.json();
-    return data.milestones || [];
+
+    const criterias = data.allCriterias || [];
+
+    // flatten
+    return criterias.flatMap(c =>
+        (c.milestones || []).map(m => ({
+            id: m.id,
+            criteria_id: c.id,
+            criteria_name: c.name,
+            milestone_name: m.name
+        }))
+    );
 }
 
 async function fetchStandards() {
@@ -147,9 +159,9 @@ addMappingBtn?.addEventListener('click', async () => {
 
         if (!res.ok) throw new Error('Failed to save milestone');
 
-        const result = await res.json();
-        const mappings = result.milestones || [];
+        const mappings = await fetchEvidenceMilestones(currentEvidenceId);
         renderEvidenceMilestonesTable(mappings);
+
         showEvidenceToast('Thêm mốc đánh giá thành công!');
 
         selectStandard.value = '';
@@ -164,35 +176,52 @@ addMappingBtn?.addEventListener('click', async () => {
     }
 });
 
+// Tìm đến đoạn xử lý click xóa (delete-evidence-mapping-btn)
 document.addEventListener('click', async (e) => {
     const btn = e.target.closest('.delete-evidence-mapping-btn');
     if (!btn) return;
 
     e.preventDefault();
 
-    const mappingId = btn.closest('tr')?.dataset.mappingId;
-    if (!mappingId) return;
+    const row = btn.closest('tr');
+    const mappingId = row?.dataset.mappingId; // Đây là milestone_id
+    const criteriaId = row?.children[0].textContent.trim(); // Lấy ID tiêu chí từ cột đầu tiên
 
-    if (!confirm('Xóa mối liên kết này?')) return;
+    if (!mappingId || !currentEvidenceId) return;
+    if (!confirm('Bạn có chắc chắn muốn xóa mối liên kết này?')) return;
 
     try {
-        const res = await fetch(`/api/evidences/${currentEvidenceId}/milestones/${mappingId}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': evCsrfToken || ''
-            }
+        const formData = new FormData();
+        formData.append('evidence_id', currentEvidenceId);
+        formData.append('criteria_id', criteriaId);
+        formData.append('milestone_id', mappingId);
+
+        if (evCsrfToken) {
+            formData.append('CSRF-token', evCsrfToken);
+        }
+
+        // Lưu ý: Route của bạn đang để là $route->delete, 
+        // nhưng nếu bạn dùng FormData, hãy đảm bảo Route ở backend nhận POST 
+        // hoặc gửi theo kiểu DELETE chuẩn. 
+        // Ở đây tôi giữ POST theo ý định "🔥 đổi thành POST" của bạn:
+        const res = await fetch('/api/evidences/criterias', {
+            method: 'POST', 
+            body: formData
         });
 
-        if (!res.ok) throw new Error('Failed to delete milestone');
+        const result = await res.json(); // Đợi phản hồi JSON từ server
 
-        btn.closest('tr').remove();
-        showEvidenceToast('Xóa mốc đánh giá thành công!');
-        if (evTBody && !evTBody.children.length) {
-            if (evEmptyState) evEmptyState.style.display = 'block';
+        if (res.ok && result.success) {
+            // Chỉ khi xóa thành công ở Database mới load lại bảng
+            const mappings = await fetchEvidenceMilestones(currentEvidenceId);
+            renderEvidenceMilestonesTable(mappings);
+            showEvidenceToast('Xóa mốc đánh giá thành công!');
+        } else {
+            throw new Error(result.message || 'Lỗi từ server');
         }
     } catch (err) {
-        console.error(err);
-        alert('Không thể xóa mốc đánh giá. Vui lòng thử lại.');
+        console.error('Delete error:', err);
+        alert('Không thể xóa: ' + err.message);
     }
 });
 

@@ -4,7 +4,6 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Evidence;
 
 use App\Modules\QualityAssessment\Application\Requests\Evidence\CreateEvidenceRequestInterface;
 use App\Modules\QualityAssessment\Domain\Entities\Evidence;
-use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIssuedDateException;
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceIdExistsException;
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
@@ -34,15 +33,15 @@ final class CreateEvidenceUseCase
             throw new EvidenceIdExistsException();
         }
 
-        if ($this->evidenceIssuedDateEmptyChecker->check($request->getIssuedDate())) {
-            throw new EvidenceEmptyIssuedDateException();
-        }
+        $issuedDate = ($this->evidenceIssuedDateEmptyChecker->check($request->getIssuedDate()))
+            ? null
+            : new DateTimeImmutable($request->getIssuedDate());
 
         $evidence = Evidence::create(
             EvidenceId::fromString($request->getId()),
             $request->getName(),
             $request->getDocumentNumber(),
-            new DateTimeImmutable($request->getIssuedDate()),
+            $issuedDate,
             $request->getIssuingAuthority(),
             $request->getMilestoneId()
         );
@@ -69,7 +68,7 @@ final class CreateEvidenceUseCase
                 'id' => $evidence->getId()->value(),
                 'name' => $evidence->getName(),
                 'document_number' => $evidence->getDocumentNumber(),
-                'issued_date' => $evidence->getIssuedDate()->format('Y-m-d'),
+                'issued_date' => $evidence->getIssuedDate()?->format('Y-m-d'),
                 'issuing_authority' => $evidence->getIssuingAuthority(),
                 'file_url' => $evidence->getFileUrl() ? $evidence->getFileUrl() : '',
                 'milestone_id' => $evidence->getMilestoneId(),

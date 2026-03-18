@@ -137,7 +137,7 @@ if (!empty($evidence->issued_date)) {
                             <div class="form-group">
                                 <label>Quyết định</label>
                                 <input type="text" name="document_number" placeholder="Nhập quyết định"
-                                value="<?= htmlspecialchars($evidence['document_number']) ?>">
+                                value="<?= htmlspecialchars($evidence['document_number'] ?? '') ?>">
                             </div>
 
                             <div class="form-group">
@@ -177,7 +177,9 @@ if (!empty($evidence->issued_date)) {
 
                         <!-- Buttons -->
                         <div class="form-actions">
-                            <button type="button" class="btn-cancel">Hủy bỏ</button>
+                            <button type="button" class="btn-cancel" onclick="history.back()">
+                                Hủy bỏ
+                            </button>
 
                             <button type="submit" class="btn-primary">
                                 <span class="material-icons-round">save</span>

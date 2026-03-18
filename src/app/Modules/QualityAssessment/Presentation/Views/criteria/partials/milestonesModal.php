@@ -77,230 +77,133 @@
 </div>
 
 <style>
+/* Hiển thị Modal */
+.modal {
+    display: none; /* Mặc định ẩn */
+    position: fixed;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
 .modal.show {
     display: flex;
 }
 
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
 
 .modal-box {
     position: relative;
     z-index: 50;
-    width: 100%;
+    width: 95%;
     max-width: 56rem;
-    background: 
+    background: #ffffff;
     border-radius: 16px;
-    border: 1px solid 
+    border: 1px solid #e5e7eb;
     box-shadow: 0 20px 25px -5px rgba(0,0,0,.1);
     overflow: hidden;
-}
-
-.modal-box {
     max-height: calc(100vh - 64px);
     display: flex;
     flex-direction: column;
 }
 
-
-
+/* Header */
 .modal-header {
     display: flex;
     justify-content: space-between;
-    gap: 16px;
-    padding: 24px 32px;
-    border-bottom: 1px solid 
-}
-
-.modal-header-left {
-    display: flex;
-    gap: 16px;
+    align-items: center;
+    padding: 20px 32px;
+    border-bottom: 1px solid #f3f4f6;
 }
 
 .modal-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: 
-    color: 
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #eff6ff;
+    color: #1c3e95;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.modal-title {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    color: 
-}
+.modal-title { font-size: 18px; font-weight: 700; color: #111827; margin: 0; }
+.modal-desc { font-size: 13px; color: #6b7280; margin: 4px 0 0; }
 
-.modal-desc {
-    margin-top: 4px;
-    font-size: 14px;
-    color: 
-    max-width: 640px;
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    color: 
-    cursor: pointer;
-}
-
-.modal-close:hover {
-    color: 
-}
-
-
-
+/* Body & Table */
 .modal-body {
     flex: 1;
     overflow-y: auto;
-    padding: 8px 32px;
+    padding: 24px 32px;
 }
+
+.add-milestone-bar {
+    background: #f9fafb;
+    border: 1px solid #f3f4f6;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
 .add-milestone-bar form {
     display: flex;
+    gap: 12px;
     align-items: center;
-    gap: 12px;
-    width: 100%;
-}
-.milestones-table {
-    width: 100%;
-    border-collapse: collapse;
 }
 
+/* Fix input layout */
+#newMilestoneOrder { width: 200px; }
+#newMilestoneName { flex: 1; }
+
+.add-milestone-bar input {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    outline: none;
+}
+
+.add-milestone-bar input:focus { border-color: #1c3e95; ring: 2px #bfdbfe; }
+
+.milestones-table { width: 100%; border-collapse: collapse; }
 .milestones-table th {
-    padding: 20px;
-    font-size: 11px;
-    text-transform: uppercase;
-    color: 
-    border-bottom: 1px solid 
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #6b7280;
+    border-bottom: 2px solid #f3f4f6;
 }
 
-.milestones-table td {
-    padding: 16px 20px;
-    border-top: 1px solid 
-}
+.milestones-table td { padding: 16px; border-bottom: 1px solid #f3f4f6; }
 
-.right {
-    text-align: right;
-}
-
-.w-sm { width: 64px; }
-.w-md { width: 192px; }
-.w-xs { width: 96px; }
-
-
-.empty-state {
-    display: none;
-    padding: 64px 32px;
-    text-align: center;
-}
-
-.empty-state span {
-    font-size: 48px;
-    color: 
-}
-
-.empty-state p {
-    color: 
-    font-weight: 500;
-}
-
-
-.modal-footer {
-    padding: 24px 32px;
-    background: 
-    border-top: 1px solid 
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
-
+/* Buttons */
 .btn-primary {
-    padding: 10px 24px;
-    border-radius: 12px;
+    background: #1c3e95;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
     border: none;
-    background: 
-    color: 
     font-weight: 600;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.btn-primary:hover { background: #1c3e95; }
+.btn-outline {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: white;
     cursor: pointer;
 }
-
-.btn-primary:hover {
-    background: 
-}
-
-.milestones-table tbody tr {
-    transition: background .15s ease, box-shadow .15s ease;
-}
-
-.milestones-table tbody tr:hover {
-    background: 
-}
-
-.milestones-table td:first-child {
-    color: 
-    font-weight: 600;
-}
-
-.milestones-table td {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-.add-milestone-bar {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.add-milestone-bar input {
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid 
-}
-
-.add-milestone-bar button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-
-.add-milestone-bar {
-    background: 
-    border: 1px solid 
-    border-radius: 14px;
-    padding: 16px;
-    margin: 16px 0 24px;
-}
-
-.add-milestone-bar form {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-
-    width: 160px;
-    flex: 0 0 160px;
-}
-
-
-    flex: 1;
-    min-width: 0;
-}
-
-
-    margin-left: auto;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
 </style>
-
 <script>
     window.IS_ADMIN = <?= isAdmin() ? 'true' : 'false' ?>;
 </script>

@@ -4,6 +4,7 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Evidence;
 
 use App\Modules\QualityAssessment\Application\Requests\Evidence\CreateEvidenceRequestInterface;
 use App\Modules\QualityAssessment\Domain\Entities\Evidence;
+use App\Modules\QualityAssessment\Domain\Exception\Criteria\CriteriaEmptyIdException;
 use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceIdExistsException;
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
@@ -27,6 +28,10 @@ final class CreateEvidenceUseCase
     
     public function execute(CreateEvidenceRequestInterface $request, string $actor_id): void
     {
+        if ($request->getCriteriaId() === '') {
+            throw new CriteriaEmptyIdException();
+        }
+        
         $this->evidencePermissionChecker->check($request->getCriteriaId(), $actor_id);
 
         if ($this->evidenceIdExistsChecker->check($request->getId())) {

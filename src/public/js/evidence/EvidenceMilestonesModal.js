@@ -10,6 +10,21 @@ const selectCriteria = document.getElementById('selectCriteria');
 const selectMilestone = document.getElementById('selectMilestone');
 const addMappingBtn = document.getElementById('addEvidenceMappingBtn');
 
+const evError = document.getElementById('evidenceMilestonesErrors');
+
+function showEvError(msg) {
+    if (!evError) return;
+    evError.innerHTML = `<span class="material-icons-round">error_outline</span> ${msg}`;
+    evError.classList.add('show');
+}
+
+function clearEvError() {
+    if (evError) {
+        evError.innerHTML = '';
+        evError.classList.remove('show');
+    }
+}
+
 async function fetchEvidenceMilestones(evidenceId) {
     const res = await fetch(`/api/evidences/${evidenceId}/criterias`);
     if (!res.ok) throw new Error('Failed to fetch');
@@ -18,13 +33,13 @@ async function fetchEvidenceMilestones(evidenceId) {
 
     const criterias = data.allCriterias || [];
 
-    // flatten
     return criterias.flatMap(c =>
         (c.milestones || []).map(m => ({
             id: m.id,
             criteria_id: c.id,
             criteria_name: c.name,
-            milestone_name: m.name
+            milestone_name: m.name,
+            is_primary: m.is_primary
         }))
     );
 }
@@ -43,6 +58,7 @@ async function fetchStandards() {
 }
 
 selectStandard?.addEventListener('change', async () => {
+    clearEvError();
     const standardId = selectStandard.value;
     selectCriteria.innerHTML = '<option value="">Chọn tiêu chí</option>';
     selectMilestone.innerHTML = '<option value="">Chọn mốc đánh giá</option>';
@@ -101,6 +117,7 @@ document.addEventListener('click', async (e) => {
     }
 
     openEvidenceMilestonesModal();
+    clearEvError();
     if (evTBody) evTBody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px">Đang tải...</td></tr>';
 
     try {
@@ -145,19 +162,27 @@ addMappingBtn?.addEventListener('click', async () => {
     const milestoneId = selectMilestone.value;
     if (!milestoneId || !currentEvidenceId) return;
 
-    if (addMappingBtn) addMappingBtn.disabled = true;
+    clearEvError();
+
+    if (addMappingBtn) {
+        addMappingBtn.disabled = true;
+        addMappingBtn.innerHTML = '<span class="material-icons-round spinner">sync</span> Đang lưu...';
+    }
 
     try {
         const formData = new FormData();
+        formData.append('evidence_id', currentEvidenceId);
+        formData.append('criteria_id', selectCriteria.value);
         formData.append('milestone_id', milestoneId);
         if (evCsrfToken) formData.append('CSRF-token', evCsrfToken);
 
-        const res = await fetch(`/api/evidences/${currentEvidenceId}/milestones`, {
+        const res = await fetch(`/api/evidences/${currentEvidenceId}/criterias`, {
             method: 'POST',
             body: formData
         });
 
-        if (!res.ok) throw new Error('Failed to save milestone');
+        const result = await res.json();
+        if (!res.ok || !result.success) throw new Error(result.message || 'Failed to save milestone');
 
         const mappings = await fetchEvidenceMilestones(currentEvidenceId);
         renderEvidenceMilestonesTable(mappings);
@@ -171,12 +196,26 @@ addMappingBtn?.addEventListener('click', async () => {
         selectMilestone.disabled = true;
     } catch (err) {
         console.error(err);
-        alert('Không thể thêm mốc đánh giá. Vui lòng thử lại.');
-        if (addMappingBtn) addMappingBtn.disabled = false;
+        showEvError(err.message);
+    } finally {
+        if (addMappingBtn) {
+            addMappingBtn.disabled = !selectMilestone.value;
+            addMappingBtn.innerHTML = '<span class="material-icons-round">add</span> Thêm';
+        }
     }
 });
 
 // Tìm đến đoạn xử lý click xóa (delete-evidence-mapping-btn)
+const deleteMappingModal = document.getElementById('deleteMappingModal');
+const confirmDeleteMappingBtn = document.getElementById('confirmDeleteMappingBtn');
+const cancelDeleteMappingModal = document.getElementById('cancelDeleteMappingModal');
+const closeDeleteMappingModal = document.getElementById('closeDeleteMappingModal');
+const deleteMappingNameEl = document.getElementById('delete_mapping_name');
+
+const closeDeleteModal = () => {
+    deleteMappingModal?.classList.remove('active');
+};
+
 document.addEventListener('click', async (e) => {
     const btn = e.target.closest('.delete-evidence-mapping-btn');
     if (!btn) return;
@@ -184,44 +223,64 @@ document.addEventListener('click', async (e) => {
     e.preventDefault();
 
     const row = btn.closest('tr');
-    const mappingId = row?.dataset.mappingId; // Đây là milestone_id
+    const milestoneId = row?.dataset.mappingId; // Đây là milestone_id
     const criteriaId = row?.children[0].textContent.trim(); // Lấy ID tiêu chí từ cột đầu tiên
+    const milestoneName = row?.children[2].textContent.trim();
 
-    if (!mappingId || !currentEvidenceId) return;
-    if (!confirm('Bạn có chắc chắn muốn xóa mối liên kết này?')) return;
+    if (!milestoneId || !currentEvidenceId) return;
+
+    document.getElementById('delete_mapping_milestone_id').value = milestoneId;
+    document.getElementById('delete_mapping_criteria_id').value = criteriaId;
+    if (deleteMappingNameEl) deleteMappingNameEl.textContent = `"${milestoneName}"`;
+
+    deleteMappingModal?.classList.add('active');
+});
+
+cancelDeleteMappingModal?.addEventListener('click', closeDeleteModal);
+closeDeleteMappingModal?.addEventListener('click', closeDeleteModal);
+deleteMappingModal?.querySelector('.modal-overlay')?.addEventListener('click', closeDeleteModal);
+
+confirmDeleteMappingBtn?.addEventListener('click', async () => {
+    const milestoneId = document.getElementById('delete_mapping_milestone_id').value;
+    const criteriaId = document.getElementById('delete_mapping_criteria_id').value;
+
+    if (!milestoneId || !criteriaId || !currentEvidenceId) return;
+
+    confirmDeleteMappingBtn.disabled = true;
+    confirmDeleteMappingBtn.textContent = 'Đang xóa...';
 
     try {
         const formData = new FormData();
         formData.append('evidence_id', currentEvidenceId);
         formData.append('criteria_id', criteriaId);
-        formData.append('milestone_id', mappingId);
+        formData.append('milestone_id', milestoneId);
+        formData.append('_method', 'DELETE'); // Method spoofing cho PHP
 
         if (evCsrfToken) {
             formData.append('CSRF-token', evCsrfToken);
         }
 
-        // Lưu ý: Route của bạn đang để là $route->delete, 
-        // nhưng nếu bạn dùng FormData, hãy đảm bảo Route ở backend nhận POST 
-        // hoặc gửi theo kiểu DELETE chuẩn. 
-        // Ở đây tôi giữ POST theo ý định "🔥 đổi thành POST" của bạn:
         const res = await fetch('/api/evidences/criterias', {
             method: 'POST', 
             body: formData
         });
 
-        const result = await res.json(); // Đợi phản hồi JSON từ server
+        const result = await res.json(); 
 
         if (res.ok && result.success) {
-            // Chỉ khi xóa thành công ở Database mới load lại bảng
             const mappings = await fetchEvidenceMilestones(currentEvidenceId);
             renderEvidenceMilestonesTable(mappings);
             showEvidenceToast('Xóa mốc đánh giá thành công!');
+            closeDeleteModal();
         } else {
             throw new Error(result.message || 'Lỗi từ server');
         }
     } catch (err) {
         console.error('Delete error:', err);
         alert('Không thể xóa: ' + err.message);
+    } finally {
+        confirmDeleteMappingBtn.disabled = false;
+        confirmDeleteMappingBtn.textContent = 'Xóa';
     }
 });
 
@@ -246,23 +305,7 @@ function escapeEvHtml(text = '') {
         .replace(/'/g, "&#039;");
 }
 
-function appendMappingRow(m) {
-    if (!evTBody) return;
-    evTBody.insertAdjacentHTML('beforeend', `
-        <tr>
-            <td>${escapeEvHtml(m.criteria_id)}</td>
-            <td>${escapeEvHtml(m.criteria_name)}</td>
-            <td>${escapeEvHtml(m.milestone_name)}</td>
-            ${window.IS_ADMIN ? `
-                <td class="right">
-                    <button class="icon-btn danger delete-evidence-mapping-btn">
-                        <span class="material-symbols-outlined">delete</span>
-                    </button>
-                </td>
-            ` : ''}
-        </tr>
-    `);
-}
+
 
 function showEvidenceToast(message) {
     const container = document.getElementById('toast-container');

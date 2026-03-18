@@ -24,8 +24,8 @@ final class DeleteMilestoneEvidenceUseCase
     {
         $this->logger->write(
             'info',
-            'create', 
-            "Người dùng {$actor_id} đã thêm 1 mốc đánh giá vào minh chứng {$request->getEvidenceId()}", 
+            'delete', 
+            "Người dùng {$actor_id} đã xóa 1 mốc đánh giá khỏi minh chứng {$request->getEvidenceId()}", 
             $actor_id, 
             [
                 'evidence_id' => $request->getEvidenceId(),

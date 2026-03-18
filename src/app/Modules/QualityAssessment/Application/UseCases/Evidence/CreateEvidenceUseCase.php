@@ -52,8 +52,7 @@ final class CreateEvidenceUseCase
         }
         
         $this->repository->create($evidence);
-        $this->repository->attachMilestone($evidence->getId()->value(), $evidence->getMilestoneId());
-
+        
         $this->writeLog($evidence, $request->getCriteriaId(), $actor_id);
     }
 

@@ -10,9 +10,23 @@ final class IndexMilestoneEvidenceController extends QualityAssessmentController
 {
     public function index(string $id): JsonResponse
     {
-        $evidence = Evidence::with('allMilestones.criteria')->findOrFail($id);
+        $evidence = Evidence::with(['milestone.criteria', 'allMilestones.criteria'])->findOrFail($id);
 
-        $grouped = $evidence->allMilestones
+        $milestonesList = collect();
+        if ($evidence->milestone) {
+            $pm = $evidence->milestone;
+            $pm->is_primary = true;
+            $milestonesList->push($pm);
+        }
+        foreach ($evidence->allMilestones as $am) {
+            if ($evidence->milestone_id === $am->id) {
+                continue;
+            }
+            $am->is_primary = false;
+            $milestonesList->push($am);
+        }
+
+        $grouped = $milestonesList
             ->groupBy(fn($m) => $m->criteria->id)
             ->map(function ($milestones, $criteriaId) {
                 $criteria = $milestones->first()->criteria;
@@ -27,6 +41,7 @@ final class IndexMilestoneEvidenceController extends QualityAssessmentController
                         'code' => $m->code,
                         'order' => $m->order,
                         'name' => $m->name,
+                        'is_primary' => $m->is_primary ?? false
                     ])->values()
                 ];
             })

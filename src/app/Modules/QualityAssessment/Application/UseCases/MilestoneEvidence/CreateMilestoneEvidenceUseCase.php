@@ -24,7 +24,7 @@ final class CreateMilestoneEvidenceUseCase
         $isCriteriaMapped = $this->repository->hasMilestoneInCriteria($evidenceId, $targetCriteriaId);
 
         if ($isCriteriaMapped) {
-            throw new DomainException('Không thể thêm mốc đánh giá. Minh chứng này đã có một mốc đánh giá khác thuộc tiêu chí này.');
+            throw new DomainException('Đã có mốc đánh giá khác thuộc tiêu chí này.');
         }
 
         $milestoneEvidence = MilestoneEvidence::create(

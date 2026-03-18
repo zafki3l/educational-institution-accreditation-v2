@@ -21,10 +21,10 @@ final class CreateMilestoneEvidenceUseCase
         $evidenceId = $request->getEvidenceId();
         $targetCriteriaId = $request->getCriteriaId();
 
-        $primaryCriteriaId = $this->repository->getPrimaryCriteriaIdByEvidence($evidenceId);
+        $isCriteriaMapped = $this->repository->hasMilestoneInCriteria($evidenceId, $targetCriteriaId);
 
-        if ($primaryCriteriaId !== null && (string)$primaryCriteriaId === (string) $targetCriteriaId) {
-            throw new DomainException('Không thể thêm mốc đánh giá vì tiêu chí này đã chứa mốc đánh giá chính của minh chứng.');
+        if ($isCriteriaMapped) {
+            throw new DomainException('Không thể thêm mốc đánh giá. Minh chứng này đã có một mốc đánh giá khác thuộc tiêu chí này.');
         }
 
         $milestoneEvidence = MilestoneEvidence::create(

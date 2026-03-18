@@ -10,5 +10,5 @@ interface MilestoneEvidenceRepositoryInterface
 
     public function delete(string $evidence_id, string $milestone_id): void;
 
-    public function getPrimaryCriteriaIdByEvidence(string $evidenceId): ?string;
+    public function hasMilestoneInCriteria(string $evidenceId, string $criteriaId): bool;
 }

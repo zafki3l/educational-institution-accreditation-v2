@@ -7,6 +7,7 @@ use App\Modules\QualityAssessment\Domain\Repositories\MilestoneEvidenceRepositor
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Infrastructure\Models\MilestoneEvidence as ModelsMilestoneEvidence;
 use App\Shared\Exception\DomainException;
+use Illuminate\Support\Facades\DB;
 
 class MilestoneEvidenceRepository implements MilestoneEvidenceRepositoryInterface
 {
@@ -33,10 +34,24 @@ class MilestoneEvidenceRepository implements MilestoneEvidenceRepositoryInterfac
                                 ->delete();
     }
 
-    public function getPrimaryCriteriaIdByEvidence(string $evidenceId): ?string
+    public function hasMilestoneInCriteria(string $evidenceId, string $criteriaId): bool
     {
-        $evidence = Evidence::with('milestone')->find($evidenceId);
+        // Bước 1: Kiểm tra xem mốc CHÍNH (trong bảng evidences) có thuộc tiêu chí này không
+        $primaryCriteriaId = DB::table('evidences')
+            ->join('milestones', 'evidences.milestone_id', '=', 'milestones.id')
+            ->where('evidences.id', $evidenceId)
+            ->value('milestones.criteria_id'); 
+        if ((string) $primaryCriteriaId === (string) $criteriaId) {
+            return true;
+        }
 
-        return $evidence?->milestone?->criteria_id;
+        // Bước 2: Kiểm tra xem các mốc PHỤ (trong bảng evidence_milestones) có thuộc tiêu chí này không
+        $hasSecondary = DB::table('evidence_milestones')
+            ->join('milestones', 'evidence_milestones.milestone_id', '=', 'milestones.id')
+            ->where('evidence_milestones.evidence_id', $evidenceId)
+            ->where('milestones.criteria_id', $criteriaId)
+            ->exists(); // exists() trả về boolean (true nếu có ít nhất 1 dòng thỏa mãn)
+
+        return $hasSecondary;
     }
 }

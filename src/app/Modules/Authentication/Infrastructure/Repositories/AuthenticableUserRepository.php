@@ -11,11 +11,8 @@ final class AuthenticableUserRepository implements AuthenticableUserRepositoryIn
 {
     public function findByIdentifier(string $identifier): ?AuthenticableUser
     {
-        $modelsUser = ModelsUser::select(['id', 'auth_id', 'password', 'role_id'])
-                    ->where(function ($query) use ($identifier) {
-                        $query->where('auth_id', $identifier)
-                            ->orWhere('email', $identifier);
-                    })
+        $modelsUser = ModelsUser::select(['id', 'email', 'password', 'role_id'])
+                    ->where('email', $identifier)
                     ->first();
         
         return $modelsUser 

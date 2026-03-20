@@ -2,23 +2,23 @@
 
 namespace App\Modules\Authentication\Application\Listeners;
 
-use App\Modules\Authentication\Domain\Events\UserLoginFailed;
+use App\Modules\Authentication\Domain\Events\UserLoggedOut;
 use App\Shared\Logging\LoggerInterface;
 
-final class UserLoginFailedLoggerListener
+final class UserLoggedOutLoggerListener
 {
     public function __construct(private LoggerInterface $logger) {}
 
-    public function handle(UserLoginFailed $event): void 
+    public function handle(UserLoggedOut $event): void 
     {
         try {
             $this->logger->write(
                 'info',
                 'login',
-                "Người dùng {$event->identifier} đã đăng nhập vào hệ thống thất bại",
-                '',
+                "Người dùng {$event->authenticable_user_id} đã đăng xuất khỏi hệ thống",
+                $event->authenticable_user_id,
                 [
-                    'identifier' => $event->identifier
+                    'id' => $event->authenticable_user_id
                 ]
             );
         } catch (\Throwable $e) {

@@ -14,6 +14,19 @@ class AuthSession
         $_SESSION['auth_user'] = $data; 
     }
 
+    public function authUser(): ?SessionAuthUser
+    {
+        if (!isset($_SESSION['auth_user'])) {
+            return null;
+        }
+
+        return new SessionAuthUser(
+            $_SESSION['auth_user']['user_id'],
+            $_SESSION['auth_user']['identifier'],
+            $_SESSION['auth_user']['role_id']
+        );
+    }
+
     public static function getUserId(): string
     {
         return $_SESSION['auth_user']['user_id'];

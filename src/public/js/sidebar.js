@@ -29,11 +29,36 @@ criteriaLinks.forEach(link => {
     });
 });
 
-const activeHref = localStorage.getItem(ACTIVE_KEY);
+// Xác định mục active dựa trên URL hiện tại trước, nếu không thấy thì mới dùng localStorage
+const currentPath = window.location.pathname;
+let activeHref = localStorage.getItem(ACTIVE_KEY);
+
+// Tìm mục trong sidebar khớp với URL hiện tại
+let foundMatch = false;
+sidebarItems.forEach(item => {
+    if (item.getAttribute('href') === currentPath) {
+        activeHref = currentPath;
+        foundMatch = true;
+        localStorage.setItem(ACTIVE_KEY, currentPath);
+    }
+});
+
+if (!foundMatch) {
+    criteriaLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            activeHref = currentPath;
+            foundMatch = true;
+            localStorage.setItem(ACTIVE_KEY, currentPath);
+        }
+    });
+}
+
 if (activeHref) {
     sidebarItems.forEach(item => {
         if (item.getAttribute('href') === activeHref) {
             item.classList.add('active');
+        } else {
+            item.classList.remove('active'); // Đảm bảo bỏ active ở các mục khác nếu có
         }
     });
 
@@ -60,6 +85,8 @@ if (activeHref) {
             if (group) {
                 group.classList.add('open');
             }
+        } else {
+            link.classList.remove('active');
         }
     });
 }

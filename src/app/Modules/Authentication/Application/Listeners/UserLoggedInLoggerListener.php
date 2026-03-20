@@ -15,11 +15,10 @@ final class UserLoggedInLoggerListener
             $this->logger->write(
                 'info',
                 'login',
-                "Người dùng {$event->identifier} đã đăng nhập vào hệ thống thành công",
+                "Người dùng {$event->authenticable_user_id} đã đăng nhập vào hệ thống thành công",
                 $event->authenticable_user_id,
                 [
-                    'id' => $event->authenticable_user_id,
-                    'identifier' => $event->identifier
+                    'user_id' => $event->authenticable_user_id,
                 ]
             );
         } catch (\Throwable $e) {

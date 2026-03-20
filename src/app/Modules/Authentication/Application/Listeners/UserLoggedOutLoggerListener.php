@@ -18,7 +18,7 @@ final class UserLoggedOutLoggerListener
                 "Người dùng {$event->authenticable_user_id} đã đăng xuất khỏi hệ thống",
                 $event->authenticable_user_id,
                 [
-                    'id' => $event->authenticable_user_id
+                    'user_id' => $event->authenticable_user_id
                 ]
             );
         } catch (\Throwable $e) {

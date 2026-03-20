@@ -18,7 +18,7 @@ final class UserLoginFailedLoggerListener
                 "Người dùng {$event->identifier} đã đăng nhập vào hệ thống thất bại",
                 '',
                 [
-                    'identifier' => $event->identifier
+                    'user_id' => $event->identifier
                 ]
             );
         } catch (\Throwable $e) {

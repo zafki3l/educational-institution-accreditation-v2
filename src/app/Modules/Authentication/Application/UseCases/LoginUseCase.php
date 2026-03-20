@@ -40,7 +40,7 @@ final class LoginUseCase
             return null;
         }
 
-        $this->eventDispatcher->dispatch(new UserLoggedIn($identifier, $authUser->getUserId()->value()));
+        $this->eventDispatcher->dispatch(new UserLoggedIn($authUser->getUserId()->value()));
 
         return $authUser;
     }

@@ -1,6 +1,15 @@
+const sidebar = document.querySelector('.sidebar');
 const sidebarItems = document.querySelectorAll('.sidebar-item');
 const criteriaLinks = document.querySelectorAll('.sidebar-criteria-link');
 const ACTIVE_KEY = 'activeSidebar';
+const SCROLL_POS_KEY = 'sidebarScrollPos';
+
+// Lưu vị trí cuộn khi người dùng cuộn sidebar
+if (sidebar) {
+    sidebar.addEventListener('scroll', () => {
+        localStorage.setItem(SCROLL_POS_KEY, sidebar.scrollTop);
+    });
+}
 
 // Đánh dấu menu hiện tại (các link sidebar-item có href)
 sidebarItems.forEach(item => {
@@ -117,4 +126,14 @@ standardToggles.forEach(toggle => {
 
         saveOpenStandards();
     });
+});
+
+// Khôi phục vị trí cuộn sau khi đã mở các menu con
+window.addEventListener('load', () => {
+    if (sidebar) {
+        const savedScrollPos = localStorage.getItem(SCROLL_POS_KEY);
+        if (savedScrollPos) {
+            sidebar.scrollTop = parseInt(savedScrollPos, 10);
+        }
+    }
 });

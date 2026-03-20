@@ -2,12 +2,10 @@
 
 namespace App\Modules\UserManagement\Domain\Events;
 
-use App\Modules\UserManagement\Domain\Entities\User;
-
 final class UserUpdated
 {
     public function __construct(
-        public readonly User $user,
+        public readonly string $user_id,
         public readonly string $actor_id
     ) {}
 }

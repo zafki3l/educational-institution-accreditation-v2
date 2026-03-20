@@ -15,9 +15,9 @@ final class UserDeletedLoggerListener
             $this->logger->write(
                 'info',
                 'update',
-                "Người dùng {$event->actor_id} đã xóa người dùng {$event->user->getUserId()->value()}",
+                "Người dùng {$event->actor_id} đã xóa người dùng {$event->user_id}",
                 $event->actor_id,
-                ['id' => $event->user->getUserId()->value()]
+                ['id' => $event->user_id]
             );
         } catch (\Throwable $e) {
             error_log("MongoDB is down, skipping log: " . $e->getMessage());

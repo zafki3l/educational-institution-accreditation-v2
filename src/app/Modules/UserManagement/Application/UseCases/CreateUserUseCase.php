@@ -43,6 +43,6 @@ final class CreateUserUseCase
 
         $this->userRepository->create($user);
 
-        $this->EventDispatcher->dispatch(new UserCreated($user, $actor_id));
+        $this->EventDispatcher->dispatch(new UserCreated($user->getUserId()->value(), $actor_id));
     }
 }

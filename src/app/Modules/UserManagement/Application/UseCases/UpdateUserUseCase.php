@@ -29,6 +29,6 @@ final class UpdateUserUseCase
 
         $this->repository->save($user);
 
-        $this->eventDispatcher->dispatch(new UserUpdated($user, $actor_id));
+        $this->eventDispatcher->dispatch(new UserUpdated($user->getUserId()->value(), $actor_id));
     }
 }

@@ -19,14 +19,13 @@ final class CreateUserUseCase
     public function __construct(
         private UserRepositoryInterface $userRepository,
         private EmailExistsCheckerInterface $emailExistsChecker,
-        private EventDispatcherInterface $EventDispatcher,
+        private EventDispatcherInterface $EventDispatcher
     ) {}
 
     public function execute(CreateUserRequestInterface $request, string $actor_id): void
     {
         $email = Email::fromString($request->getEmail());
 
-        // Email exists checker
         if ($this->emailExistsChecker->isExists($email)) {
             throw new EmailExistException();
         }
@@ -43,6 +42,9 @@ final class CreateUserUseCase
 
         $this->userRepository->create($user);
 
-        $this->EventDispatcher->dispatch(new UserCreated($user->getUserId()->value(), $actor_id));
+        $this->EventDispatcher->dispatch(new UserCreated(
+            $user->getUserId()->value(), 
+            $actor_id
+        ));
     }
 }

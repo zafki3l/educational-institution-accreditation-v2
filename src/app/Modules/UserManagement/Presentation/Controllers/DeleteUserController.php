@@ -7,11 +7,14 @@ use App\Shared\SessionManager\AuthSession;
 
 final class DeleteUserController extends UserController
 {
-    public function __construct(private DeleteUserUseCase $deleteUserUseCase) {}
+    public function __construct(
+        private DeleteUserUseCase $deleteUserUseCase,
+        private AuthSession $authSession
+    ) {}
 
     public function destroy(string $id)
     {
-        $this->deleteUserUseCase->execute($id, AuthSession::getUserId());
+        $this->deleteUserUseCase->execute($id, $this->authSession->authUser()->user_id);
         
         $this->redirect('/users');
     }

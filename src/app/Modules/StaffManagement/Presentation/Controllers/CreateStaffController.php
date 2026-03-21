@@ -14,7 +14,8 @@ final class CreateStaffController extends StaffController
 {
     public function __construct(
         private CreateUserUseCase $createUserUseCase,
-        private DepartmentReaderInterface $departmentReader
+        private DepartmentReaderInterface $departmentReader,
+        private AuthSession $authSession
     ) {}
 
     public function create(): ViewResponse
@@ -35,7 +36,7 @@ final class CreateStaffController extends StaffController
     public function store(CreateStaffRequest $request): JsonResponse
     {
         try {
-            $this->createUserUseCase->execute($request, AuthSession::getUserId());
+            $this->createUserUseCase->execute($request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([], 200);
         } catch (DomainException $e) {

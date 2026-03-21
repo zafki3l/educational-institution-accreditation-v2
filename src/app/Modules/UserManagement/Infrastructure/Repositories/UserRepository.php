@@ -29,7 +29,7 @@ class UserRepository implements UserRepositoryInterface
         return UserMapper::toDomain(ModelsUser::findOrFail($id));
     }
 
-    public function save(EntitiesUser $entitiesUser): void
+    public function update(EntitiesUser $entitiesUser): void
     {
         $user_id = $entitiesUser->getUserId()->value();
 

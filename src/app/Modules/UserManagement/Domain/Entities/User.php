@@ -10,6 +10,8 @@ use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 
 class User
 {
+    private array $changes = [];
+
     private function __construct(
         private UserId $id,
         private string $first_name,
@@ -46,22 +48,47 @@ class User
         self::isRoleIdEmpty($new_role_id);
 
         if ($this->first_name !== $new_first_name) {
+            $this->changes['first_name'] = [
+                'old' => $this->first_name,
+                'new' => $new_first_name
+            ];
+
             $this->changeFirstName($new_first_name);
         }
 
         if ($this->last_name !== $new_last_name) {
+            $this->changes['last_name'] = [
+                'old' => $this->last_name,
+                'new' => $new_last_name
+            ];
+
             $this->changeLastName($new_last_name);
         }
 
         if (!$this->email->equals($new_email)) {
+            $this->changes['email'] = [
+                'old' => $this->email->value(),
+                'new' => $new_email->value()
+            ];
+
             $this->changeEmail($new_email);
         }
 
         if ($this->role_id !== $new_role_id) {
+            $this->changes['role_id'] = [
+                'old' => $this->role_id,
+                'new' => $new_role_id
+            ];
+
             $this->changeRoleId($new_role_id);
         }
 
         if ($this->department_id !== $new_department_id) {
+            $this->changes['department_id'] = [
+                'old' => $this->department_id,
+                'new' => $new_department_id
+            ];
+
             $this->changeDepartmentId($new_department_id);
         }
     }
@@ -104,6 +131,11 @@ class User
     public function getDepartmentId(): ?string
     {
         return $this->department_id;
+    }
+
+    public function getChanges(): array
+    {
+        return $this->changes;
     }
 
     public function changeFirstName(string $first_name): void

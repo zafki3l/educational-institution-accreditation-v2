@@ -22,8 +22,6 @@ final class RoleCreatedLoggerListener
                 ]
             );
         } catch (\Throwable $e) {
-            error_log("MongoDB is down, skipping log: " . $e->getMessage());
-            return;
         }
     }
 }

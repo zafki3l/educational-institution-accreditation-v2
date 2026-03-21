@@ -14,7 +14,8 @@ final class CreateUserController extends UserController
 {
     public function __construct(
         private RoleReaderInterface $roleReader,
-        private CreateUserUseCase $createUserUseCase
+        private CreateUserUseCase $createUserUseCase,
+        private AuthSession $authSession
     ) {}
 
     public function create(): ViewResponse
@@ -35,7 +36,7 @@ final class CreateUserController extends UserController
     public function store(CreateUserRequest $request): JsonResponse
     {
         try {
-            $this->createUserUseCase->execute($request, AuthSession::getUserId());
+            $this->createUserUseCase->execute($request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([], 200);
         } catch (DomainException $e) {

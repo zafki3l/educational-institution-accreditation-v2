@@ -3,13 +3,13 @@
 namespace App\Modules\Dashboard\Presentation\Controllers;
 
 use App\Modules\Authorization\Application\Readers\RoleReaderInterface;
+use App\Modules\Authorization\Domain\Entities\Role;
 use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
+use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
 use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
-use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
-use App\Shared\Domain\UserRole;
 use App\Shared\Response\ViewResponse;
 
 final class AdminDashboardController extends DashboardController
@@ -25,7 +25,7 @@ final class AdminDashboardController extends DashboardController
     public function dashboard(): ViewResponse
     {
         $total_users = $this->userReader->count();
-        $total_staffs = $this->userReader->countByRoleId(UserRole::ROLE_STAFF);
+        $total_staffs = $this->userReader->countByRoleId(Role::ROLE_STAFF);
         $total_departments = $this->departmentReader->count();
         $total_roles = $this->roleReader->count();
         $total_standards =  $this->standardReader->count();

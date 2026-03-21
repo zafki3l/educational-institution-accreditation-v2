@@ -2,11 +2,11 @@
 
 namespace App\Modules\UserManagement\Infrastructure\Readers;
 
+use App\Modules\Authorization\Domain\Entities\Role;
 use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
 use App\Modules\UserManagement\Application\Responses\UserAllResponse;
 use App\Modules\UserManagement\Application\Responses\UserByIdResponse;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Domain\UserRole;
 use App\Shared\Paginator\PaginatedResult;
 
 class UserReader implements UserReaderInterface
@@ -57,9 +57,9 @@ class UserReader implements UserReaderInterface
         );
     }
 
-    public function allStaffs(?string $keyword, int $role_id = UserRole::ROLE_STAFF): PaginatedResult
+    public function allStaffs(?string $keyword): PaginatedResult
     {
-        return $this->all($keyword, $role_id);
+        return $this->all($keyword, Role::ROLE_STAFF);
     }
 
     public function findById(string $id): UserByIdResponse

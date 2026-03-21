@@ -9,6 +9,7 @@ class Role
 {
     public const ROLE_ADMIN = 3;
     public const ROLE_STAFF = 2;
+    public const ROLE_USER = 1;
     
     private ?int $id;
 

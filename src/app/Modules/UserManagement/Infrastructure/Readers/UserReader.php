@@ -2,17 +2,16 @@
 
 namespace App\Modules\UserManagement\Infrastructure\Readers;
 
-use App\Modules\UserManagement\Application\DTOs\EditUserViewDTO;
-use App\Modules\UserManagement\Infrastructure\Mappers\EditUserViewDTOMapper;
-use App\Modules\UserManagement\Infrastructure\Mappers\IndexUserViewDTOMapper;
+use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
+use App\Modules\UserManagement\Application\Responses\UserAllResponse;
+use App\Modules\UserManagement\Application\Responses\UserByIdResponse;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
-use App\Shared\Application\DTOs\Paginator\PaginatedResultDTO;
 use App\Shared\Domain\UserRole;
+use App\Shared\Paginator\PaginatedResult;
 
 class UserReader implements UserReaderInterface
 {
-    public function all(?string $keyword, ?int $role_id): PaginatedResultDTO
+    public function all(?string $keyword, ?int $role_id): PaginatedResult
     {
         $query = User::query()
             ->with('role:id,name', 'department:id,name')
@@ -39,10 +38,17 @@ class UserReader implements UserReaderInterface
         ]);
 
         $items = $paginator->getCollection()
-            ->map(fn($user) => IndexUserViewDTOMapper::fromModel($user))
+            ->map(fn($user) => new UserAllResponse(
+                $user->id,
+                $user->first_name,
+                $user->last_name,
+                $user->email ?? '[Trống]',
+                $user->role->name,
+                $user->department->name ?? ''
+            ))
             ->toArray();
 
-        return new PaginatedResultDTO(
+        return new PaginatedResult(
             $items,
             $paginator->currentPage(),
             $paginator->perPage(),
@@ -51,12 +57,12 @@ class UserReader implements UserReaderInterface
         );
     }
 
-    public function allStaffs(?string $keyword, int $role_id = UserRole::ROLE_STAFF): PaginatedResultDTO
+    public function allStaffs(?string $keyword, int $role_id = UserRole::ROLE_STAFF): PaginatedResult
     {
         return $this->all($keyword, $role_id);
     }
 
-    public function findById(string $id): EditUserViewDTO
+    public function findById(string $id): UserByIdResponse
     {
         $user = User::query()
             ->select(
@@ -70,7 +76,14 @@ class UserReader implements UserReaderInterface
             ->where('id', $id)
             ->first();
 
-        return EditUserViewDTOMapper::fromModel($user);
+        return new UserByIdResponse(
+            $user->id,
+            $user->first_name,
+            $user->last_name,
+            $user->email ?? '',
+            $user->role_id,
+            $user->department_id ?? ''
+        );
     }
 
     public function count(): int

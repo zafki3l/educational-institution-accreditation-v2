@@ -4,11 +4,11 @@ namespace App\Modules\QualityAssessment\Infrastructure\Readers;
 
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\SearchEvidenceRequest;
-use App\Shared\Application\DTOs\Paginator\PaginatedResultDTO;
+use App\Shared\Paginator\PaginatedResult;
 
 class EvidenceReader
 {
-    public function getSearchResult(SearchEvidenceRequest $request): PaginatedResultDTO
+    public function getSearchResult(SearchEvidenceRequest $request): PaginatedResult
     {
         $keyword = $request->getKeyword();
         $standard_id = $request->getStandardId();
@@ -70,7 +70,7 @@ class EvidenceReader
 
         $items = $paginator->getCollection()->toArray();
 
-        return new PaginatedResultDTO(
+        return new PaginatedResult(
             $items,
             $paginator->currentPage(),
             $paginator->perPage(),

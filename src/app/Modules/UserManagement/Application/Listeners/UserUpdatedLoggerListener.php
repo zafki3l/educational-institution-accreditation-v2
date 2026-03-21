@@ -17,11 +17,12 @@ final class UserUpdatedLoggerListener
                 'update',
                 "Người dùng {$event->actor_id} đã sửa thông tin người dùng {$event->user_id}",
                 $event->actor_id,
-                ['id' => $event->user_id]
+                [
+                    'id' => $event->user_id,
+                    'changes' => $event->changes
+                ]
             );
         } catch (\Throwable $e) {
-            error_log("MongoDB is down, skipping log: " . $e->getMessage());
-            return;
         }
     }
 }

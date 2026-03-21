@@ -27,8 +27,12 @@ final class UpdateUserUseCase
             $request->getDepartmentId() == '' ? null : $request->getDepartmentId()
         );
 
-        $this->repository->save($user);
+        $this->repository->update($user);
 
-        $this->eventDispatcher->dispatch(new UserUpdated($user->getUserId()->value(), $actor_id));
+        $this->eventDispatcher->dispatch(new UserUpdated(
+            $user->getUserId()->value(), 
+            $user->getChanges(),
+            $actor_id
+        ));
     }
 }

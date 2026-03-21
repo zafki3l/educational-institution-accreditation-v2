@@ -3,8 +3,8 @@
 namespace App\Modules\StaffManagement\Presentation\Controllers;
 
 use App\Modules\StaffManagement\Presentation\Requests\UpdateStaffRequest;
+use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
 use App\Modules\UserManagement\Application\UseCases\UpdateUserUseCase;
-use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
 use App\Shared\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
@@ -13,7 +13,8 @@ final class UpdateStaffController extends StaffController
 {
     public function __construct(
         private UserReaderInterface $userReader,
-        private UpdateUserUseCase $updateUserUseCase
+        private UpdateUserUseCase $updateUserUseCase,
+        private AuthSession $authSession
     ) {}
 
     public function edit(string $id): JsonResponse
@@ -32,7 +33,7 @@ final class UpdateStaffController extends StaffController
     public function update(UpdateStaffRequest $request): JsonResponse
     {
         try {
-            $this->updateUserUseCase->execute($request, AuthSession::getUserId());
+            $this->updateUserUseCase->execute($request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([]);
         } catch (DomainException $e) {

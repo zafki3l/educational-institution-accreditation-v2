@@ -2,9 +2,10 @@
 
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
+use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
 use App\Modules\UserManagement\Application\UseCases\UpdateUserUseCase;
 use App\Modules\UserManagement\Presentation\Requests\UpdateUserRequest;
-use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
+use App\Modules\UserManagement\Presentation\ViewModel\EditUserViewModel;
 use App\Shared\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
@@ -13,27 +14,30 @@ final class UpdateUserController extends UserController
 {
     public function __construct(
         private UserReaderInterface $userReader,
-        private UpdateUserUseCase $updateUserUseCase
+        private UpdateUserUseCase $updateUserUseCase,
+        private AuthSession $authSession
     ) {}
 
     public function edit(string $id): JsonResponse
     {
         $user = $this->userReader->findById($id);
 
-        return new JsonResponse([
-            'id' => $user->id,
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
-            'email' => $user->email ?? '',
-            'role_id' => $user->role_id,
-            'department_id' => $user->department_id ?? ''
-        ]);
+        $editUserViewModel = new EditUserViewModel(
+            $user->id,
+            $user->first_name,
+            $user->last_name,
+            $user->email,
+            $user->role_id,
+            $user->department_id ?? null
+        );
+
+        return new JsonResponse($editUserViewModel->toArray());
     }
 
     public function update(UpdateUserRequest $request)
     {
         try {
-            $this->updateUserUseCase->execute($request, AuthSession::getUserId());
+            $this->updateUserUseCase->execute($request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([]);
         } catch (DomainException $e) {

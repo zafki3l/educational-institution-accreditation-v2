@@ -17,11 +17,11 @@ final class UserDeletedLoggerListener
                 'update',
                 "Người dùng {$event->actor_id} đã xóa người dùng {$event->user_id}",
                 $event->actor_id,
-                ['id' => $event->user_id]
+                [
+                    'user_id' => $event->user_id,
+                ]
             );
         } catch (\Throwable $e) {
-            error_log("MongoDB is down, skipping log: " . $e->getMessage());
-            return;
         }
     }
 }

@@ -6,9 +6,9 @@ use App\Modules\Authorization\Application\Readers\RoleReaderInterface;
 use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
+use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
 use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
-use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
 use App\Shared\Domain\UserRole;
 use App\Shared\Response\ViewResponse;
 

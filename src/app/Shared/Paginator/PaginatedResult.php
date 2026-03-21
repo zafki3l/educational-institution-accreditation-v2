@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shared\Application\DTOs\Paginator;
+namespace App\Shared\Paginator;
 
-class PaginatedResultDTO
+class PaginatedResult
 {
     public function __construct(
         public array $items,

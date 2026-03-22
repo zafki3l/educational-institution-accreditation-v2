@@ -26,11 +26,11 @@ class StaffDashboardController extends DashboardController
         $user_id = $_SESSION['auth_user']['user_id'] ?? null;
         $user = $user_id ? User::with('department')->find($user_id) : null;
 
-        $department = Department::with('standards.criteria')->findOrFail($user->department->id);
+        $department = (isStaff()) 
+            ? Department::with('standards.criteria')->findOrFail($user->department->id)
+            : '';
 
-        $first_criteria = (isAdmin()) 
-            ? '1.1' 
-            : $department->standards->first()?->criteria->first();
+        $first_criteria = (isStaff()) ? $department->standards->first()?->criteria->first() : '';
 
         return new ViewResponse(
             self::MODULE_NAME,
@@ -43,7 +43,7 @@ class StaffDashboardController extends DashboardController
                 'total_milestones' => $total_milestones,
                 'total_evidences' => $total_evidences,
                 'user' => $user,
-                'first_criteria_id' => $first_criteria->id
+                'first_criteria_id' => isAdmin() ? '1.1' : $first_criteria->id
             ]
         );
     }

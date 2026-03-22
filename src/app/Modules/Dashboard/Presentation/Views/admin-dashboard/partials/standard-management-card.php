@@ -9,28 +9,28 @@
             <a href="/standards">
                 <div class="item">
                     <h4>Quản lý tiêu chuẩn đánh giá</h4>
-                    <span><?= htmlspecialchars($total_standards) ?> tiêu chuẩn</span>
+                    <span><?= htmlspecialchars($overview->standardManagement->total_standards) ?> tiêu chuẩn</span>
                 </div>
             </a>
 
             <a href="/criterias">
                 <div class="item">
                     <h4>Quản lý tiêu chí đánh giá</h4>
-                    <span><?= htmlspecialchars($total_criterias) ?> tiêu chí</span>
+                    <span><?= htmlspecialchars($overview->standardManagement->total_criterias) ?> tiêu chí</span>
                 </div>
             </a>
     
             <a href="/criterias">
                 <div class="item">
                     <h4>Quản lý mốc đánh giá</h4>
-                    <span><?= htmlspecialchars($total_milestones) ?> Mốc đánh giá</span>
+                    <span><?= htmlspecialchars($overview->standardManagement->total_milestones) ?> Mốc đánh giá</span>
                 </div>
             </a>
             
             <a href="/criterias/1.1/evidences">
                 <div class="item">
                     <h4>Quản lý minh chứng</h4>
-                    <span><?= htmlspecialchars($total_evidences) ?> Minh chứng</span>
+                    <span><?= htmlspecialchars($overview->standardManagement->total_evidences) ?> Minh chứng</span>
                 </div>
             </a>
         </div>

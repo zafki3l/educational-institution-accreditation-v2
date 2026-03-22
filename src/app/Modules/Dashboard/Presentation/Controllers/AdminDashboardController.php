@@ -2,36 +2,20 @@
 
 namespace App\Modules\Dashboard\Presentation\Controllers;
 
-use App\Modules\Authorization\Application\Readers\RoleReaderInterface;
-use App\Modules\Authorization\Domain\Entities\Role;
-use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
-use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
-use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
-use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
-use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
-use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
+use App\Modules\Dashboard\Application\Readers\AdminDashboardReaderInterface;
+use App\Modules\Dashboard\Presentation\ViewModels\AdminDashboardOverviewViewModel;
 use App\Shared\Response\ViewResponse;
 
 final class AdminDashboardController extends DashboardController
 {
-    public function __construct(
-        private UserReaderInterface $userReader,
-        private DepartmentReaderInterface $departmentReader,
-        private RoleReaderInterface $roleReader,
-        private StandardReaderInterface $standardReader,
-        private CriteriaReaderInterface $criteriaReader,
-    ) {}
+    public function __construct(private AdminDashboardReaderInterface $adminDashboardReader) {}
 
     public function dashboard(): ViewResponse
     {
-        $total_users = $this->userReader->count();
-        $total_staffs = $this->userReader->countByRoleId(Role::ROLE_STAFF);
-        $total_departments = $this->departmentReader->count();
-        $total_roles = $this->roleReader->count();
-        $total_standards =  $this->standardReader->count();
-        $total_criterias = $this->criteriaReader->count();
-        $total_milestones = Milestone::count();
-        $total_evidences = Evidence::count();
+        $overview = new AdminDashboardOverviewViewModel(
+            $this->adminDashboardReader->getOverviewUserManagementStats(),
+            $this->adminDashboardReader->getOverviewStandardManagementStats()
+        );
         
         return new ViewResponse(
             self::MODULE_NAME,
@@ -39,14 +23,7 @@ final class AdminDashboardController extends DashboardController
             'main.layouts',
             [
                 'title' => 'Trang điều khiển Admin | ' . SYSTEM_NAME,
-                'total_users' => $total_users,
-                'total_staffs' => $total_staffs,
-                'total_departments' => $total_departments,
-                'total_roles' => $total_roles,
-                'total_standards' => $total_standards,
-                'total_criterias' => $total_criterias,
-                'total_milestones' => $total_milestones,
-                'total_evidences' => $total_evidences
+                'overview' => $overview
             ]
         );
     }

@@ -2,6 +2,7 @@
 
 namespace App\Modules\QualityAssessment\Infrastructure\ServiceProvider;
 
+use App\Modules\QualityAssessment\Application\Readers\CriteriaReaderInterface;
 use App\Modules\QualityAssessment\Application\Requests\Criteria\CreateCriteriaRequestInterface;
 use App\Modules\QualityAssessment\Application\Requests\Criteria\UpdateCriteriaRequestInterface;
 use App\Modules\QualityAssessment\Domain\Repositories\CriteriaRepositoryInterface;
@@ -11,7 +12,6 @@ use App\Modules\QualityAssessment\Infrastructure\Repositories\CriteriaRepository
 use App\Modules\QualityAssessment\Infrastructure\Services\CriteriaIdExistsChecker;
 use App\Modules\QualityAssessment\Presentation\Requests\Criteria\CreateCriteriaRequest;
 use App\Modules\QualityAssessment\Presentation\Requests\Criteria\UpdateCriteriaRequest;
-use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
 use Core\ServiceProvider;
 use Illuminate\Container\Container;
 

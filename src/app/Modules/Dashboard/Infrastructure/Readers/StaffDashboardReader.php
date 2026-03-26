@@ -7,11 +7,11 @@ use App\Modules\Dashboard\Application\Responses\FirstCriteriaIdResponse;
 use App\Modules\Dashboard\Application\Responses\StaffInfoResponse;
 use App\Modules\Dashboard\Application\Responses\StandardManagementStatsResponse;
 use App\Modules\DepartmentManagement\Infrastructure\Models\Department;
+use App\Modules\QualityAssessment\Application\Readers\CriteriaReaderInterface;
 use App\Modules\QualityAssessment\Application\Readers\EvidenceReaderInterface;
 use App\Modules\QualityAssessment\Application\Readers\MilestoneReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
-use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 
 class StaffDashboardReader implements StaffDashboardReaderInterface
 {

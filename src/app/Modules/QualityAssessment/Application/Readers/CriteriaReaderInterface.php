@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Application\Contracts\CriteriaReader;
+namespace App\Modules\QualityAssessment\Application\Readers;
 
 interface CriteriaReaderInterface
 {

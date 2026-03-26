@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Application\Contracts\StandardReader;
+namespace App\Modules\QualityAssessment\Application\Readers;
 
 use Illuminate\Database\Eloquent\Collection;
 

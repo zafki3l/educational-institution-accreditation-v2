@@ -8,11 +8,11 @@ use App\Modules\Dashboard\Application\Readers\AdminDashboardReaderInterface;
 use App\Modules\Dashboard\Application\Responses\StandardManagementStatsResponse;
 use App\Modules\Dashboard\Application\Responses\UserManagementStatsResponse;
 use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\CriteriaReaderInterface;
 use App\Modules\QualityAssessment\Application\Readers\EvidenceReaderInterface;
 use App\Modules\QualityAssessment\Application\Readers\MilestoneReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
-use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
-use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 
 class AdminDashboardReader implements AdminDashboardReaderInterface
 {

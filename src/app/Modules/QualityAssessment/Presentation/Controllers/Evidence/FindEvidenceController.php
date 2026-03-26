@@ -2,19 +2,19 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Controllers\Evidence;
 
+use App\Modules\QualityAssessment\Application\Readers\EvidenceReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
-use App\Modules\QualityAssessment\Infrastructure\Readers\EvidenceReader;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\SearchEvidenceRequest;
-use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;
 
 final class FindEvidenceController extends QualityAssessmentController
 {
     public function __construct(
-        private EvidenceReader $evidenceReader,
+        private EvidenceReaderInterface $evidenceReader,
         private StandardReaderInterface $standardReader
     ) {}
 

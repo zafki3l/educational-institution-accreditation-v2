@@ -2,8 +2,8 @@
 
 namespace App\Modules\QualityAssessment\Infrastructure\Readers;
 
+use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
-use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 class StandardReader implements StandardReaderInterface

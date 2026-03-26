@@ -8,11 +8,11 @@ use App\Modules\Dashboard\Application\Readers\AdminDashboardReaderInterface;
 use App\Modules\Dashboard\Application\Responses\StandardManagementStatsResponse;
 use App\Modules\Dashboard\Application\Responses\UserManagementStatsResponse;
 use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
-use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
-use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
+use App\Modules\QualityAssessment\Application\Readers\CriteriaReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\EvidenceReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\MilestoneReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
-use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
-use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 
 class AdminDashboardReader implements AdminDashboardReaderInterface
 {
@@ -22,6 +22,8 @@ class AdminDashboardReader implements AdminDashboardReaderInterface
         private RoleReaderInterface $roleReader,
         private StandardReaderInterface $standardReader,
         private CriteriaReaderInterface $criteriaReader,
+        private MilestoneReaderInterface $milestoneReader,
+        private EvidenceReaderInterface $evidenceReader
     ) {}
 
     public function getOverviewUserManagementStats(): UserManagementStatsResponse
@@ -39,8 +41,8 @@ class AdminDashboardReader implements AdminDashboardReaderInterface
         return new StandardManagementStatsResponse(
             $this->standardReader->count(),
             $this->criteriaReader->count(),
-            Milestone::count(),
-            Evidence::count()
+            $this->milestoneReader->count(),
+            $this->evidenceReader->count()
         );
     }
 }

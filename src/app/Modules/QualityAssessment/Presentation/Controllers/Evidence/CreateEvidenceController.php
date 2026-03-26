@@ -2,14 +2,13 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Controllers\Evidence;
 
+use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\QualityAssessment\Application\UseCases\Evidence\CreateEvidenceUseCase;
 use App\Modules\QualityAssessment\Infrastructure\Models\Criteria;
-use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
 use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\CreateEvidenceRequest;
-use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use App\Shared\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;

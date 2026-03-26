@@ -20,7 +20,7 @@ class StaffDashboardController extends DashboardController
         $first_criteria = $this->staffDashboardReader->getFirstCriteriaId($staff->department_id);
 
         $overview = new StaffDashboardOverviewViewModel(
-            $this->staffDashboardReader->getOverviewStandardManagementStats(),
+            $this->staffDashboardReader->getOverviewStandardManagementStats($staff->department_id),
             $staff,
             $first_criteria->first_criteria_id
         );

@@ -7,17 +7,19 @@ use App\Modules\Dashboard\Application\Responses\FirstCriteriaIdResponse;
 use App\Modules\Dashboard\Application\Responses\StaffInfoResponse;
 use App\Modules\Dashboard\Application\Responses\StandardManagementStatsResponse;
 use App\Modules\DepartmentManagement\Infrastructure\Models\Department;
-use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
-use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
+use App\Modules\QualityAssessment\Application\Readers\CriteriaReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\EvidenceReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\MilestoneReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
-use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 
 class StaffDashboardReader implements StaffDashboardReaderInterface
 {
     public function __construct(
         private StandardReaderInterface $standardReader,
         private CriteriaReaderInterface $criteriaReader,
+        private MilestoneReaderInterface $milestoneReader,
+        private EvidenceReaderInterface $evidenceReader
     ) {}
 
     public function getStaffInfo(string $staff_id): ?StaffInfoResponse
@@ -38,13 +40,13 @@ class StaffDashboardReader implements StaffDashboardReaderInterface
         );
     }
 
-    public function getOverviewStandardManagementStats(): StandardManagementStatsResponse
+    public function getOverviewStandardManagementStats(string $department_id): StandardManagementStatsResponse
     {
         return new StandardManagementStatsResponse(
             $this->standardReader->count(),
             $this->criteriaReader->count(),
-            Milestone::count(),
-            Evidence::count()
+            $this->milestoneReader->count(),
+            $this->evidenceReader->countByDepartment($department_id)
         );
     }
 

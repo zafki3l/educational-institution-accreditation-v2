@@ -10,7 +10,7 @@ interface StaffDashboardReaderInterface
 {
     public function getStaffInfo(string $staff_id): ?StaffInfoResponse;
 
-    public function getOverviewStandardManagementStats(): StandardManagementStatsResponse;
+    public function getOverviewStandardManagementStats(string $department_id): StandardManagementStatsResponse;
 
     public function getFirstCriteriaId(string $staff_id): FirstCriteriaIdResponse;
 }

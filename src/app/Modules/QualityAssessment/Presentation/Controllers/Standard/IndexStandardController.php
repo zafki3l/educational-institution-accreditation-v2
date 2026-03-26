@@ -3,8 +3,8 @@
 namespace App\Modules\QualityAssessment\Presentation\Controllers\Standard;
 
 use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
+use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use App\Shared\Response\ViewResponse;
 
 final class IndexStandardController extends QualityAssessmentController

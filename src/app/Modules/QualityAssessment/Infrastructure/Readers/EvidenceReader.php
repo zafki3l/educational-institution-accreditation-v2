@@ -2,11 +2,12 @@
 
 namespace App\Modules\QualityAssessment\Infrastructure\Readers;
 
+use App\Modules\QualityAssessment\Application\Readers\EvidenceReaderInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\SearchEvidenceRequest;
 use App\Shared\Paginator\PaginatedResult;
 
-class EvidenceReader
+class EvidenceReader implements EvidenceReaderInterface
 {
     public function getSearchResult(SearchEvidenceRequest $request): PaginatedResult
     {
@@ -77,5 +78,19 @@ class EvidenceReader
             $paginator->total(),
             $paginator->lastPage()
         );
+    }
+
+    public function count(): int
+    {
+        return Evidence::count();
+    }
+
+    public function countByDepartment(string $department_id): int
+    {
+        $count = Evidence::whereHas('milestone.criteria.standard.department', function ($query) use ($department_id) {
+                $query->where('id', $department_id);
+            })->count();
+
+        return $count;
     }
 }

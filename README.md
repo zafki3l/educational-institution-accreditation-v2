@@ -1,4 +1,4 @@
-![Homepage](docs/images/homepage.png)
+![Homepage](docs/UI/homepage.png)
 
 
 1. Clone repository

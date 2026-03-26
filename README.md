@@ -1,3 +1,6 @@
+![Homepage](docs/images/homepage.png)
+
+
 1. Clone repository
 
 ```bash
@@ -22,8 +25,8 @@ MYSQL_PORT=3306 # Your port
 MONGO_PORT=27017 # Default MongoDB port
 MONGO_COLLECTION='logs' # Your mongo collection
 MONGO_DATABASE='app_logs' # Your mongo database
-DOCKER_GID=1000 # Run `id -g` to get your group id
-DOCKER_UID=1000 # Run `id -u` to get your user id
+DOCKER_GID=YOUR_GID # Run `id -g` to get your group id
+DOCKER_UID=YOUR_UID # Run `id -u` to get your user id
 ```
 
 4. Docker compose up
@@ -31,24 +34,15 @@ DOCKER_UID=1000 # Run `id -u` to get your user id
 docker compose up -d --build
 ```
 
-5. Enter application container
+
+5. Run 'composer install' to install dependencies
 ```bash
-docker compose exec app sh
-```
-You should see:
-```bash
-/var/www/html $
+docker compose exec app composer install
 ```
 
-
-6. Run 'composer install' to install dependencies
+6. Run 'composer migrate' to create database
 ```bash
-composer install
-```
-
-7. Run 'composer migrate' to create database
-```bash
-composer migrate
+docker compose exec app composer migrate
 ```
 
 After setup, open your browser:

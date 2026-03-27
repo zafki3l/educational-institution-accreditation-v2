@@ -22,11 +22,11 @@
         <!-- Table -->
         <div class="modal-body">
             
+            <?php if (isAdmin()): ?>
             <div class="add-milestone-bar">
                 <form id="addMilestoneForm" action="/milestones" method="post">
                     <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
                     <input type="hidden" name="criteria_id" id="criteriaIdInput">
-                    <?php if (isAdmin()): ?>
                         <input
                             type="text"
                             id="newMilestoneOrder"
@@ -45,9 +45,9 @@
                             <span class="material-icons-round">add</span>
                             Thêm mốc đánh giá
                         </button>
-                    <?php endif; ?>
                 </form>
             </div>
+            <?php endif; ?>
 
             <div class="error" id="formMilestonesErrors"></div>
             

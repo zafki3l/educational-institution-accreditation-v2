@@ -33,7 +33,10 @@ document.addEventListener('click', async (e) => {
     e.preventDefault();
     
     currentCriteriaId = btn.dataset.id;
-    document.getElementById('criteriaIdInput').value = currentCriteriaId;
+    const criteriaIdInput = document.getElementById('criteriaIdInput');
+    if (criteriaIdInput) {
+        criteriaIdInput.value = currentCriteriaId;
+    }
 
     document.getElementById('milestonesModalDesc').textContent =
         btn.dataset.desc || 'Chưa có mô tả';
@@ -130,7 +133,7 @@ function openMilestonesModal() {
 function closeMilestonesModal() {
     modal.classList.remove('show');
     clearMilestonesErrors();
-    form.reset();
+    if (form) form.reset();
 }
 
 document.getElementById('closeMilestonesModal')?.addEventListener('click', closeMilestonesModal);
@@ -140,40 +143,42 @@ modal.querySelector('.modal-overlay')?.addEventListener('click', closeMilestones
 /* =====================
    SUBMIT FORM
 ===================== */
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+if (form) {
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    const res = await fetch('/milestones', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json'
-        },
-        body: new FormData(form)
+        const res = await fetch('/milestones', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json'
+            },
+            body: new FormData(form)
+        });
+
+        if (!res.ok) {
+            const data = await res.json();
+            renderMilestonesErrors(data.errors ?? []);
+            return;
+        }
+
+        const milestone = await res.json();
+        appendMilestoneRow(milestone);
+
+        clearMilestonesErrors();
+        
+        orderInput.value = '';
+        nameInput.value = '';
+        orderInput.focus();
     });
 
-    if (!res.ok) {
-        const data = await res.json();
-        renderMilestonesErrors(data.errors ?? []);
-        return;
-    }
-
-    const milestone = await res.json();
-    appendMilestoneRow(milestone);
-
-    clearMilestonesErrors();
-    
-    orderInput.value = '';
-    nameInput.value = '';
-    orderInput.focus();
-});
-
-/* =====================
-   INPUT STATE
-===================== */
-form.addEventListener('input', () => {
-    addMilestoneBtn.disabled =
-        !orderInput.value.trim() || !nameInput.value.trim();
-});
+    /* =====================
+       INPUT STATE
+    ===================== */
+    form.addEventListener('input', () => {
+        addMilestoneBtn.disabled =
+            !orderInput.value.trim() || !nameInput.value.trim();
+    });
+}
 
 /* =====================
    HELPERS

@@ -52,7 +52,7 @@ if (!empty($evidence->issued_date)) {
             <div class="container">
 
                 <div class="page-header">
-                    <h2>Thêm minh chứng</h2>
+                    <h2>Cập nhật minh chứng</h2>
                 </div>
 
                 <div class="card">
@@ -183,7 +183,7 @@ if (!empty($evidence->issued_date)) {
 
                             <button type="submit" class="btn-primary">
                                 <span class="material-icons-round">save</span>
-                                Tạo minh chứng
+                                Cập nhật minh chứng
                             </button>
                         </div>
 

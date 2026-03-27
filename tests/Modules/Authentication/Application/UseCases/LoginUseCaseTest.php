@@ -92,7 +92,7 @@ final class LoginUseCaseTest extends TestCase
         );
 
         return [
-            'Email not found'    => [self::NON_EXISTENT_EMAIL, self::VALID_PASS, null],
+            'Email not found' => [self::NON_EXISTENT_EMAIL, self::VALID_PASS, null],
             'Password incorrect' => [self::VALID_EMAIL, self::WRONG_PASS, $user],
         ];
     }

@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Milestone;
 
 use App\Modules\QualityAssessment\Infrastructure\Models\Criteria;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\Response\JsonResponse;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class IndexMilestoneController extends QualityAssessmentController
 {

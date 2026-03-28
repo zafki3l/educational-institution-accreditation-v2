@@ -6,8 +6,8 @@ use App\Modules\DepartmentManagement\Application\UseCases\CreateDepartmentUseCas
 use App\Modules\DepartmentManagement\Presentation\Controllers\DepartmentController;
 use App\Modules\DepartmentManagement\Presentation\Requests\CreateDepartmentRequest;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class CreateDepartmentController extends DepartmentController
 {

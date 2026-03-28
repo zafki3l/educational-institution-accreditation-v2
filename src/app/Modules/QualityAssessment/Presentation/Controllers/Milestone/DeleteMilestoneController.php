@@ -4,8 +4,8 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Milestone;
 
 use App\Modules\QualityAssessment\Application\UseCases\Milestone\DeleteMilestoneUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class DeleteMilestoneController extends QualityAssessmentController
 {

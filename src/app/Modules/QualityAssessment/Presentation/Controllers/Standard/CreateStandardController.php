@@ -6,8 +6,8 @@ use App\Modules\QualityAssessment\Application\UseCases\Standard\CreateStandardUs
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Standard\CreateStandardRequest;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class CreateStandardController extends QualityAssessmentController
 {

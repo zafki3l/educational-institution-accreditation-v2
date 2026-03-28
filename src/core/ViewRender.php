@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 class ViewRender
 {

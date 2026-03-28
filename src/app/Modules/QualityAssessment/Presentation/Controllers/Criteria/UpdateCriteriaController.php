@@ -7,8 +7,8 @@ use App\Modules\QualityAssessment\Infrastructure\Models\Criteria;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Criteria\UpdateCriteriaRequest;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class UpdateCriteriaController extends QualityAssessmentController
 {

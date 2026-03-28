@@ -5,7 +5,7 @@ namespace App\Modules\DepartmentManagement\Presentation\Controllers;
 use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
 use App\Modules\DepartmentManagement\Application\Responses\DepartmentReaderResponse;
 use App\Modules\DepartmentManagement\Presentation\ViewModels\IndexDepartmentViewModel;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class IndexDepartmentController extends DepartmentController
 {

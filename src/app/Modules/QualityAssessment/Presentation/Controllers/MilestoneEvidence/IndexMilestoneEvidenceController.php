@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\MilestoneEviden
 
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\Response\JsonResponse;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class IndexMilestoneEvidenceController extends QualityAssessmentController
 {

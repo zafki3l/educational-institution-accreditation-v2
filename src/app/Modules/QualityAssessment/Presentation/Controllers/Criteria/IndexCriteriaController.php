@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Criteria;
 
 use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class IndexCriteriaController extends QualityAssessmentController
 {

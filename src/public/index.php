@@ -1,7 +1,7 @@
 <?php
 
-use App\Shared\Response\JsonResponse;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\JsonResponse;
+use App\Shared\Web\Responses\ViewResponse;
 use Core\Router;
 use Core\ViewRender;
 

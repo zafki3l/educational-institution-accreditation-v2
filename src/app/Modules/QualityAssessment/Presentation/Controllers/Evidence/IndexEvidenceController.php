@@ -8,7 +8,7 @@ use App\Modules\QualityAssessment\Infrastructure\Models\Criteria;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class IndexEvidenceController extends QualityAssessmentController
 {

@@ -10,9 +10,9 @@ use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\CreateEvidenceRequest;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
-use App\Shared\Response\ViewResponse;
 use App\Shared\SessionManager\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class CreateEvidenceController extends QualityAssessmentController
 {

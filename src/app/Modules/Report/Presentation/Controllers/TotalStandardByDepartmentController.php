@@ -5,7 +5,7 @@ namespace App\Modules\Report\Presentation\Controllers;
 use App\Modules\DepartmentManagement\Infrastructure\Models\Department;
 use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Response\JsonResponse;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class TotalStandardByDepartmentController extends ReportController
 {

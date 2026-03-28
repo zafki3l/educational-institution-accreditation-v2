@@ -8,8 +8,8 @@ use App\Modules\UserManagement\Presentation\Controllers\UserController;
 use App\Modules\UserManagement\Presentation\Requests\UpdateUserRequest;
 use App\Modules\UserManagement\Presentation\ViewModel\EditUserViewModel;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class UpdateUserController extends UserController
 {

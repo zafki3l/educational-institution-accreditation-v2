@@ -4,13 +4,13 @@ namespace App\Modules\Dashboard\Presentation\Controllers;
 
 use App\Modules\Dashboard\Application\Readers\AdminDashboardReaderInterface;
 use App\Modules\Dashboard\Presentation\ViewModels\AdminDashboardOverviewViewModel;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class AdminDashboardController extends DashboardController
 {
     public function __construct(private AdminDashboardReaderInterface $adminDashboardReader) {}
 
-    public function dashboard(): ViewResponse   
+    public function dashboard(): ViewResponse  
     {
         $overview = new AdminDashboardOverviewViewModel(
             $this->adminDashboardReader->getOverviewUserManagementStats(),

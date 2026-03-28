@@ -3,7 +3,7 @@
 namespace App\Modules\Report\Presentation\Controllers;
 
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
-use App\Shared\Response\JsonResponse;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class EvidenceWithoutFileController extends ReportController
 {

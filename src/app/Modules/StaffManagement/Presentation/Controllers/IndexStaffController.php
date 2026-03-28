@@ -4,7 +4,7 @@ namespace App\Modules\StaffManagement\Presentation\Controllers;
 
 use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
 use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class IndexStaffController extends StaffController
 {

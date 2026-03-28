@@ -5,7 +5,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Evidence;
 use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class ShowEvidenceController extends QualityAssessmentController
 {

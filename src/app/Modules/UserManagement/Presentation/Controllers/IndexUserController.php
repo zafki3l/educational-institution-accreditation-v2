@@ -7,7 +7,7 @@ use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterfa
 use App\Modules\UserManagement\Infrastructure\Readers\UserReader;
 use App\Modules\UserManagement\Presentation\Requests\IndexUserRequest;
 use App\Modules\UserManagement\Presentation\ViewModel\IndexUserViewModel;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class IndexUserController extends UserController
 {

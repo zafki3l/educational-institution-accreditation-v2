@@ -8,8 +8,8 @@ use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\SearchEvidenceRequest;
-use App\Shared\Response\JsonResponse;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\JsonResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class FindEvidenceController extends QualityAssessmentController
 {

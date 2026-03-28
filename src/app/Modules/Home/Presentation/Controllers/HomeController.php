@@ -2,8 +2,8 @@
 
 namespace App\Modules\Home\Presentation\Controllers;
 
-use App\Shared\Response\ViewResponse;
 use App\Shared\Web\Http\HttpResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 class HomeController
 {

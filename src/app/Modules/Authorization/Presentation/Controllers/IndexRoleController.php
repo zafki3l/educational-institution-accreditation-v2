@@ -5,7 +5,7 @@ namespace App\Modules\Authorization\Presentation\Controllers;
 use App\Modules\Authorization\Application\Readers\RoleReaderInterface;
 use App\Modules\Authorization\Application\Responses\RoleReaderResponse;
 use App\Modules\Authorization\Presentation\ViewModels\IndexRoleViewModel;
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class IndexRoleController extends AuthorizationController
 {

@@ -5,7 +5,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Standard;
 use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Standard\UpdateStandardRequest;
-use App\Shared\Response\JsonResponse;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class UpdateStandardController extends QualityAssessmentController
 {

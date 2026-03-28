@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Response;
+namespace App\Shared\Web\Responses;
 
 use Core\Response;
 

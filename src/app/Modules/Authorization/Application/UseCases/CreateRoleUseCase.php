@@ -6,7 +6,7 @@ use App\Modules\Authorization\Application\Requests\CreateRoleRequestInterface;
 use App\Modules\Authorization\Domain\Entities\Role;
 use App\Modules\Authorization\Domain\Events\RoleCreated;
 use App\Modules\Authorization\Domain\Repositories\RoleRepositoryInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class CreateRoleUseCase
 {

@@ -8,7 +8,7 @@ use App\Modules\UserProfile\Domain\Events\UserProfileUpdated;
 use App\Modules\UserProfile\Domain\Exceptions\EmailExistException;
 use App\Modules\UserProfile\Domain\Repositories\UserProfileRepositoryInterface;
 use App\Modules\UserProfile\Domain\Services\EmailExistsCheckerInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class UpdateUserProfileUseCase
 {

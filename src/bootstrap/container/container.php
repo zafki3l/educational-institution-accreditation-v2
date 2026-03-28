@@ -1,6 +1,6 @@
 <?php
 
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 use App\Shared\Infrastructure\EventDispatcher;
 use App\Shared\Infrastructure\MySQLDatabase;
 use App\Shared\Logging\LoggerInterface;

@@ -6,7 +6,7 @@ use App\Modules\DepartmentManagement\Application\Requests\CreateDepartmentReques
 use App\Modules\DepartmentManagement\Domain\Entities\Department;
 use App\Modules\DepartmentManagement\Domain\Events\DepartmentCreated;
 use App\Modules\DepartmentManagement\Domain\Repositories\DepartmentRepositoryInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class CreateDepartmentUseCase 
 {

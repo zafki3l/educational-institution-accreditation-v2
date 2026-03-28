@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Events;
+namespace App\Shared\Contracts\Events;
 
 interface EventDispatcherInterface {
     public function dispatch(object $event): void;

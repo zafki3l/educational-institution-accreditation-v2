@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure;
 
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 class EventDispatcher implements EventDispatcherInterface {
     private array $listeners = [];

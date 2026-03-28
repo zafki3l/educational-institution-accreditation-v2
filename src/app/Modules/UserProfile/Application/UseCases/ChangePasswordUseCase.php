@@ -8,7 +8,7 @@ use App\Modules\UserProfile\Domain\Events\PasswordChanged;
 use App\Modules\UserProfile\Domain\Exceptions\NewPasswordNotMatchingException;
 use App\Modules\UserProfile\Domain\Repositories\UserProfileRepositoryInterface;
 use App\Modules\UserProfile\Domain\Services\VerifyCurrentPasswordInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class ChangePasswordUseCase
 {

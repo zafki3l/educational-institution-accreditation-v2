@@ -5,7 +5,7 @@ namespace App\Modules\Authorization\Application\UseCases;
 use App\Modules\Authorization\Application\Requests\UpdateRoleRequestInterface;
 use App\Modules\Authorization\Domain\Events\RoleUpdated;
 use App\Modules\Authorization\Domain\Repositories\RoleRepositoryInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class UpdateRoleUseCase
 {

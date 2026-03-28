@@ -8,7 +8,7 @@ use App\Modules\Authentication\Domain\Entities\AuthenticableUser;
 use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

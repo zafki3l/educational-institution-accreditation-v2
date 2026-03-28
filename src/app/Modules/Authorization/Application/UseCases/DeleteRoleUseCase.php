@@ -4,7 +4,7 @@ namespace App\Modules\Authorization\Application\UseCases;
 
 use App\Modules\Authorization\Domain\Events\RoleDeleted;
 use App\Modules\Authorization\Domain\Repositories\RoleRepositoryInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class DeleteRoleUseCase
 {

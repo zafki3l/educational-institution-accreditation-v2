@@ -8,7 +8,7 @@ use App\Modules\Authentication\Domain\Events\UserLoggedIn;
 use App\Modules\Authentication\Domain\Events\UserLoginFailed;
 use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class LoginUseCase
 {

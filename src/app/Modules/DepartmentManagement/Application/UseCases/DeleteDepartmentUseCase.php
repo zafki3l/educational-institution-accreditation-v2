@@ -4,7 +4,7 @@ namespace App\Modules\DepartmentManagement\Application\UseCases;
 
 use App\Modules\DepartmentManagement\Domain\Events\DepartmentDeleted;
 use App\Modules\DepartmentManagement\Domain\Repositories\DepartmentRepositoryInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class DeleteDepartmentUseCase
 {

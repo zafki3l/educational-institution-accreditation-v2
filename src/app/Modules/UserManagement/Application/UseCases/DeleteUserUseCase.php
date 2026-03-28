@@ -4,7 +4,7 @@ namespace App\Modules\UserManagement\Application\UseCases;
 
 use App\Modules\UserManagement\Domain\Events\UserDeleted;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class DeleteUserUseCase
 {

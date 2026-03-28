@@ -7,7 +7,7 @@ use App\Modules\Authorization\Application\UseCases\UpdateRoleUseCase;
 use App\Modules\Authorization\Domain\Entities\Role;
 use App\Modules\Authorization\Domain\Exception\EmptyRoleNameException;
 use App\Modules\Authorization\Domain\Repositories\RoleRepositoryInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

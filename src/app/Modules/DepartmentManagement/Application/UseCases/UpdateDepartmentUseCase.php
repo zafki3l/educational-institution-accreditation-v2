@@ -6,7 +6,7 @@ use App\Modules\DepartmentManagement\Application\Requests\UpdateDepartmentReques
 use App\Modules\DepartmentManagement\Domain\Events\DepartmentUpdated;
 use App\Modules\DepartmentManagement\Domain\Exception\DepartmentNotFoundException;
 use App\Modules\DepartmentManagement\Domain\Repositories\DepartmentRepositoryInterface;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 
 final class UpdateDepartmentUseCase 
 {

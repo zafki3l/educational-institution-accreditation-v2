@@ -11,7 +11,7 @@ use App\Modules\UserManagement\Domain\Services\EmailExistsCheckerInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
 use App\Shared\Infrastructure\UuidGenerator;
 
 final class CreateUserUseCase

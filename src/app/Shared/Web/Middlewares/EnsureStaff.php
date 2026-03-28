@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Middlewares;
+namespace App\Shared\Web\Middlewares;
 
 use App\Modules\Authentication\Domain\Exception\PermissionDeniedException;
 

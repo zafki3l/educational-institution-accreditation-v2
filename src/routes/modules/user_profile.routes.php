@@ -3,7 +3,7 @@
 use App\Modules\UserProfile\Presentation\Controllers\ChangePasswordController;
 use App\Modules\UserProfile\Presentation\Controllers\IndexUserProfileController;
 use App\Modules\UserProfile\Presentation\Controllers\UpdateUserProfileController;
-use App\Shared\Middlewares\EnsureAuth;
+use App\Shared\Web\Middlewares\EnsureAuth;
 
 $route->middleware([EnsureAuth::class])
     ->get('/profile', [IndexUserProfileController::class, 'index']);

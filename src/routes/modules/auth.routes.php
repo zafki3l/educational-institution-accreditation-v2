@@ -2,7 +2,7 @@
 
 use App\Modules\Authentication\Presentation\Controllers\LoginController;
 use App\Modules\Authentication\Presentation\Controllers\LogoutController;
-use App\Shared\Middlewares\EnsureAuth;
+use App\Shared\Web\Middlewares\EnsureAuth;
 
 $route->get('/login', [LoginController::class, 'showLogin']);
 

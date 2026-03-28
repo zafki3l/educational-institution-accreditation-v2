@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use App\Shared\Middlewares\CSRF_Authenticator;
+use App\Shared\Web\Middlewares\CSRF_Authenticator;
 use Exception;
 use ReflectionMethod;
 

@@ -4,8 +4,8 @@ use App\Modules\StaffManagement\Presentation\Controllers\CreateStaffController;
 use App\Modules\StaffManagement\Presentation\Controllers\DeleteStaffController;
 use App\Modules\StaffManagement\Presentation\Controllers\IndexStaffController;
 use App\Modules\StaffManagement\Presentation\Controllers\UpdateStaffController;
-use App\Shared\Middlewares\EnsureAdmin;
-use App\Shared\Middlewares\EnsureAuth;
+use App\Shared\Web\Middlewares\EnsureAdmin;
+use App\Shared\Web\Middlewares\EnsureAuth;
 
 $route->middleware([EnsureAuth::class, EnsureAdmin::class])
     ->get('/staffs', [IndexStaffController::class, 'index']);

@@ -4,9 +4,9 @@ use App\Modules\QualityAssessment\Presentation\Controllers\Criteria\CreateCriter
 use App\Modules\QualityAssessment\Presentation\Controllers\Criteria\DeleteCriteriaController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Criteria\IndexCriteriaController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Criteria\UpdateCriteriaController;
-use App\Shared\Middlewares\EnsureAdmin;
-use App\Shared\Middlewares\EnsureAuth;
-use App\Shared\Middlewares\EnsureStaff;
+use App\Shared\Web\Middlewares\EnsureAdmin;
+use App\Shared\Web\Middlewares\EnsureAuth;
+use App\Shared\Web\Middlewares\EnsureStaff;
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->get('/criterias', [IndexCriteriaController::class, 'index']);

@@ -4,8 +4,8 @@ use App\Modules\UserManagement\Presentation\Controllers\CreateUserController;
 use App\Modules\UserManagement\Presentation\Controllers\DeleteUserController;
 use App\Modules\UserManagement\Presentation\Controllers\IndexUserController;
 use App\Modules\UserManagement\Presentation\Controllers\UpdateUserController;
-use App\Shared\Middlewares\EnsureAdmin;
-use App\Shared\Middlewares\EnsureAuth;
+use App\Shared\Web\Middlewares\EnsureAdmin;
+use App\Shared\Web\Middlewares\EnsureAuth;
 
 $route->middleware([EnsureAuth::class, EnsureAdmin::class])
     ->get('/users', [IndexUserController::class, 'index']);

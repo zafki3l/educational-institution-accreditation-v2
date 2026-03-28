@@ -4,8 +4,8 @@ use App\Modules\DepartmentManagement\Presentation\Controllers\CreateDepartmentCo
 use App\Modules\DepartmentManagement\Presentation\Controllers\DeleteDepartmentController;
 use App\Modules\DepartmentManagement\Presentation\Controllers\IndexDepartmentController;
 use App\Modules\DepartmentManagement\Presentation\Controllers\UpdateDepartmentController;
-use App\Shared\Middlewares\EnsureAdmin;
-use App\Shared\Middlewares\EnsureAuth;
+use App\Shared\Web\Middlewares\EnsureAdmin;
+use App\Shared\Web\Middlewares\EnsureAuth;
 
 $route->middleware([EnsureAuth::class, EnsureAdmin::class])
     ->get('/departments', [IndexDepartmentController::class, 'index']);

@@ -2,7 +2,7 @@
 
 namespace App\Modules\UserManagement\Domain\Exception;
 
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 
 final class PasswordEmptyException extends DomainException
 {

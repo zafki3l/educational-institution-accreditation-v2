@@ -5,7 +5,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Standard;
 use App\Modules\QualityAssessment\Application\UseCases\Standard\CreateStandardUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Standard\CreateStandardRequest;
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
 

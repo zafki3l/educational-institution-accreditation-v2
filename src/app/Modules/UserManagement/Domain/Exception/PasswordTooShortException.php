@@ -2,9 +2,9 @@
 
 namespace App\Modules\UserManagement\Domain\Exception;
 
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 
-final class PasswordTooShortException extends DomainException 
+final class PasswordTooShortException extends DomainException
 {
     public function __construct()
     {

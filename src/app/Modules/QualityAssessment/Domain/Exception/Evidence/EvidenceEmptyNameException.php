@@ -2,7 +2,7 @@
 
 namespace App\Modules\QualityAssessment\Domain\Exception\Evidence;
 
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 
 final class EvidenceEmptyNameException extends DomainException
 {

@@ -7,7 +7,7 @@ use App\Modules\QualityAssessment\Application\UseCases\Evidence\UpdateEvidenceUs
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\UpdateEvidenceRequest;
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 use App\Shared\Response\ViewResponse;
 use App\Shared\SessionManager\AuthSession;
 

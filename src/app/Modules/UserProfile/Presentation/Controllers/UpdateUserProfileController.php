@@ -4,7 +4,7 @@ namespace App\Modules\UserProfile\Presentation\Controllers;
 
 use App\Modules\UserProfile\Application\UseCases\UpdateUserProfileUseCase;
 use App\Modules\UserProfile\Presentation\Requests\UpdateUserProfileRequest;
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 use App\Shared\SessionManager\AuthSession;
 
 final class UpdateUserProfileController extends UserProfileController

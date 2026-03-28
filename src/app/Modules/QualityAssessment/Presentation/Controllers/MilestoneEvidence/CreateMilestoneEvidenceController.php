@@ -5,7 +5,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\MilestoneEviden
 use App\Modules\QualityAssessment\Application\UseCases\MilestoneEvidence\CreateMilestoneEvidenceUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\MilestoneEvidence\CreateMilestoneEvidenceRequest;
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 use App\Shared\SessionManager\AuthSession;
 
 use App\Shared\Response\JsonResponse;

@@ -2,7 +2,7 @@
 
 namespace App\Modules\QualityAssessment\Domain\Exception\Milestone;
 
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 
 final class MilestoneInvalidIdException extends DomainException
 {

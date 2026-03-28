@@ -2,7 +2,7 @@
 
 namespace App\Modules\Authentication\Domain\Exception;
 
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 
 final class PermissionDeniedException extends DomainException
 {

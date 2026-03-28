@@ -5,8 +5,8 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Standard;
 use App\Modules\QualityAssessment\Application\Requests\Standard\CreateStandardRequestInterface;
 use App\Modules\QualityAssessment\Domain\Entities\Standard;
 use App\Modules\QualityAssessment\Domain\Repositories\StandardRepositoryInterface;
+use App\Shared\Domain\Exception\DomainException;
 use App\Shared\Logging\LoggerInterface;
-use App\Shared\Exception\DomainException;
 
 final class CreateStandardUseCase
 {

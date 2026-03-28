@@ -2,7 +2,7 @@
 
 namespace App\Modules\FileUpload\Domain\Exceptions;
 
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 
 final class InvalidIdException extends DomainException
 {

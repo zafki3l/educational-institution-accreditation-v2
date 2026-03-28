@@ -2,7 +2,7 @@
 
 namespace App\Modules\QualityAssessment\Domain\Exception\Criteria;
 
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 
 final class CriteriaEmptyNameException extends DomainException
 {

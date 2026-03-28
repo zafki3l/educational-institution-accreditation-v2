@@ -5,7 +5,7 @@ namespace App\Modules\Authorization\Presentation\Controllers;
 use App\Modules\Authorization\Application\UseCases\UpdateRoleUseCase;
 use App\Modules\Authorization\Presentation\Controllers\AuthorizationController;
 use App\Modules\Authorization\Presentation\Requests\UpdateRoleRequest;
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
 

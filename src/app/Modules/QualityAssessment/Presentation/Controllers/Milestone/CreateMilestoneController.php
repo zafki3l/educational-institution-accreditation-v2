@@ -5,7 +5,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Milestone;
 use App\Modules\QualityAssessment\Application\UseCases\Milestone\CreateMilestoneUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Milestone\CreateMilestoneRequest;
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
 

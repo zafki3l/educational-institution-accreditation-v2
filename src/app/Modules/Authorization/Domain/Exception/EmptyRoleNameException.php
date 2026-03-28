@@ -2,7 +2,7 @@
 
 namespace App\Modules\Authorization\Domain\Exception;
 
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 
 final class EmptyRoleNameException extends DomainException
 {

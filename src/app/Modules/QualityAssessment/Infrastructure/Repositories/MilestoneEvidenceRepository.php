@@ -6,8 +6,7 @@ use App\Modules\QualityAssessment\Domain\Entities\MilestoneEvidence as EntitiesM
 use App\Modules\QualityAssessment\Domain\Repositories\MilestoneEvidenceRepositoryInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Infrastructure\Models\MilestoneEvidence as ModelsMilestoneEvidence;
-use App\Shared\Exception\DomainException;
-
+use App\Shared\Domain\Exception\DomainException;
 
 class MilestoneEvidenceRepository implements MilestoneEvidenceRepositoryInterface
 {

@@ -2,7 +2,7 @@
 
 namespace App\Modules\UserProfile\Domain\Exceptions;
 
-use App\Shared\Exception\DomainException;
+use App\Shared\Domain\Exception\DomainException;
 
 class PasswordIncorrectException extends DomainException
 {

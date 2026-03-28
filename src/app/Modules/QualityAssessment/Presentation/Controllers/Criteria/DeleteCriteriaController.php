@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Criteria;
 
 use App\Modules\QualityAssessment\Application\UseCases\Criteria\DeleteCriteriaUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class DeleteCriteriaController extends QualityAssessmentController
 {

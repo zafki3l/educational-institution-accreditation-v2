@@ -3,7 +3,7 @@
 namespace App\Modules\UserProfile\Presentation\Controllers;
 
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 use App\Shared\Web\Responses\ViewResponse;
 
 final class IndexUserProfileController extends UserProfileController

@@ -2,9 +2,9 @@
 
 use App\Shared\Contracts\Events\EventDispatcherInterface;
 use App\Shared\Contracts\Logging\LoggerInterface;
-use App\Shared\Infrastructure\EventDispatcher;
-use App\Shared\Infrastructure\MySQLDatabase;
-use App\Shared\Logging\MongoLogger;
+use App\Shared\Infrastructure\Events\EventDispatcher;
+use App\Shared\Infrastructure\Logging\MongoLogger;
+use App\Shared\Infrastructure\Persistence\MySQLDatabase;
 use Core\App;
 use Illuminate\Container\Container;
 

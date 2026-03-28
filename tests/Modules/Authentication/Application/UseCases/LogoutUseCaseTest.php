@@ -4,8 +4,8 @@ namespace Tests\Modules\Authentication\Application\UseCases;
 
 use App\Modules\Authentication\Application\UseCases\LogoutUseCase;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
-use App\Shared\SessionManager\AuthSession;
-use App\Shared\SessionManager\SessionAuthUser;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Security\Session\SessionAuthUser;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

@@ -8,7 +8,7 @@ use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\UpdateEvidenceRequest;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 use App\Shared\Web\Responses\ViewResponse;
 
 final class UpdateEvidenceController extends QualityAssessmentController

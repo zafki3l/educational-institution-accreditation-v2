@@ -4,7 +4,7 @@ namespace App\Modules\Authentication\Application\UseCases;
 
 use App\Modules\Authentication\Domain\Events\UserLoggedOut;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class LogoutUseCase
 {

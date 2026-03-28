@@ -3,7 +3,7 @@ namespace App\Modules\Dashboard\Presentation\Controllers;
 
 use App\Modules\Dashboard\Application\Readers\StaffDashboardReaderInterface;
 use App\Modules\Dashboard\Presentation\ViewModels\StaffDashboardOverviewViewModel;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 use App\Shared\Web\Responses\ViewResponse;
 
 class StaffDashboardController extends DashboardController

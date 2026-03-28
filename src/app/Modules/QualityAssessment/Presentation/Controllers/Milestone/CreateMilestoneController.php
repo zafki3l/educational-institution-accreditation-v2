@@ -6,7 +6,7 @@ use App\Modules\QualityAssessment\Application\UseCases\Milestone\CreateMilestone
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Milestone\CreateMilestoneRequest;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 use App\Shared\Web\Responses\JsonResponse;
 
 final class CreateMilestoneController extends QualityAssessmentController

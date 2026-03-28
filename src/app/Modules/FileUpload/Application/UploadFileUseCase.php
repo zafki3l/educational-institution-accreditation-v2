@@ -3,7 +3,7 @@
 namespace App\Modules\FileUpload\Application;
 
 use App\Modules\FileUpload\Domain\Entities\File;
-use App\Shared\Infrastructure\UuidGenerator;
+use App\Shared\Infrastructure\Utils\UuidGenerator;
 
 final class UploadFileUseCase
 {

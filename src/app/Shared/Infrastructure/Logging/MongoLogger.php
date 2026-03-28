@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Shared\Logging;
+namespace App\Shared\Infrastructure\Logging;
 
 use App\Shared\Contracts\Logging\LoggerInterface;
-use App\Shared\Infrastructure\MongoDBConnection;
+use App\Shared\Infrastructure\Persistence\MongoDBConnection;
 use MongoDB\Collection;
 
 class MongoLogger implements LoggerInterface

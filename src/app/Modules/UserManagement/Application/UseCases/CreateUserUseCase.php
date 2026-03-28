@@ -12,7 +12,7 @@ use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
-use App\Shared\Infrastructure\UuidGenerator;
+use App\Shared\Infrastructure\Utils\UuidGenerator;
 
 final class CreateUserUseCase
 {

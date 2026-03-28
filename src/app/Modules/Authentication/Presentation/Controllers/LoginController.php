@@ -4,7 +4,7 @@ namespace App\Modules\Authentication\Presentation\Controllers;
 
 use App\Modules\Authentication\Application\UseCases\LoginUseCase;
 use App\Modules\Authentication\Presentation\Requests\LoginRequest;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 use App\Shared\Web\Responses\ViewResponse;
 
 final class LoginController extends AuthController

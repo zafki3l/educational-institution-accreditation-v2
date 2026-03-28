@@ -1,7 +1,7 @@
 <?php
 
-use App\Shared\Security\CsrfTokenGenerator;
-use App\Shared\SessionManager\SessionGenerator;
+use App\Shared\Security\Csrf\CsrfTokenGenerator;
+use App\Shared\Security\Session\SessionGenerator;
 use Dotenv\Dotenv;
 use Illuminate\Pagination\Paginator;
 

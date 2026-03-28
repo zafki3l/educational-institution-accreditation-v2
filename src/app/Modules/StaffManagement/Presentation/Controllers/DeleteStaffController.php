@@ -3,7 +3,7 @@
 namespace App\Modules\StaffManagement\Presentation\Controllers;
 
 use App\Modules\UserManagement\Application\UseCases\DeleteUserUseCase;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class DeleteStaffController extends StaffController
 {

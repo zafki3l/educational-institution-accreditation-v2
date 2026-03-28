@@ -5,7 +5,7 @@ namespace App\Modules\Authorization\Presentation\Controllers;
 use App\Modules\Authorization\Application\UseCases\CreateRoleUseCase;
 use App\Modules\Authorization\Presentation\Controllers\AuthorizationController;
 use App\Modules\Authorization\Presentation\Requests\CreateRoleRequest;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class CreateRoleController extends AuthorizationController
 {

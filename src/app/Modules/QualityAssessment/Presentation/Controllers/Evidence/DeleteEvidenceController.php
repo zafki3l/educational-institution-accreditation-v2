@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Evidence;
 
 use App\Modules\QualityAssessment\Application\UseCases\Evidence\DeleteEvidenceUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class DeleteEvidenceController extends QualityAssessmentController
 {

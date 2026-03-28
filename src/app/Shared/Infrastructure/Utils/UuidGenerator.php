@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Infrastructure;
+namespace App\Shared\Infrastructure\Utils;
 
 class UuidGenerator
 {

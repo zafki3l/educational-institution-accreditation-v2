@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Standard;
 
 use App\Modules\QualityAssessment\Application\UseCases\Standard\DeleteStandardUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class DeleteStandardController extends QualityAssessmentController
 {

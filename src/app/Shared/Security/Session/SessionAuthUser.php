@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\SessionManager;
+namespace App\Shared\Security\Session;
 
 final class SessionAuthUser
 {

@@ -4,7 +4,7 @@ namespace App\Modules\Authorization\Presentation\Controllers;
 
 use App\Modules\Authorization\Application\UseCases\DeleteRoleUseCase;
 use App\Modules\Authorization\Presentation\Controllers\AuthorizationController;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class DeleteRoleController extends AuthorizationController
 {

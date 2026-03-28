@@ -10,7 +10,7 @@ use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\CreateEvidenceRequest;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 use App\Shared\Web\Responses\JsonResponse;
 use App\Shared\Web\Responses\ViewResponse;
 

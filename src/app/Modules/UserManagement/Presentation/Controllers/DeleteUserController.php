@@ -3,7 +3,7 @@
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
 use App\Modules\UserManagement\Application\UseCases\DeleteUserUseCase;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class DeleteUserController extends UserController
 {

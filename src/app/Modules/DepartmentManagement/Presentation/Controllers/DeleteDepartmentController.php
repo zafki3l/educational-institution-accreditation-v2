@@ -3,7 +3,7 @@
 namespace App\Modules\DepartmentManagement\Presentation\Controllers;
 
 use App\Modules\DepartmentManagement\Application\UseCases\DeleteDepartmentUseCase;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class DeleteDepartmentController extends DepartmentController
 {

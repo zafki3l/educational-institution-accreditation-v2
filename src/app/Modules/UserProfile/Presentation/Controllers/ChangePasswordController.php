@@ -5,7 +5,7 @@ namespace App\Modules\UserProfile\Presentation\Controllers;
 use App\Modules\UserProfile\Application\UseCases\ChangePasswordUseCase;
 use App\Modules\UserProfile\Presentation\Requests\ChangePasswordRequest;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 
 final class ChangePasswordController extends UserProfileController
 {

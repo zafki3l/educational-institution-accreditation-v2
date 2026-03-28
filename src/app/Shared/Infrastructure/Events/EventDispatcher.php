@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Shared\Infrastructure;
+namespace App\Shared\Infrastructure\Events;
 
 use App\Shared\Contracts\Events\EventDispatcherInterface;
 
-class EventDispatcher implements EventDispatcherInterface {
+class EventDispatcher implements EventDispatcherInterface 
+{
     private array $listeners = [];
 
     public function addListener(string $eventClass, callable $listener): void {

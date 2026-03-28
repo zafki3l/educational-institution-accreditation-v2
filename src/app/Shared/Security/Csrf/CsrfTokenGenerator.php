@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Security;
+namespace App\Shared\Security\Csrf;
 
 class CsrfTokenGenerator
 {

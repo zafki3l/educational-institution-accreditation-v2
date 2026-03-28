@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use App\Shared\Web\Middlewares\CSRF_Authenticator;
+use App\Shared\Web\Middlewares\CsrfAuthenticator;
 use Exception;
 use ReflectionMethod;
 
@@ -122,7 +122,7 @@ class Router
         }
 
         if (in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'])) {
-            $middleware = new CSRF_Authenticator();
+            $middleware = new CsrfAuthenticator();
             $middleware->handle();
         }
 

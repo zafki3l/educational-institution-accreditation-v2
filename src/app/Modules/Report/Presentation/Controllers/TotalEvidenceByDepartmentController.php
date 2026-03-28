@@ -4,7 +4,7 @@ namespace App\Modules\Report\Presentation\Controllers;
 
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
 use App\Shared\Web\Responses\JsonResponse;
 
 final class TotalEvidenceByDepartmentController extends ReportController

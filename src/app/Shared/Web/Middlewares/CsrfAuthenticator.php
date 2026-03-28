@@ -4,7 +4,7 @@ namespace App\Shared\Web\Middlewares;
 
 use Exception;
 
-final class CSRF_Authenticator
+final class CsrfAuthenticator
 {
     public function handle(): void
     {

@@ -2,9 +2,11 @@
 
 use App\Shared\Contracts\Events\EventDispatcherInterface;
 use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use App\Shared\Infrastructure\Events\EventDispatcher;
 use App\Shared\Infrastructure\Logging\MongoLogger;
 use App\Shared\Infrastructure\Persistence\MySQLDatabase;
+use App\Shared\Infrastructure\Persistence\UnitOfWork;
 use Core\App;
 use Illuminate\Container\Container;
 
@@ -17,6 +19,15 @@ $container->singleton(\PDO::class, function () {
 $container->bind(
     LoggerInterface::class,
     MongoLogger::class
+);
+
+$container->singleton(\Illuminate\Database\ConnectionInterface::class, function () {
+    return \Illuminate\Database\Capsule\Manager::connection();
+});
+
+$container->bind(
+    UnitOfWorkInterface::class,
+    UnitOfWork::class
 );
 
 $providers = require_once 'providers.php';

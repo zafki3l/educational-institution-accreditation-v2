@@ -26,7 +26,7 @@ final class UpdateDepartmentUseCase
 
         $department->update($request->getName());
 
-        if (empty($department->getChanges())) {
+        if (!$department->hasChanges()) {
             return;
         }
 

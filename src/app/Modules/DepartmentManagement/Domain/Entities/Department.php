@@ -57,4 +57,9 @@ class Department
     {
         return $this->changes;
     }
+
+    public function hasChanges(): bool
+    {
+        return !empty($this->changes);
+    }
 }

@@ -6,8 +6,10 @@ use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterfa
 use App\Modules\DepartmentManagement\Application\Requests\CreateDepartmentRequestInterface;
 use App\Modules\DepartmentManagement\Application\Requests\UpdateDepartmentRequestInterface;
 use App\Modules\DepartmentManagement\Domain\Repositories\DepartmentRepositoryInterface;
+use App\Modules\DepartmentManagement\Domain\Services\DepartmentExistsCheckerInterface;
 use App\Modules\DepartmentManagement\Infrastructure\Readers\DepartmentReader;
 use App\Modules\DepartmentManagement\Infrastructure\Repositories\DepartmentRepository;
+use App\Modules\DepartmentManagement\Infrastructure\Services\DepartmentExistsChecker;
 use App\Modules\DepartmentManagement\Presentation\Requests\CreateDepartmentRequest;
 use App\Modules\DepartmentManagement\Presentation\Requests\UpdateDepartmentRequest;
 use Core\ServiceProvider;
@@ -35,6 +37,11 @@ class DepartmentServiceProvider extends ServiceProvider
         $container->bind(
             DepartmentRepositoryInterface::class,
             DepartmentRepository::class
+        );
+
+        $container->bind(
+            DepartmentExistsCheckerInterface::class,
+            DepartmentExistsChecker::class
         );
     }
 }

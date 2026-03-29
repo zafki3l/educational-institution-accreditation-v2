@@ -7,9 +7,9 @@ use App\Modules\DepartmentManagement\Application\UseCases\CreateDepartmentUseCas
 use App\Modules\DepartmentManagement\Domain\Entities\Department;
 use App\Modules\DepartmentManagement\Domain\Exception\EmptyDepartmentIdException;
 use App\Modules\DepartmentManagement\Domain\Repositories\DepartmentRepositoryInterface;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;
 
@@ -18,70 +18,77 @@ class CreateDepartmentUseCaseTest extends TestCase
     use DebugHelper;
 
     private DepartmentRepositoryInterface&MockObject $repository;
-    private LoggerInterface&MockObject $logger;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private CreateDepartmentUseCase $useCase;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(DepartmentRepositoryInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->useCase = new CreateDepartmentUseCase($this->repository, $this->logger);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')
+            ->willReturnCallback(fn(callable $work) => $work());
+
+        $this->useCase = new CreateDepartmentUseCase(
+            $this->repository, 
+            $this->eventDispatcher,
+            $this->unitOfWork
+        );
     }
 
-    /**
-     * Run: composer test -- --filter CreateDepartmentUseCaseTest::it_creates_department_successfully
-     */
-    #[Test]
-    public function it_creates_department_successfully(): void
+    public function testExecuteSuccess(): void
     {
         $actorId = 'admin-uuid';
+        $deptId = 'DEPT-001';
+        $deptName = 'Phòng Kế Toán';
         
         $request = $this->createMock(CreateDepartmentRequestInterface::class);
-        $request->method('getId')->willReturn('DEPT-001');
-        $request->method('getName')->willReturn('Phòng Kế Toán');
+        $request->method('getId')->willReturn($deptId);
+        $request->method('getName')->willReturn($deptName);
 
-        $this->debug('STEP 1: REQUEST INPUT', [
-            'id' => $request->getId(),
-            'name' => $request->getName()
-        ]);
+        $this->debug('INPUT', ['id' => $deptId, 'name' => $deptName]);
 
         $this->repository->expects($this->once())
             ->method('create')
-            ->with($this->callback(function (Department $dept) {
-                $this->debug('STEP 2: ENTITY CREATED', [
-                    'id' => $dept->getId(),
-                    'name' => $dept->getName()
-                ]);
-                return $dept->getId() === 'DEPT-001' && $dept->getName() === 'Phòng Kế Toán';
+            ->with($this->callback(function (Department $dept) use ($deptId, $deptName) {
+                return $dept->getId() === $deptId && $dept->getName() === $deptName;
             }));
 
-        $this->logger->expects($this->once())
-            ->method('write')
-            ->willReturnCallback(function ($level, $action, $msg, $id, $context) {
-                $this->debug('STEP 3: LOG DATA', [
-                    'message' => $msg,
-                    'context' => $context
-                ]);
-            });
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch');
 
         $this->useCase->execute($request, $actorId);
     }
 
-    /**
-     * Run: composer test -- --filter CreateDepartmentUseCaseTest::it_throws_exception_if_department_data_invalid
-     */
-    #[Test]
-    public function it_throws_exception_if_department_data_invalid(): void
+    public function testExecuteThrowsExceptionWhenDataIsInvalid(): void
     {
         $request = $this->createMock(CreateDepartmentRequestInterface::class);
-        $request->method('getId')->willReturn(''); 
+        $request->method('getId')->willReturn('');
 
         $this->debug('TEST CASE: Expecting EmptyDepartmentIdException', []);
 
         $this->repository->expects($this->never())->method('create');
-        $this->logger->expects($this->never())->method('write');
+        $this->eventDispatcher->expects($this->never())->method('dispatch');
 
         $this->expectException(EmptyDepartmentIdException::class);
+
+        $this->useCase->execute($request, 'admin-uuid');
+    }
+
+    public function testExecuteDoesNotDispatchEventWhenRepositoryFails(): void
+    {
+        $request = $this->createMock(CreateDepartmentRequestInterface::class);
+        $request->method('getId')->willReturn('DEPT-002');
+        $request->method('getName')->willReturn('Phòng Nhân Sự');
+
+        $this->repository->method('create')
+            ->willThrowException(new \Exception("Database error"));
+
+        $this->eventDispatcher->expects($this->never())->method('dispatch');
+
+        $this->expectException(\Exception::class);
 
         $this->useCase->execute($request, 'admin-uuid');
     }

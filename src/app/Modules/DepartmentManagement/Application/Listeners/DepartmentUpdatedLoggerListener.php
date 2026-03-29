@@ -19,8 +19,7 @@ final class DepartmentUpdatedLoggerListener
                 $event->actor_id,
                 [
                     'department_id' => $event->id,
-                    'department_old_name' => $event->old_name,
-                    'department_new_name' => $event->new_name
+                    'changes' => $event->changes
                 ]
             );
         } catch (\Throwable $e) {

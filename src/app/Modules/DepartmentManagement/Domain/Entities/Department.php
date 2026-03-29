@@ -7,6 +7,8 @@ use App\Modules\DepartmentManagement\Domain\Exception\EmptyDepartmentNameExcepti
 
 class Department
 {
+    private array $changes = [];
+
     private function __construct(
         private string $id,
         private string $name
@@ -17,7 +19,7 @@ class Department
         if (empty($id)) {
             throw new EmptyDepartmentIdException();
         }
-        
+
         if (empty($name)) {
             throw new EmptyDepartmentNameException();
         }
@@ -31,10 +33,28 @@ class Department
             throw new EmptyDepartmentNameException();
         }
 
-        $this->name = $name;
+        if ($this->name !== $name) {
+            $this->changes['name'] = [
+                'old' => $this->name, 
+                'new' => $name
+            ];
+
+            $this->name = $name;
+        }
     }
 
-    public function getId(): string { return $this->id; }
+    public function getId(): string
+    {
+        return $this->id;
+    }
 
-    public function getName(): string { return $this->name; }
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getChanges(): array
+    {
+        return $this->changes;
+    }
 }

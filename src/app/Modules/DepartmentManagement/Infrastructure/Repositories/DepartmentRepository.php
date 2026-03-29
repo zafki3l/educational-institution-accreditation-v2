@@ -21,6 +21,10 @@ class DepartmentRepository implements DepartmentRepositoryInterface
     {
         $modelsDepartment = ModelsDepartment::findOrFail($id);
 
+        if (!$modelsDepartment) {
+            return null;
+        }
+
         return DepartmentMapper::toDomain($modelsDepartment);
     }
 

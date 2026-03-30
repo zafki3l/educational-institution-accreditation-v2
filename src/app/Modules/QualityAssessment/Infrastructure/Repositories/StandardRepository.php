@@ -18,15 +18,27 @@ class StandardRepository implements StandardRepositoryInterface
         ]);
     }
 
-    public function findOrFail(string $id): EntitiesStandard
+    public function findOrFail(string $id): ?EntitiesStandard
     {
         $modelsStandard = ModelsStandard::findOrFail($id);
 
+        if (!$modelsStandard) {
+            return null;
+        }
+        
         return StandardMapper::toDomain($modelsStandard);
     }
 
     public function delete(EntitiesStandard $entitiesStandard): void
     {
         ModelsStandard::where('id', $entitiesStandard->getId())->delete();
+    }
+
+    public function update(EntitiesStandard $entitiesStandard): void
+    {
+        ModelsStandard::where('id', $entitiesStandard->getId())->update([
+            'name' => $entitiesStandard->getName(),
+            'department_id' => $entitiesStandard->getDepartmentId()
+        ]);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Requests\Standard;
 
-final class UpdateStandardRequest
+use App\Modules\QualityAssessment\Application\Requests\Standard\UpdateStandardRequestInterface;
+
+final class UpdateStandardRequest implements UpdateStandardRequestInterface
 {
     private string $id;
     private string $name;

@@ -12,11 +12,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 final class StandardTest extends TestCase
 {
-    /**
-     * Run: composer test -- --filter StandardTest::testCreateWithValidData
-     * 
-     * @return void
-     */
     public function testCreateWithValidData(): void
     {
         $id = '1';
@@ -29,24 +24,49 @@ final class StandardTest extends TestCase
         $this->assertEquals($id, $standard->getId());
         $this->assertEquals($name, $standard->getName());
         $this->assertEquals($deptId, $standard->getDepartmentId());
+        $this->assertFalse($standard->hasChanges());
     }
 
-    /**
-     * Run: composer test -- --filter StandardTest::testCreateThrowsExceptionWhenIdIsEmpty
-     * 
-     * @return void
-     */
+    public function testUpdateSuccessAndRecordsChanges(): void
+    {
+        $standard = Standard::create('1', 'Old Name', 'Dept-Old');
+
+        $newName = 'New Name';
+        $newDeptId = 'Dept-New';
+
+        $standard->update($newName, $newDeptId);
+
+        $this->assertEquals($newName, $standard->getName());
+        $this->assertEquals($newDeptId, $standard->getDepartmentId());
+        $this->assertTrue($standard->hasChanges());
+
+        $changes = $standard->getChanges();
+        
+        $this->assertArrayHasKey('name', $changes);
+        $this->assertEquals('Old Name', $changes['name']['old']);
+        $this->assertEquals('New Name', $changes['name']['new']);
+
+        $this->assertArrayHasKey('department_id', $changes);
+        $this->assertEquals('Dept-Old', $changes['department_id']['old']);
+        $this->assertEquals('Dept-New', $changes['department_id']['new']);
+    }
+
+    public function testUpdateWithSameDataDoesNotRecordChanges(): void
+    {
+        $standard = Standard::create('1', 'Name', 'Dept-1');
+
+        $standard->update('Name', 'Dept-1');
+
+        $this->assertFalse($standard->hasChanges());
+        $this->assertEmpty($standard->getChanges());
+    }
+
     public function testCreateThrowsExceptionWhenIdIsEmpty(): void
     {
         $this->expectException(StandardEmptyIdException::class);
         Standard::create('', 'Name', 'Dept-1');
     }
 
-    /**
-     * Run: composer test -- --filter StandardTest::testCreateThrowsExceptionWhenIdIsInvalid
-     * 
-     * @return void
-     */
     #[DataProvider('invalidIdProvider')]
     public function testCreateThrowsExceptionWhenIdIsInvalid(string $invalidId): void
     {
@@ -64,22 +84,12 @@ final class StandardTest extends TestCase
         ];
     }
 
-    /**
-     * Run: composer test -- --filter StandardTest::testCreateThrowsExceptionWhenNameIsEmpty
-     * 
-     * @return void
-     */
     public function testCreateThrowsExceptionWhenNameIsEmpty(): void
     {
         $this->expectException(StandardEmptyNameException::class);
         Standard::create('1', '', 'Dept-1');
     }
 
-    /**
-     * Run: composer test -- --filter StandardTest::testCreateThrowsExceptionWhenDepartmentIdIsEmpty
-     * 
-     * @return void
-     */
     public function testCreateThrowsExceptionWhenDepartmentIdIsEmpty(): void
     {
         $this->expectException(StandardEmptyDepartmentIdException::class);

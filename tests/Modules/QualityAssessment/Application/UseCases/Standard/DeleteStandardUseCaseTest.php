@@ -5,7 +5,8 @@ namespace Tests\Unit\Modules\QualityAssessment\Application\UseCases\Standard;
 use App\Modules\QualityAssessment\Application\UseCases\Standard\DeleteStandardUseCase;
 use App\Modules\QualityAssessment\Domain\Entities\Standard;
 use App\Modules\QualityAssessment\Domain\Repositories\StandardRepositoryInterface;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;
@@ -15,30 +16,37 @@ final class DeleteStandardUseCaseTest extends TestCase
     use DebugHelper;
 
     private StandardRepositoryInterface&MockObject $repository;
-    private LoggerInterface&MockObject $logger;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private DeleteStandardUseCase $useCase;
+
+    private const VALID_STANDARD_ID = '1';
+    private const VALID_ACTOR_ID = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(StandardRepositoryInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->useCase = new DeleteStandardUseCase($this->repository, $this->logger);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')->willReturnCallback(function ($callback) {
+            return $callback();
+        });
+
+        $this->useCase = new DeleteStandardUseCase(
+            $this->repository,
+            $this->eventDispatcher,
+            $this->unitOfWork
+        );
     }
 
-    /**
-     * Run: composer test -- --filter DeleteStandardUseCaseTest::testDeleteSuccessfully
-     * 
-     * @return void
-     */
     public function testDeleteSuccessfully(): void
     {
-        $id = '1';
-        $actorId = 'admin-uuid';
+        $id = self::VALID_STANDARD_ID;
+        $actorId = self::VALID_ACTOR_ID; 
         
         $standard = $this->createMock(Standard::class);
         $standard->method('getId')->willReturn($id);
-        $standard->method('getName')->willReturn('Tiêu chuẩn Test');
-        $standard->method('getDepartmentId')->willReturn('DEPT-01');
 
         $this->repository->expects($this->once())
             ->method('findOrFail')
@@ -49,37 +57,37 @@ final class DeleteStandardUseCaseTest extends TestCase
             ->method('delete')
             ->with($standard);
 
-        $this->logger->expects($this->once())
-            ->method('write')
-            ->willReturnCallback(function ($level, $action, $msg, $actor, $context) use ($id) {
-                $this->debug('LOG DATA CHECK', [
-                    'message' => $msg,
-                    'context_id' => $context['id'],
-                    'context_name' => $context['name']
-                ]);
-                return true;
-            });
+        $this->eventDispatcher->expects($this->once())->method('dispatch');
 
         $this->useCase->execute($id, $actorId);
+
+        $this->debug('DELETE SUCCESS', ['id' => $id, 'actor_id' => $actorId]);
     }
 
-    /**
-     * Run: composer test -- --filter DeleteStandardUseCaseTest::testDeleteThrowsExceptionWhenNotFound
-     * 
-     * @return void
-     */
     public function testDeleteThrowsExceptionWhenNotFound(): void
     {
         $invalidId = '999';
         
         $this->repository->method('findOrFail')
+            ->with($invalidId)
             ->willThrowException(new \Exception("Standard not found"));
 
         $this->expectException(\Exception::class);
 
         $this->repository->expects($this->never())->method('delete');
-        $this->logger->expects($this->never())->method('write');
+        $this->eventDispatcher->expects($this->never())->method('dispatch');
 
-        $this->useCase->execute($invalidId, 'admin-uuid');
+        $this->useCase->execute($invalidId, self::VALID_ACTOR_ID);
+    }
+
+    public function testDeleteDoesNothingWhenStandardIsNull(): void
+    {
+        $id = '123';
+        $this->repository->method('findOrFail')->willReturn(null);
+
+        $this->unitOfWork->expects($this->never())->method('execute');
+        $this->repository->expects($this->never())->method('delete');
+
+        $this->useCase->execute($id, 'actor-id');
     }
 }

@@ -11,12 +11,15 @@ use App\Shared\Web\Responses\JsonResponse;
 
 final class CreateStandardController extends QualityAssessmentController
 {
-    public function __construct(private CreateStandardUseCase $createStandardUseCase) {}
+    public function __construct(
+        private CreateStandardUseCase $createStandardUseCase,
+        private AuthSession $authSession
+    ) {}
 
     public function store(CreateStandardRequest $request): JsonResponse
     {
         try {
-            $this->createStandardUseCase->execute($request, AuthSession::getUserId());
+            $this->createStandardUseCase->execute($request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([]);
 

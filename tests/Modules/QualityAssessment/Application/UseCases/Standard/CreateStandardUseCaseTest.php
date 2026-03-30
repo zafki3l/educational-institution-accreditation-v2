@@ -6,8 +6,11 @@ use App\Modules\QualityAssessment\Application\Requests\Standard\CreateStandardRe
 use App\Modules\QualityAssessment\Application\UseCases\Standard\CreateStandardUseCase;
 use App\Modules\QualityAssessment\Domain\Entities\Standard;
 use App\Modules\QualityAssessment\Domain\Repositories\StandardRepositoryInterface;
-use App\Shared\Contracts\Logging\LoggerInterface;
-use App\Shared\Domain\Exception\DomainException;
+use App\Modules\QualityAssessment\Domain\Exception\Standard\StandardEmptyIdException;
+use App\Modules\QualityAssessment\Domain\Exception\Standard\StandardEmptyNameException;
+use App\Modules\QualityAssessment\Domain\Exception\Standard\StandardEmptyDepartmentIdException;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -18,67 +21,63 @@ final class CreateStandardUseCaseTest extends TestCase
     use DebugHelper;
 
     private StandardRepositoryInterface&MockObject $repository;
-    private LoggerInterface&MockObject $logger;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private CreateStandardUseCase $useCase;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(StandardRepositoryInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->useCase = new CreateStandardUseCase($this->repository, $this->logger);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')->willReturnCallback(function ($callback) {
+            return $callback();
+        });
+
+        $this->useCase = new CreateStandardUseCase(
+            $this->repository, 
+            $this->eventDispatcher, 
+            $this->unitOfWork
+        );
     }
 
-    /**
-     * Run: composer test -- --filter CreateStandardUseCaseTest::testExecuteSuccessfully
-     * 
-     * @return void
-     */
     public function testExecuteSuccessfully(): void
     {
         $actorId = 'user-admin';
-        
         $request = $this->createMock(CreateStandardRequestInterface::class);
         $request->method('getId')->willReturn('1');
         $request->method('getName')->willReturn('Tiêu chuẩn 1');
         $request->method('getDepartmentId')->willReturn('DEPT-01');
 
-        $this->debug('INPUT DATA', [
-            'id' => $request->getId(),
-            'name' => $request->getName()
-        ]);
-
         $this->repository->expects($this->once())
             ->method('create')
             ->with($this->isInstanceOf(Standard::class));
 
-        $this->logger->expects($this->once())
-            ->method('write');
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch');
 
         $this->useCase->execute($request, $actorId);
+        
+        $this->debug('CREATE STANDARD SUCCESS', ['id' => '1']);
     }
 
-    /**
-     * Run: composer test -- --filter CreateStandardUseCaseTest::testExecuteThrowsExceptionForMissingFields
-     * 
-     * @return void
-     */
     #[DataProvider('invalidRequestProvider')]
-    public function testExecuteThrowsExceptionForMissingFields(
+    public function testExecuteThrowsExceptionForInvalidFields(
         string $id, 
         string $name, 
         string $deptId, 
-        string $expectedMessage
+        string $expectedException
     ): void {
         $request = $this->createMock(CreateStandardRequestInterface::class);
         $request->method('getId')->willReturn($id);
         $request->method('getName')->willReturn($name);
         $request->method('getDepartmentId')->willReturn($deptId);
 
-        $this->expectException(DomainException::class);
-        $this->expectExceptionMessage($expectedMessage);
+        $this->expectException($expectedException);
 
         $this->repository->expects($this->never())->method('create');
-        $this->logger->expects($this->never())->method('write');
+        $this->eventDispatcher->expects($this->never())->method('dispatch');
 
         $this->useCase->execute($request, 'actor-123');
     }
@@ -86,9 +85,9 @@ final class CreateStandardUseCaseTest extends TestCase
     public static function invalidRequestProvider(): array
     {
         return [
-            'trong_id' => ['', 'Name', 'Dept', 'Mã tiêu chuẩn không được để trống'],
-            'trong_name' => ['1', '', 'Dept', 'Tên tiêu chuẩn không được để trống'],
-            'trong_dept' => ['1', 'Name', '', 'Vui lòng chọn phòng ban'],
+            'empty_id' => ['', 'Name', 'Dept', StandardEmptyIdException::class],
+            'empty_name' => ['1', '', 'Dept', StandardEmptyNameException::class],
+            'empty_dept' => ['1', 'Name', '', StandardEmptyDepartmentIdException::class],
         ];
     }
 }

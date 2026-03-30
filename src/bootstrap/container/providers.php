@@ -8,6 +8,7 @@ use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\CriteriaService
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\EvidenceServiceProvider;
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\MilestoneServiceProvider;
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\StandardServiceProvider;
+use App\Modules\Report\Infrastructure\ServiceProvider\ReportServiceProvider;
 use App\Modules\UserManagement\Infrastructure\ServiceProvider\UserServiceProvider;
 use App\Modules\UserProfile\Infrastructure\ServiceProvider\UserProfileServiceProvider;
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\MilestoneEvidenceServiceProvider;
@@ -23,5 +24,6 @@ return [
     new EvidenceServiceProvider(),
     new UserProfileServiceProvider(),
     new MilestoneEvidenceServiceProvider(),
-    new DashboardServiceProvider()
+    new DashboardServiceProvider(),
+    new ReportServiceProvider()
 ];

@@ -2,7 +2,9 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Requests\Evidence;
 
-final class SearchEvidenceRequest
+use App\Modules\QualityAssessment\Application\Requests\Evidence\SearchEvidenceRequestInterface;
+
+final class SearchEvidenceRequest implements SearchEvidenceRequestInterface
 {
     private string $keyword;
     private string $standard_id;

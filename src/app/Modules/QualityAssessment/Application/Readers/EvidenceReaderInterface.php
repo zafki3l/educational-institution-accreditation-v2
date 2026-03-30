@@ -2,12 +2,12 @@
 
 namespace App\Modules\QualityAssessment\Application\Readers;
 
-use App\Modules\QualityAssessment\Presentation\Requests\Evidence\SearchEvidenceRequest;
+use App\Modules\QualityAssessment\Application\Requests\Evidence\SearchEvidenceRequestInterface;
 use App\Shared\Domain\Paginator\PaginatedResult;
 
 interface EvidenceReaderInterface
 {
-    public function getSearchResult(SearchEvidenceRequest $request): PaginatedResult;
+    public function getSearchResult(SearchEvidenceRequestInterface $request): PaginatedResult;
 
     public function count(): int;
 

@@ -3,13 +3,13 @@
 namespace App\Modules\QualityAssessment\Infrastructure\Readers;
 
 use App\Modules\QualityAssessment\Application\Readers\EvidenceReaderInterface;
+use App\Modules\QualityAssessment\Application\Requests\Evidence\SearchEvidenceRequestInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
-use App\Modules\QualityAssessment\Presentation\Requests\Evidence\SearchEvidenceRequest;
 use App\Shared\Domain\Paginator\PaginatedResult;
 
 class EvidenceReader implements EvidenceReaderInterface
 {
-    public function getSearchResult(SearchEvidenceRequest $request): PaginatedResult
+    public function getSearchResult(SearchEvidenceRequestInterface $request): PaginatedResult
     {
         $keyword = $request->getKeyword();
         $standard_id = $request->getStandardId();

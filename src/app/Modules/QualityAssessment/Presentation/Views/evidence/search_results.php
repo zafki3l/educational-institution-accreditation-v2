@@ -120,7 +120,7 @@
                                 <div class="result-item">
                                     <h3 class="result-title">
                                         <a href="/evidences/results/<?= htmlspecialchars($evidence['id']) ?>/view">
-                                            <?= htmlspecialchars("Tiêu chuẩn {$evidence['id']}: {$evidence['name']}") ?>
+                                            <?= htmlspecialchars("Minh chứng {$evidence['id']}: {$evidence['name']}") ?>
                                         </a>
                                     </h3>
                                 </div>

@@ -1,3 +1,5 @@
+# prod dockerFile, for local dev: Check php/dockerFile
+
 FROM php:8.2-cli-alpine
 
 WORKDIR /app

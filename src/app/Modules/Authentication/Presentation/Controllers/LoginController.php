@@ -34,7 +34,7 @@ final class LoginController extends AuthController
         if (!$auth_user) {
             $_SESSION['login_errors'] = 'Tài khoản hoặc mật khẩu không hợp lệ!';
 
-            $this->redirect(HOST . '/login');
+            $this->redirect('/login');
         }
 
         session_regenerate_id(true);

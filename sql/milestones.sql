@@ -24,11 +24,9 @@ VALUES
 -- Tiêu chí 1.5
 ('1.5', '1.5.1', 1, 'CSGD có quy trình và đơn vị/bộ phận giám sát, rà soát, triển khai cải tiến chất lượng việc xây dựng, rà soát và phát triển tầm nhìn, sứ mạng và văn hóa.'),
 ('1.5', '1.5.2', 2, 'Tầm nhìn, sứ mạng và văn hóa của CSGD được điều chỉnh nhằm đáp ứng nhu cầu và sự hài lòng của các bên liên quan.'),
-('1.5', '1.5.3', 3, 'Quy trình xây dựng, rà soát và phát triển tầm nhìn, sứ mạng và văn hóa được cải tiến ít nhất một lần trong 5 năm của chu kỳ đánh giá.');
+('1.5', '1.5.3', 3, 'Quy trình xây dựng, rà soát và phát triển tầm nhìn, sứ mạng và văn hóa được cải tiến ít nhất một lần trong 5 năm của chu kỳ đánh giá.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 -- Tiêu chí 2.1
 ('2.1', '2.1.1', 1, 'CSGD có thành lập hội đồng quản trị/hội đồng trường; có các tổ chức đảng, đoàn thể, các hội đồng tư vấn đáp ứng quy định của Luật Giáo dục, Luật Giáo dục đại học, Điều lệ trường đại học, các quy định khác của pháp luật và các quy định của đơn vị chủ quản.'),
 ('2.1', '2.1.2', 2, 'Hội đồng quản trị/hội đồng trường; các tổ chức đảng, đoàn thể; các hội đồng tư vấn được quy định rõ chức năng, nhiệm vụ, quyền hạn; có các văn bản thể hiện trách nhiệm giải trình, tính bền vững, sự minh bạch và giảm thiểu các rủi ro tiềm tàng trong quá trình hoạt động.'),
@@ -46,11 +44,9 @@ VALUES
 -- Tiêu chí 2.4
 ('2.4', '2.4.1', 1, 'Cơ cấu tổ chức, chức năng, nhiệm vụ của các đơn vị, bộ phận được điều chỉnh phù hợp với các quy định của CSGD và các quy định khác của đơn vị chủ quản để tăng hiệu quả hoạt động và quản lý rủi ro tốt hơn.'),
 ('2.4', '2.4.2', 2, 'Nhân sự tham gia các đơn vị, bộ phận của hệ thống quản trị được điều chỉnh và/hoặc được nâng cao năng lực để tăng hiệu quả hoạt động và quản lý rủi ro tốt hơn.'),
-('2.4', '2.4.3', 3, 'Hệ thống văn bản để tổ chức, quản lý của CSGD được điều chỉnh phù hợp với các thay đổi trong cơ cấu tổ chức và quản trị của CSGD.');
+('2.4', '2.4.3', 3, 'Hệ thống văn bản để tổ chức, quản lý của CSGD được điều chỉnh phù hợp với các thay đổi trong cơ cấu tổ chức và quản trị của CSGD.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 -- Tiêu chí 3.1
 ('3.1', '3.1.1', 1, 'CSGD có cơ cấu quản lý rõ ràng; các đơn vị, bộ phận, tổ chức được thành lập mới căn cứ trên kế hoạch và định hướng chiến lược phát triển đã được phê duyệt, phù hợp với bối cảnh cụ thể của CSGD.'),
 ('3.1', '3.1.2', 2, 'Có văn bản quy định rõ ràng vai trò, trách nhiệm, chức năng, nhiệm vụ và mối liên hệ giữa các thành phần trong cơ cấu quản lý của CSGD.'),
@@ -69,11 +65,9 @@ VALUES
 -- Tiêu chí 3.4
 ('3.4', '3.4.1', 1, 'Cơ cấu lãnh đạo và quản lý của CSGD được cải tiến dựa trên kết quả rà soát và đánh giá.'),
 ('3.4', '3.4.2', 2, 'Các văn bản quy định về vai trò, chức năng, nhiệm vụ và mối liên hệ giữa các thành phần trong cơ cấu quản lý được điều chỉnh, bổ sung nhằm tăng hiệu quả quản lý và hiệu quả công việc của CSGD.'),
-('3.4', '3.4.3', 3, 'Nhân sự tham gia cơ cấu lãnh đạo và quản lý của CSGD được điều chỉnh, luân chuyển dựa trên kết quả đánh giá năng lực lãnh đạo, quản lý và hiệu quả công việc.');
+('3.4', '3.4.3', 3, 'Nhân sự tham gia cơ cấu lãnh đạo và quản lý của CSGD được điều chỉnh, luân chuyển dựa trên kết quả đánh giá năng lực lãnh đạo, quản lý và hiệu quả công việc.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 -- Tiêu chí 4.1
 ('4.1', '4.1.1', 1, 'CSGD có bộ phận phụ trách công tác xây dựng và theo dõi kế hoạch chiến lược của CSGD.'),
 ('4.1', '4.1.2', 2, 'CSGD có quy trình hoặc hướng dẫn xây dựng kế hoạch chiến lược tổng thể và kế hoạch chiến lược theo từng lĩnh vực như nguồn nhân lực, cơ sở vật chất, tài chính, đào tạo, NCKH và phục vụ cộng đồng.'),
@@ -92,11 +86,9 @@ VALUES
 -- Tiêu chí 4.4
 ('4.4', '4.4.1', 1, 'CSGD thực hiện cải tiến quá trình lập kế hoạch chiến lược nhằm đạt được các mục tiêu chiến lược đã đề ra.'),
 ('4.4', '4.4.2', 2, 'CSGD thực hiện đối sánh và đánh giá việc xây dựng, triển khai kế hoạch chiến lược để đề xuất các giải pháp thực hiện và điều chỉnh phù hợp nhằm đạt mục tiêu chiến lược.'),
-('4.4', '4.4.3', 3, 'CSGD ban hành các văn bản bổ sung và điều chỉnh kế hoạch chiến lược, các KPIs và các chỉ tiêu phấn đấu chính.');
+('4.4', '4.4.3', 3, 'CSGD ban hành các văn bản bổ sung và điều chỉnh kế hoạch chiến lược, các KPIs và các chỉ tiêu phấn đấu chính.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 -- Tiêu chí 5.1
 ('5.1', '5.1.1', 1, 'CSGD có phân công các đơn vị, bộ phận chịu trách nhiệm xây dựng các chính sách về đào tạo, NCKH và phục vụ cộng đồng.'),
 ('5.1', '5.1.2', 2, 'CSGD có văn bản hướng dẫn và kế hoạch tập huấn về việc xây dựng các chính sách về đào tạo, NCKH và phục vụ cộng đồng.'),
@@ -115,11 +107,9 @@ VALUES
 
 -- Tiêu chí 5.4
 ('5.4', '5.4.1', 1, 'CSGD thực hiện cải tiến và điều chỉnh các chính sách về đào tạo, NCKH và phục vụ cộng đồng dựa trên kết quả rà soát và đánh giá.'),
-('5.4', '5.4.2', 2, 'Các bên liên quan hài lòng đối với các chính sách về đào tạo, NCKH và phục vụ cộng đồng.');
+('5.4', '5.4.2', 2, 'Các bên liên quan hài lòng đối với các chính sách về đào tạo, NCKH và phục vụ cộng đồng.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 -- Tiêu chí 6.1
 ('6.1', '6.1.1', 1, 'CSGD có kế hoạch đánh giá nhu cầu về nguồn nhân lực đáp ứng hoạt động đào tạo, NCKH và phục vụ cộng đồng.'),
 ('6.1', '6.1.2', 2, 'CSGD có quy hoạch và kế hoạch phát triển nguồn nhân lực dựa trên đánh giá nhu cầu của hoạt động đào tạo, NCKH và phục vụ cộng đồng, tuân thủ các quy định hiện hành.'),
@@ -152,11 +142,9 @@ VALUES
 
 -- Tiêu chí 6.7
 ('6.7', '6.7.1', 1, 'CSGD thực hiện cải thiện các chế độ và chính sách dựa trên kết quả rà soát và đánh giá nhằm hỗ trợ hoạt động đào tạo, NCKH và phục vụ cộng đồng.'),
-('6.7', '6.7.2', 2, 'CSGD thực hiện cải tiến quy trình và quy hoạch về nguồn nhân lực làm căn cứ đầu tư cho phát triển nguồn nhân lực.');
+('6.7', '6.7.2', 2, 'CSGD thực hiện cải tiến quy trình và quy hoạch về nguồn nhân lực làm căn cứ đầu tư cho phát triển nguồn nhân lực.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 7.1
 ('7.1', '7.1.1', 1, 'CSGD có bộ phận xây dựng kế hoạch và theo dõi, giám sát việc phát triển các nguồn lực tài chính phục vụ đào tạo, NCKH và phục vụ cộng đồng.'),
@@ -195,11 +183,9 @@ VALUES
 ('7.5', '7.5.3', 3, 'CSGD thực hiện đầu tư cho môi trường, sức khỏe, an toàn và khả năng tiếp cận.'),
 ('7.5', '7.5.4', 4, 'Các nội dung về môi trường, sức khỏe, an toàn và khả năng tiếp cận được rà soát, đánh giá hằng năm.'),
 ('7.5', '7.5.5', 5, 'CSGD có dữ liệu theo dõi và đánh giá hiệu quả đầu tư cải tiến môi trường, sức khỏe, an toàn và khả năng tiếp cận.'),
-('7.5', '7.5.6', 6, 'Môi trường, sức khỏe, an toàn và khả năng tiếp cận được cải tiến sau mỗi đợt rà soát, đánh giá.');
+('7.5', '7.5.6', 6, 'Môi trường, sức khỏe, an toàn và khả năng tiếp cận được cải tiến sau mỗi đợt rà soát, đánh giá.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 8.1
 ('8.1', '8.1.1', 1, 'CSGD có bộ phận chịu trách nhiệm xây dựng kế hoạch và theo dõi, giám sát các hoạt động đối ngoại theo quy định.'),
@@ -218,11 +204,9 @@ VALUES
 
 -- Tiêu chí 8.4
 ('8.4', '8.4.1', 1, 'CSGD có sự phát triển về số lượng đối tác, mạng lưới hoặc kết quả hoạt động đối ngoại trong chu kỳ 5 năm.'),
-('8.4', '8.4.2', 2, 'CSGD thực hiện các biện pháp cải thiện quan hệ hợp tác nhằm đạt được tầm nhìn, sứ mạng và mục tiêu chiến lược.');
+('8.4', '8.4.2', 2, 'CSGD thực hiện các biện pháp cải thiện quan hệ hợp tác nhằm đạt được tầm nhìn, sứ mạng và mục tiêu chiến lược.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 9.1
 ('9.1', '9.1.1', 1, 'CSGD có hệ thống đảm bảo chất lượng bên trong bao gồm trung tâm/bộ phận chuyên trách về đảm bảo chất lượng, trong đó có nhân sự được đào tạo hoặc bồi dưỡng về đảm bảo và kiểm định chất lượng giáo dục.'),
@@ -252,11 +236,9 @@ VALUES
 
 -- Tiêu chí 9.6
 ('9.6', '9.6.1', 1, 'CSGD thực hiện rà soát và cải tiến quy trình lập kế hoạch các hoạt động nhằm đáp ứng mục tiêu chiến lược và đảm bảo chất lượng ít nhất một lần trong chu kỳ đánh giá 5 năm.'),
-('9.6', '9.6.2', 2, 'CSGD thực hiện rà soát và cải tiến các KPIs và chỉ tiêu phấn đấu chính nhằm đáp ứng mục tiêu chiến lược và đảm bảo chất lượng ít nhất một lần trong chu kỳ đánh giá 5 năm.');
+('9.6', '9.6.2', 2, 'CSGD thực hiện rà soát và cải tiến các KPIs và chỉ tiêu phấn đấu chính nhằm đáp ứng mục tiêu chiến lược và đảm bảo chất lượng ít nhất một lần trong chu kỳ đánh giá 5 năm.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 10.1
 ('10.1', '10.1.1', 1, 'CSGD có kế hoạch đảm bảo chất lượng, trong đó xác định rõ lộ trình và kế hoạch tự đánh giá và chuẩn bị cho đánh giá ngoài CSGD và các chương trình đào tạo.'),
@@ -281,11 +263,9 @@ VALUES
 ('10.4', '10.4.2', 2, 'Quy trình tự đánh giá CSGD hoặc chương trình đào tạo được cải tiến dựa trên kết quả rà soát.'),
 ('10.4', '10.4.3', 3, 'CSGD thực hiện rà soát và đánh giá quy trình chuẩn bị cho đánh giá ngoài ít nhất một lần trong chu kỳ đánh giá 5 năm.'),
 ('10.4', '10.4.4', 4, 'Quy trình chuẩn bị cho đánh giá ngoài được cải tiến.'),
-('10.4', '10.4.5', 5, 'CSGD tổ chức họp rút kinh nghiệm và chia sẻ các thực hành tốt trong công tác đảm bảo và kiểm định chất lượng giáo dục giữa các đơn vị.');
+('10.4', '10.4.5', 5, 'CSGD tổ chức họp rút kinh nghiệm và chia sẻ các thực hành tốt trong công tác đảm bảo và kiểm định chất lượng giáo dục giữa các đơn vị.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 11.1
 ('11.1', '11.1.1', 1, 'CSGD có kế hoạch xây dựng hệ thống quản lý thông tin đảm bảo chất lượng bên trong nhằm hỗ trợ hoạt động đào tạo, nghiên cứu khoa học và phục vụ cộng đồng.'),
@@ -307,11 +287,9 @@ VALUES
 -- Tiêu chí 11.4
 ('11.4', '11.4.1', 1, 'Hệ thống quản lý thông tin đảm bảo chất lượng bên trong của CSGD được cải tiến.'),
 ('11.4', '11.4.2', 2, 'Các chính sách, quy trình và kế hoạch quản lý thông tin đảm bảo chất lượng bên trong của CSGD được cải tiến và đánh giá là có hiệu quả.'),
-('11.4', '11.4.3', 3, 'Thông tin đảm bảo chất lượng bên trong, bao gồm kết quả phân tích đánh giá, được CSGD sử dụng để hỗ trợ đào tạo, nghiên cứu khoa học và phục vụ cộng đồng.');
+('11.4', '11.4.3', 3, 'Thông tin đảm bảo chất lượng bên trong, bao gồm kết quả phân tích đánh giá, được CSGD sử dụng để hỗ trợ đào tạo, nghiên cứu khoa học và phục vụ cộng đồng.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 12.1
 ('12.1', '12.1.1', 1, 'Kế hoạch nâng cao chất lượng có các chính sách, hệ thống, quy trình, thủ tục và nguồn lực để thực hiện tốt nhất hoạt động đào tạo, nghiên cứu khoa học và phục vụ cộng đồng.'),
@@ -332,11 +310,9 @@ VALUES
 ('12.4', '12.4.2', 2, 'CSGD có tham chiếu các tiêu chí đối sánh của các CSGD khác khi lựa chọn và xác định thang đo chuẩn.'),
 
 -- Tiêu chí 12.5
-('12.5', '12.5.1', 1, 'Quy trình lựa chọn và sử dụng các thông tin so chuẩn, đối sánh được cải tiến nhằm liên tục đạt được các kết quả tốt nhất trong hoạt động đào tạo, nghiên cứu khoa học và phục vụ cộng đồng.');
+('12.5', '12.5.1', 1, 'Quy trình lựa chọn và sử dụng các thông tin so chuẩn, đối sánh được cải tiến nhằm liên tục đạt được các kết quả tốt nhất trong hoạt động đào tạo, nghiên cứu khoa học và phục vụ cộng đồng.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 13.1
 ('13.1', '13.1.1', 1, 'Đề án hoặc văn bản quy định về tuyển sinh thể hiện rõ ràng chính sách tuyển sinh.'),
@@ -357,11 +333,9 @@ VALUES
 
 -- Tiêu chí 13.5
 ('13.5', '13.5.1', 1, 'CSGD sử dụng kết quả đánh giá công tác tuyển sinh và nhập học làm căn cứ điều chỉnh chiến lược, chính sách và kế hoạch tuyển sinh, nhập học.'),
-('13.5', '13.5.2', 2, 'Công tác tuyển sinh và nhập học được cải tiến, cập nhật ít nhất hai lần trong một chu kỳ đánh giá.');
+('13.5', '13.5.2', 2, 'Công tác tuyển sinh và nhập học được cải tiến, cập nhật ít nhất hai lần trong một chu kỳ đánh giá.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 14.1
 ('14.1', '14.1.1', 1, 'CSGD có quy định, hướng dẫn và phân công trách nhiệm cụ thể cho các đơn vị, cá nhân liên quan trong quá trình xây dựng, giám sát, rà soát, thẩm định, phê duyệt và ban hành chương trình dạy học.'),
@@ -383,11 +357,9 @@ VALUES
 
 -- Tiêu chí 14.5
 ('14.5', '14.5.1', 1, 'CSGD ban hành quy trình thiết kế, phát triển và đánh giá chương trình dạy học.'),
-('14.5', '14.5.2', 2, 'Chương trình dạy học được cải tiến và ban hành đáp ứng nhu cầu của các bên liên quan.');
+('14.5', '14.5.2', 2, 'Chương trình dạy học được cải tiến và ban hành đáp ứng nhu cầu của các bên liên quan.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 15.1
 ('15.1', '15.1.1', 1, 'CSGD có tuyên bố chính thức về triết lý giáo dục; nội dung triết lý phù hợp với mục tiêu, sứ mạng của CSGD và với xu thế phát triển chung.'),
@@ -412,11 +384,9 @@ VALUES
 -- Tiêu chí 15.5
 ('15.5', '15.5.1', 1, 'CSGD điều chỉnh triết lý giáo dục ít nhất một lần trong chu kỳ đánh giá; nội dung điều chỉnh phù hợp với chuẩn đầu ra và tiếp cận các xu hướng mới.'),
 ('15.5', '15.5.2', 2, 'CSGD điều chỉnh các hoạt động dạy và học ít nhất hai năm một lần; nội dung điều chỉnh phù hợp với triết lý giáo dục nhằm đạt chuẩn đầu ra.'),
-('15.5', '15.5.3', 3, 'CSGD lấy ý kiến các bên liên quan về mức độ hài lòng đối với triết lý giáo dục và các hoạt động dạy và học.');
+('15.5', '15.5.3', 3, 'CSGD lấy ý kiến các bên liên quan về mức độ hài lòng đối với triết lý giáo dục và các hoạt động dạy và học.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 16.1
 ('16.1', '16.1.1', 1, 'CSGD có quy trình thiết lập hệ thống lập kế hoạch và lựa chọn các loại hình đánh giá người học phù hợp trong quá trình học tập.'),
@@ -438,11 +408,9 @@ VALUES
 ('16.4', '16.4.1', 1, 'CSGD thực hiện thay đổi và cải tiến các loại hình hoặc phương pháp đánh giá người học.'),
 ('16.4', '16.4.2', 2, 'CSGD định kỳ đánh giá độ tin cậy và độ chính xác của các loại hình hoặc phương pháp kiểm tra, đánh giá người học.'),
 ('16.4', '16.4.3', 3, 'Quy trình xây dựng và đánh giá độ tin cậy, độ chính xác của các phương pháp kiểm tra, đánh giá được thực hiện khoa học, được kiểm chứng trước khi áp dụng và được thông báo công khai cho người học trước mỗi khóa học, kỳ học hoặc học phần.'),
-('16.4', '16.4.4', 4, 'Không có tình trạng khiếu nại hoặc phàn nàn của người học về sự thiếu công bằng hoặc minh bạch trong việc sử dụng các phương pháp đánh giá kết quả học tập.');
+('16.4', '16.4.4', 4, 'Không có tình trạng khiếu nại hoặc phàn nàn của người học về sự thiếu công bằng hoặc minh bạch trong việc sử dụng các phương pháp đánh giá kết quả học tập.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 17.1
 ('17.1', '17.1.1', 1, 'CSGD có quy chế, quy định hoặc văn bản về việc triển khai các hoạt động phục vụ và hỗ trợ người học.'),
@@ -463,11 +431,9 @@ VALUES
 -- Tiêu chí 17.4
 ('17.4', '17.4.1', 1, 'CSGD có các chỉ số thể hiện sự cải thiện về chất lượng các hoạt động phục vụ và hỗ trợ người học.'),
 ('17.4', '17.4.2', 2, 'CSGD có các chỉ số thể hiện sự cải thiện về phần mềm quản lý người học, cơ sở dữ liệu kết quả đánh giá và hệ thống cố vấn học tập.'),
-('17.4', '17.4.3', 3, 'Ít nhất 75 phần trăm người học và cựu người học được khảo sát hài lòng về các hoạt động phục vụ, hỗ trợ và hệ thống giám sát người học.');
+('17.4', '17.4.3', 3, 'Ít nhất 75 phần trăm người học và cựu người học được khảo sát hài lòng về các hoạt động phục vụ, hỗ trợ và hệ thống giám sát người học.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 18.1
 ('18.1', '18.1.1', 1, 'Có cơ cấu tổ chức quản lý việc thực hiện giám sát, rà soát các hoạt động nghiên cứu.'),
@@ -489,11 +455,9 @@ VALUES
 
 -- Tiêu chí 18.4
 ('18.4', '18.4.1', 1, 'CSGD lấy ý kiến khảo sát của các bên liên quan về công tác quản lý nghiên cứu.'),
-('18.4', '18.4.2', 2, 'CSGD cải tiến công tác quản lý nghiên cứu và được các bên liên quan đánh giá tốt.');
+('18.4', '18.4.2', 2, 'CSGD cải tiến công tác quản lý nghiên cứu và được các bên liên quan đánh giá tốt.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 19.1
 ('19.1', '19.1.1', 1, 'CSGD có đơn vị, bộ phận hoặc nhân sự quản lý và hỗ trợ bảo hộ các phát minh, sáng chế, bản quyền và kết quả nghiên cứu.'),
@@ -513,11 +477,9 @@ VALUES
 
 -- Tiêu chí 19.4
 ('19.4', '19.4.1', 1, 'CSGD có kế hoạch và triển khai thực hiện cải tiến công tác quản lý tài sản trí tuệ nhằm bảo hộ hiệu quả cho CSGD, cán bộ nghiên cứu và lợi ích cộng đồng.'),
-('19.4', '19.4.2', 2, 'Ít nhất 75 phần trăm các bên liên quan được khảo sát hài lòng về công tác quản lý tài sản trí tuệ của CSGD.');
+('19.4', '19.4.2', 2, 'Ít nhất 75 phần trăm các bên liên quan được khảo sát hài lòng về công tác quản lý tài sản trí tuệ của CSGD.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 20.1
 ('20.1', '20.1.1', 1, 'CSGD có quy định về việc thiết lập các mối quan hệ hợp tác trong nghiên cứu nhằm đáp ứng các mục tiêu nghiên cứu.'),
@@ -542,11 +504,9 @@ VALUES
 ('20.4', '20.4.1', 1, 'CSGD thực hiện cải thiện các mối quan hệ hợp tác trong nghiên cứu khoa học; lựa chọn lại các đối tác sau rà soát nhằm nâng cao hiệu quả các hoạt động hợp tác và phát triển đối tác.'),
 ('20.4', '20.4.2', 2, 'CSGD gia tăng được số lượng và chất lượng các mối quan hệ hợp tác và đối tác như các nhà khoa học, nhà tuyển dụng và các đối tác có uy tín, xứng tầm.'),
 ('20.4', '20.4.3', 3, 'Kết quả của các hoạt động phát triển hợp tác và đối tác của CSGD đáp ứng được các mục tiêu nghiên cứu đã đề ra.'),
-('20.4', '20.4.4', 4, 'Các hoạt động hợp tác và đối tác của CSGD góp phần gia tăng các nguồn lực cho CSGD về nhân lực và tài lực.');
+('20.4', '20.4.4', 4, 'Các hoạt động hợp tác và đối tác của CSGD góp phần gia tăng các nguồn lực cho CSGD về nhân lực và tài lực.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 21.1
 ('21.1', '21.1.1', 1, 'CSGD có các chính sách và kế hoạch kết nối, cung cấp các dịch vụ phục vụ cộng đồng nhằm thực hiện tầm nhìn và sứ mạng của CSGD.'),
@@ -566,11 +526,9 @@ VALUES
 -- Tiêu chí 21.4
 ('21.4', '21.4.1', 1, 'CSGD có kế hoạch cung cấp các dịch vụ phục vụ và kết nối cộng đồng.'),
 ('21.4', '21.4.2', 2, 'CSGD thực hiện các hoạt động cải tiến việc cung cấp các dịch vụ phục vụ và kết nối cộng đồng theo kế hoạch, đáp ứng nhu cầu của các bên liên quan.'),
-('21.4', '21.4.3', 3, 'Ít nhất 75 phần trăm các bên liên quan được khảo sát hài lòng về kết quả thực hiện các hoạt động dịch vụ phục vụ và kết nối cộng đồng.');
+('21.4', '21.4.3', 3, 'Ít nhất 75 phần trăm các bên liên quan được khảo sát hài lòng về kết quả thực hiện các hoạt động dịch vụ phục vụ và kết nối cộng đồng.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 22.1
 ('22.1', '22.1.1', 1, 'CSGD có kế hoạch đào tạo trong đó xác định và phân tích, dự đoán được tỷ lệ tốt nghiệp đúng hạn và tỷ lệ thôi học của tất cả các chương trình đào tạo.'),
@@ -599,9 +557,7 @@ VALUES
 ('22.4', '22.4.5', 5, 'CSGD thực hiện đối sánh mức độ hài lòng của các bên liên quan đối với chất lượng người học sau tốt nghiệp giữa các khóa học trước và sau của tất cả các chương trình đào tạo.'),
 ('22.4', '22.4.6', 6, 'CSGD triển khai các biện pháp cải tiến nhằm nâng cao mức độ hài lòng của các bên liên quan về chất lượng người học sau tốt nghiệp của tất cả các chương trình đào tạo.');
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 23.1
 ('23.1', '23.1.1', 1, 'Có quy định cụ thể về các loại hình hoạt động nghiên cứu; số lượng và chất lượng NCKH mà đội ngũ GV và cán bộ nghiên cứu phải thực hiện (ví dụ số lượng công trình NCKH, bài báo, tham dự hội thảo…) theo định mức ứng với mỗi vị trí công việc khác nhau theo quy định hiện hành.'),
@@ -641,11 +597,9 @@ VALUES
 ('23.6', '23.6.1', 1, 'CSGD có quy định cụ thể về kết quả nghiên cứu và sáng tạo (bao gồm thương mại hóa, thử nghiệm chuyển giao, thành lập đơn vị khởi nghiệp) trong hoạt động KHCN.'),
 ('23.6', '23.6.2', 2, 'Có hệ thống thu thập thông tin phản hồi của các bên liên quan về chất lượng kết quả nghiên cứu và sáng tạo.'),
 ('23.6', '23.6.3', 3, 'Có các đơn vị khởi nghiệp, thử nghiệm chuyển giao và hoạt động nghiên cứu sáng tạo.'),
-('23.6', '23.6.4', 4, 'Thực hiện việc đối sánh, rà soát và điều chỉnh hoạt động nghiên cứu và sáng tạo; có kế hoạch cải tiến căn cứ thông tin phản hồi của các bên liên quan.');
+('23.6', '23.6.4', 4, 'Thực hiện việc đối sánh, rà soát và điều chỉnh hoạt động nghiên cứu và sáng tạo; có kế hoạch cải tiến căn cứ thông tin phản hồi của các bên liên quan.'),
 
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+
 
 -- Tiêu chí 24.1
 ('24.1', '24.1.1', 1, 'Có văn bản quy định cụ thể về loại hình và khối lượng tham gia vào hoạt động kết nối và phục vụ cộng đồng, đóng góp cho xã hội.'),
@@ -673,11 +627,7 @@ VALUES
 ('24.4', '24.4.2', 2, 'Có hệ thống thu thập thông tin phản hồi của các bên liên quan về tác động của hoạt động kết nối và phục vụ cộng đồng, đóng góp cho xã hội.'),
 ('24.4', '24.4.3', 3, 'Có hệ thống giám sát sự hài lòng của các bên liên quan về hoạt động kết nối và phục vụ cộng đồng, đóng góp cho xã hội.'),
 ('24.4', '24.4.4', 4, 'Có thực hiện đối sánh sự hài lòng của các bên liên quan; rà soát, điều chỉnh các hoạt động kết nối và phục vụ cộng đồng hằng năm.'),
-('24.4', '24.4.5', 5, 'Có kế hoạch cải tiến chất lượng hoạt động kết nối và phục vụ cộng đồng căn cứ thông tin phản hồi của các bên liên quan.');
-
-INSERT INTO educational_institution_accreditation.milestones
-(criteria_id, code, `order`, name)
-VALUES
+('24.4', '24.4.5', 5, 'Có kế hoạch cải tiến chất lượng hoạt động kết nối và phục vụ cộng đồng căn cứ thông tin phản hồi của các bên liên quan.'),
 
 -- Tiêu chí 25.1
 ('25.1', '25.1.1', 1, 'CSGD có quy định cụ thể về kết quả và các chỉ số tài chính đạt được của hoạt động đào tạo, NCKH và phục vụ cộng đồng.'),
@@ -693,4 +643,4 @@ VALUES
 ('25.2', '25.2.3', 3, 'Có thực hiện đối sánh về kết quả và các chỉ số thị trường của hoạt động đào tạo, NCKH và phục vụ cộng đồng; thực hiện rà soát, điều chỉnh hằng năm.'),
 ('25.2', '25.2.4', 4, 'Có hệ thống thu thập thông tin phản hồi của các bên liên quan về kết quả và các chỉ số thị trường của hoạt động đào tạo, NCKH và phục vụ cộng đồng.'),
 ('25.2', '25.2.5', 5, 'Có kế hoạch cải tiến chất lượng hoạt động căn cứ thông tin phản hồi của các bên liên quan về kết quả và các chỉ số thị trường.'),
-('25.2', '25.2.6', 6, 'Có CSDL đánh giá về kết quả và các chỉ số thị trường của hoạt động đào tạo, NCKH và phục vụ cộng đồng.');
+('25.2', '25.2.6', 6, 'Có CSDL đánh giá về kết quả và các chỉ số thị trường của hoạt động đào tạo, NCKH và phục vụ cộng đồng.'),

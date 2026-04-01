@@ -1,5 +1,9 @@
 vendor/
 .env
+.env.prod
 .phpunit.cache/
 .DS_Store
 src/public/assets/evidences
+docker-compose.prod.yaml
+dockerFile
+Thumbs.db

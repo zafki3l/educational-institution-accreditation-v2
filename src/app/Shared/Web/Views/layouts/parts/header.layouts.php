@@ -2,7 +2,7 @@
     <div class="nav-bar">
         <ul class="left-nav">
             <li>
-                <img src="http://localhost/assets/icon/fbu.png">
+                <img src="/assets/icon/fbu.png">
             </li>
             <li><a href="/">Trang chủ</a></li>
             <li><a href="/evidences/find">Tìm kiếm minh chứng</a></li>

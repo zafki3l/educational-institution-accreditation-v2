@@ -83,6 +83,7 @@ VALUES
 ('14.2', '14', 'Có hệ thống xây dựng, rà soát, điều chỉnh CĐR của CTĐT và các môn học/học phần để phù hợp với nhu cầu của các bên liên quan.'),
 ('14.3', '14', 'Các đề cương môn học/học phần, kế hoạch giảng dạy của CTĐT và các môn học/học phần được văn bản hóa, phổ biến và thực hiện dựa trên CĐR.'),
 ('14.4', '14', 'Việc rà soát quy trình thiết kế, đánh giá và rà soát chương trình dạy học được thực hiện.'),
+('14.5', '14', 'Quy trình thiết kế, đánh giá và chương trình dạy học được cải tiến để đảm bảo sự phù hợp và cập nhật nhằm đáp ứng nhu cầu luôn thay đổi của các bên liên quan.'),
 
 -- Tiêu chuẩn 15: Dạy và học
 ('15.1', '15', 'Thiết lập được hệ thống lựa chọn các hoạt động dạy và học phù hợp với triết lý giáo dục và để đạt được CĐR.'),

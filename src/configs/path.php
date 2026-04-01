@@ -6,4 +6,3 @@ $host = $_SERVER['HTTP_HOST'];
 $rootUrl = $scheme . '://' . $host;
 
 define('ROOT_URL', $rootUrl);
-define('HOST', 'http://localhost');

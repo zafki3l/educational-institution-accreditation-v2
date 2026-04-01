@@ -12,6 +12,6 @@ final class LogoutController extends AuthController
     {
         $this->logoutUseCase->execute();
 
-        $this->redirect(HOST . '/login');
+        $this->redirect('/login');
     }
 }

@@ -3,8 +3,9 @@ FROM php:8.2-cli-alpine
 WORKDIR /app
 
 RUN apk add --no-cache \
-    git unzip curl libzip-dev oniguruma-dev \
-    && docker-php-ext-install pdo pdo_mysql zip
+    git unzip curl libzip-dev oniguruma-dev
+
+RUN docker-php-ext-install pdo pdo_mysql zip
 
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
@@ -13,8 +14,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 WORKDIR /app/src
-
 CMD php -S 0.0.0.0:$PORT -t public public/index.php

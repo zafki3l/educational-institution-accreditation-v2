@@ -1,0 +1,9 @@
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-SearchBot
+Disallow: /
+
+User-agent: *
+Disallow: /admin/
+Disallow: /api/

@@ -12,8 +12,10 @@ use App\Modules\Report\Infrastructure\ServiceProvider\ReportServiceProvider;
 use App\Modules\UserManagement\Infrastructure\ServiceProvider\UserServiceProvider;
 use App\Modules\UserProfile\Infrastructure\ServiceProvider\UserProfileServiceProvider;
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\MilestoneEvidenceServiceProvider;
+use App\Shared\Infrastructure\Persistence\PersistenceServiceProvider;
 
 return [
+    new PersistenceServiceProvider(),
     new AuthServiceProvider(),
     new RoleServiceProvider(),
     new UserServiceProvider(),

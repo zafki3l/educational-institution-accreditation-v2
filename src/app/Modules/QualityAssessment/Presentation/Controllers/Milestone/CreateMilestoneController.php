@@ -11,12 +11,15 @@ use App\Shared\Web\Responses\JsonResponse;
 
 final class CreateMilestoneController extends QualityAssessmentController
 {
-    public function __construct(private CreateMilestoneUseCase $createMilestoneUseCase) {}
+    public function __construct(
+        private CreateMilestoneUseCase $createMilestoneUseCase,
+        private AuthSession $authSession
+    ) {}
 
-    public function store(CreateMilestoneRequest $request)
+    public function store(CreateMilestoneRequest $request): JsonResponse
     {
         try {
-            $milestone = $this->createMilestoneUseCase->execute($request, AuthSession::getUserId());
+            $milestone = $this->createMilestoneUseCase->execute($request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([
                 'id' => $milestone->getId(),

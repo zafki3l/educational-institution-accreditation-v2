@@ -15,6 +15,7 @@ final class LoginUseCase
 {
     /**
      * Using fake hash to prevents timing attacks
+     * 
      * @var string
      */
     private const DUMMY_HASH = '$2y$10$usesomesillystringfore7hnbRJHxXVLeakoG8K30oukPsA.ztMG';

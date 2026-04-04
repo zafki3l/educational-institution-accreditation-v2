@@ -12,11 +12,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 final class MilestoneTest extends TestCase
 {
-    /**
-     * Run: composer test -- --filter MilestoneTest::testCreateMilestoneSuccessfully
-     * 
-     * @return void
-     */
     public function testCreateMilestoneSuccessfully(): void
     {
         $id = 100;
@@ -35,11 +30,6 @@ final class MilestoneTest extends TestCase
         $this->assertEquals($name, $milestone->getName());
     }
 
-    /**
-     * Run: composer test -- --filter MilestoneTest::testCreateThrowsExceptionWhenNameIsEmpty
-     * 
-     * @return void
-     */
     public function testCreateThrowsExceptionWhenNameIsEmpty(): void
     {
         $this->expectException(MilestoneNameEmptyException::class);
@@ -53,11 +43,6 @@ final class MilestoneTest extends TestCase
         );
     }
 
-    /**
-     * Run: composer test -- --filter MilestoneTest::testCreateThrowsExceptionWhenCriteriaIdIsEmpty
-     * 
-     * @return void
-     */
     public function testCreateThrowsExceptionWhenCriteriaIdIsEmpty(): void
     {
         $this->expectException(CriteriaEmptyIdException::class);
@@ -71,11 +56,6 @@ final class MilestoneTest extends TestCase
         );
     }
 
-    /**
-     * Run: composer test -- --filter MilestoneTest::testCreateThrowsExceptionWhenOrderIsInvalid
-     * 
-     * @return void
-     */
     #[DataProvider('invalidOrderProvider')]
     public function testCreateThrowsExceptionWhenOrderIsInvalid(int $invalidOrder): void
     {

@@ -15,3 +15,6 @@ $route->middleware([EnsureAuth::class, EnsureAdmin::class])
 
 $route->middleware([EnsureAuth::class, EnsureAdmin::class])
     ->delete('/milestones/{id}', [DeleteMilestoneController::class, 'destroy']);
+
+$route->middleware([EnsureAuth::class, EnsureStaff::class])
+    ->get('/api/criterias/{criteria_id}/milestones', [IndexMilestoneController::class, 'test']);

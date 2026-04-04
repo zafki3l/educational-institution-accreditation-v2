@@ -4,48 +4,41 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Milestone;
 
 use App\Modules\QualityAssessment\Application\Requests\Milestone\CreateMilestoneRequestInterface;
 use App\Modules\QualityAssessment\Domain\Entities\Milestone;
+use App\Modules\QualityAssessment\Domain\Events\Milestone\MilestoneCreated;
 use App\Modules\QualityAssessment\Domain\Repositories\MilestoneRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Milestone\MilestoneCode;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 
 final class CreateMilestoneUseCase
 {
     public function __construct(
         private MilestoneRepositoryInterface $repository,
-        private LoggerInterface $logger
+        private EventDispatcherInterface $eventDispatcher,
+        private UnitOfWorkInterface $unitOfWork
     ) {}
 
     public function execute(CreateMilestoneRequestInterface $request, string $actor_id): Milestone
     {
-        $milestone = Milestone::create(
-            null,
-            $request->getCriteriaId(),
-            MilestoneCode::generate($request->getCriteriaId(), $request->getOrder()),
-            $request->getOrder(),
-            $request->getName()
-        );
+        return $this->unitOfWork->execute(function () use ($request, $actor_id) {
+            $milestone = $this->repository->create(Milestone::create(
+                null,
+                $request->getCriteriaId(),
+                MilestoneCode::generate($request->getCriteriaId(), $request->getOrder()),
+                $request->getOrder(),
+                $request->getName()
+            ));
 
-        $created = $this->repository->create($milestone);
+            $this->eventDispatcher->dispatch(new MilestoneCreated(
+                $milestone->getId(),
+                $milestone->getCriteriaId(),
+                $milestone->getCode()->value(),
+                $milestone->getOrder(),
+                $milestone->getName(),
+                $actor_id
+            ));
 
-        $this->writeLog($created, $actor_id);
-
-        return $created;
-    }
-
-    private function writeLog(Milestone $milestone, string $actor_id): void
-    {
-        $this->logger->write(
-            'info',
-            'create', 
-            "Người dùng {$actor_id} đã thêm 1 mốc đánh giá mới", 
-            $actor_id, 
-            [
-                'id' => $milestone->getId(),
-                'criteria_id' => $milestone->getCriteriaId(),
-                'code' => $milestone->getCode()->value(),
-                'order' => $milestone->getOrder(),
-                'name' => $milestone->getName(),
-            ]
-        );
+            return $milestone;
+        });
     }
 }

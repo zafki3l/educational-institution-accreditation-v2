@@ -7,7 +7,8 @@ use App\Modules\QualityAssessment\Application\UseCases\Milestone\CreateMilestone
 use App\Modules\QualityAssessment\Domain\Entities\Milestone;
 use App\Modules\QualityAssessment\Domain\Repositories\MilestoneRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Milestone\MilestoneCode;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;
@@ -17,26 +18,33 @@ final class CreateMilestoneUseCaseTest extends TestCase
     use DebugHelper;
 
     private MilestoneRepositoryInterface&MockObject $repository;
-    private LoggerInterface&MockObject $logger;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private CreateMilestoneUseCase $useCase;
+
+    private const VALID_ACTOR_ID = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(MilestoneRepositoryInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->useCase = new CreateMilestoneUseCase($this->repository, $this->logger);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')->willReturnCallback(fn($callback) => $callback());
+
+        $this->useCase = new CreateMilestoneUseCase(
+            $this->repository,
+            $this->eventDispatcher,
+            $this->unitOfWork
+        );
     }
 
-    /**
-     * Run: composer test -- --filter CreateMilestoneUseCaseTest::testExecuteSuccessfully
-     * @return void
-     */
     public function testExecuteSuccessfully(): void
     {
-        $actorId = 'user-123';
+        $actorId = self::VALID_ACTOR_ID;
         $criteriaId = '1.1';
         $order = 2;
-        $name = 'Hoàn thành báo cáo tự đánh giá';
+        $name = 'Finish self-assessment report';
 
         $request = $this->createMock(CreateMilestoneRequestInterface::class);
         $request->method('getCriteriaId')->willReturn($criteriaId);
@@ -48,7 +56,6 @@ final class CreateMilestoneUseCaseTest extends TestCase
         $persistedMilestone->method('getCriteriaId')->willReturn($criteriaId);
         $persistedMilestone->method('getOrder')->willReturn($order);
         $persistedMilestone->method('getName')->willReturn($name);
-
         $persistedMilestone->method('getCode')->willReturn(
             MilestoneCode::fromString('1.1.2')
         );
@@ -60,17 +67,14 @@ final class CreateMilestoneUseCaseTest extends TestCase
             ->with($this->isInstanceOf(Milestone::class))
             ->willReturn($persistedMilestone);
 
-        $this->logger->expects($this->once())
-            ->method('write')
-            ->willReturnCallback(function($level, $action, $msg, $actor, $context) {
-                $this->debug('LOG CHECK', ['log_context' => $context]);
-                return true;
-            });
+        $this->eventDispatcher->expects($this->once())->method('dispatch');
 
         $result = $this->useCase->execute($request, $actorId);
 
         $this->assertSame($persistedMilestone, $result);
         $this->assertEquals(99, $result->getId());
         $this->assertEquals('1.1.2', $result->getCode()->value());
+        
+        $this->debug('CREATE MILESTONE SUCCESS', ['id' => $result->getId(), 'code' => $result->getCode()->value()]);
     }
 }

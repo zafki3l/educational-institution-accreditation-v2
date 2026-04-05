@@ -161,4 +161,4 @@
                 });
             });
         });
-    cxx / script >
+</script>

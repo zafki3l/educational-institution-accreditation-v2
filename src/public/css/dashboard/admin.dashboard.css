@@ -4,7 +4,7 @@ a {
 }
 
 .layout {
-    padding: 30px 170px !important;
+    padding: 70px 170px 30px;
 }
 
 .card-grid {
@@ -305,13 +305,14 @@ a {
     font-size: 13px;
 }
 
-@media (max-width: 1024px) and (max-height: 700px) {
+@media (max-width: 1024px) {
     .layout {
-        padding: 20px 30px !important;
-    }
+        padding: 70px 40px 30px ;
+    }   
 
     .card-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 15px;
     }
 
@@ -335,4 +336,10 @@ a {
         justify-content: space-around;
         width: 100%;
     }
+}
+
+@media (min-width: 2560px) {
+    .layout {
+        padding: 70px 400px 30px ;
+    }   
 }

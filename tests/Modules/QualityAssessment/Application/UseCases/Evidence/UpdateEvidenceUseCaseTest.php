@@ -2,106 +2,135 @@
 
 namespace Tests\Unit\Modules\QualityAssessment\Application\UseCases\Evidence;
 
+use App\Modules\QualityAssessment\Application\Readers\MilestoneReaderInterface;
 use App\Modules\QualityAssessment\Application\Requests\Evidence\UpdateEvidenceRequestInterface;
 use App\Modules\QualityAssessment\Application\UseCases\Evidence\UpdateEvidenceUseCase;
 use App\Modules\QualityAssessment\Domain\Entities\Evidence;
-use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIssuedDateException;
+use App\Modules\QualityAssessment\Domain\Events\Evidence\EvidenceUpdated;
+use App\Modules\QualityAssessment\Domain\Exception\Criteria\CriteriaEmptyIdException;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidencePermissionAccessDeniedException;
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
-use App\Modules\QualityAssessment\Domain\Services\EvidenceIssuedDateEmptyCheckerInterface;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
+use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Tests\TraitHelper\DebugHelper;
+use DateTimeImmutable;
 
 final class UpdateEvidenceUseCaseTest extends TestCase
 {
-    use DebugHelper;
-
     private EvidenceRepositoryInterface&MockObject $repository;
     private EvidenceFileUploaderInterface&MockObject $fileUploader;
-    private EvidenceIssuedDateEmptyCheckerInterface&MockObject $dateChecker;
-    private LoggerInterface&MockObject $logger;
+    private EvidencePermissionCheckerInterface&MockObject $permissionChecker;
+    private MilestoneReaderInterface&MockObject $milestoneReader;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private UpdateEvidenceUseCase $useCase;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(EvidenceRepositoryInterface::class);
         $this->fileUploader = $this->createMock(EvidenceFileUploaderInterface::class);
-        $this->dateChecker = $this->createMock(EvidenceIssuedDateEmptyCheckerInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
+        $this->permissionChecker = $this->createMock(EvidencePermissionCheckerInterface::class);
+        $this->milestoneReader = $this->createMock(MilestoneReaderInterface::class);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')->willReturnCallback(fn($callback) => $callback());
 
         $this->useCase = new UpdateEvidenceUseCase(
             $this->repository,
             $this->fileUploader,
-            $this->dateChecker,
-            $this->logger
+            $this->permissionChecker,
+            $this->milestoneReader,
+            $this->eventDispatcher,
+            $this->unitOfWork
         );
     }
 
-    /**
-     * Run: composer test -- --filter UpdateEvidenceUseCaseTest::testExecuteSuccessfullyWithNewFile
-     * 
-     * @return void
-     */
-    public function testExecuteSuccessfullyWithNewFile(): void
+    public function testExecuteSuccessfullyWithChanges(): void
     {
         $actorId = 'user-update-01';
-        $this->debug('START', 'Bắt đầu testUpdateSuccessfullyWithNewFile');
+        $evidenceId = 'H1.01.01.01';
+        $criteriaId = 'CRIT-123';
 
         $request = $this->createMock(UpdateEvidenceRequestInterface::class);
-        $request->method('getId')->willReturn('H1.01.01.01');
-        $request->method('getName')->willReturn('Tên minh chứng cập nhật');
+        $request->method('getCriteriaId')->willReturn($criteriaId);
+        $request->method('getId')->willReturn($evidenceId);
+        $request->method('getName')->willReturn('Tên mới');
         $request->method('getIssuedDate')->willReturn('2024-02-02');
-        $request->method('getDocumentNumber')->willReturn('456/QĐ');
-        $request->method('getIssuingAuthority')->willReturn('Sở GD');
+        $request->method('getDocumentNumber')->willReturn('456/QD');
+        $request->method('getIssuingAuthority')->willReturn('So GD');
         $request->method('getMilestoneId')->willReturn(2);
-
         $request->method('getFile')->willReturn(['error' => UPLOAD_ERR_OK]);
 
-        $this->dateChecker->method('check')->willReturn(false);
+        $evidence = $this->createMock(Evidence::class);
+        $evidence->method('getId')->willReturn(EvidenceId::fromString($evidenceId));
+        $evidence->method('getIssuedDate')->willReturn(new DateTimeImmutable('2023-01-01'));
+        $evidence->method('getFileUrl')->willReturn('old_path.pdf');
+        
+        $evidence->method('hasChanges')->willReturn(true);
+        $evidence->method('getChanges')->willReturn([
+            'name' => ['old' => 'Old name', 'new' => 'New name'],
+            'milestone_id' => ['old' => 1, 'new' => 2]
+        ]);
 
-        $this->fileUploader->expects($this->once())
-            ->method('upload')
-            ->willReturn('new_evidence_path.pdf');
+        $this->permissionChecker->method('check')->willReturn(true);
+        $this->repository->method('findOrFail')->with($evidenceId)->willReturn($evidence);
+        $this->fileUploader->method('upload')->willReturn('new_path.pdf');
+        
+        $this->milestoneReader->method('getCodeById')->willReturnMap([
+            [1, '1.1.1'],
+            [2, '1.1.2'],
+        ]);
 
-        $expectedCriteriaId = 'CRIT-123';
-        $this->repository->expects($this->once())
-            ->method('update')
-            ->with($this->callback(function (Evidence $evidence) {
-                $this->debug('REPO_UPDATE', [
-                    'id' => $evidence->getId()->value(),
-                    'new_file' => $evidence->getFileUrl()
-                ]);
-                return $evidence->getFileUrl() === 'new_evidence_path.pdf';
-            }))
-            ->willReturn($expectedCriteriaId);
+        $this->repository->expects($this->once())->method('update')->with($evidence);
+        $this->repository->expects($this->once())->method('updateMilestoneLink')->with($evidence);
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with($this->isInstanceOf(EvidenceUpdated::class));
 
-        $this->logger->expects($this->once())
-            ->method('write')
-            ->with('info', 'delete', $this->anything(), $actorId);
-
-        $result = $this->useCase->execute($request, $actorId);
-
-        $this->assertEquals($expectedCriteriaId, $result);
-        $this->debug('END', ['criteria_id' => $result]);
+        $this->useCase->execute($request, $actorId);
     }
 
-    /**
-     * Run: composer test -- --filter UpdateEvidenceUseCaseTest::testExecuteThrowsExceptionWhenDateEmpty
-     * 
-     * @return void
-     */
-    public function testExecuteThrowsExceptionWhenDateEmpty(): void
+    public function testExecuteReturnsEarlyWhenNoChangesDetected(): void
     {
-        $this->debug('START', 'Bắt đầu test lỗi ngày ban hành trống');
-
         $request = $this->createMock(UpdateEvidenceRequestInterface::class);
-        $request->method('getIssuedDate')->willReturn('');
+        $request->method('getCriteriaId')->willReturn('CRIT-123');
+        $request->method('getFile')->willReturn(['error' => UPLOAD_ERR_NO_FILE]);
 
-        $this->dateChecker->method('check')->willReturn(true);
+        $evidence = $this->createMock(Evidence::class);
+        $evidence->method('hasChanges')->willReturn(false);
 
-        $this->expectException(EvidenceEmptyIssuedDateException::class);
+        $this->permissionChecker->method('check')->willReturn(true);
+        $this->repository->method('findOrFail')->willReturn($evidence);
+
+        $this->repository->expects($this->never())->method('update');
+        $this->unitOfWork->expects($this->never())->method('execute');
+
+        $this->useCase->execute($request, 'actor-1');
+    }
+
+    public function testThrowsExceptionWhenCriteriaIdIsEmpty(): void
+    {
+        $request = $this->createMock(UpdateEvidenceRequestInterface::class);
+        $request->method('getCriteriaId')->willReturn('');
+
+        $this->expectException(CriteriaEmptyIdException::class);
+
+        $this->useCase->execute($request, 'actor-1');
+    }
+
+    public function testThrowsExceptionWhenPermissionIsDenied(): void
+    {
+        $request = $this->createMock(UpdateEvidenceRequestInterface::class);
+        $request->method('getCriteriaId')->willReturn('CRIT-123');
+
+        $this->permissionChecker->method('check')->willReturn(false);
+
+        $this->expectException(EvidencePermissionAccessDeniedException::class);
 
         $this->useCase->execute($request, 'actor-1');
     }

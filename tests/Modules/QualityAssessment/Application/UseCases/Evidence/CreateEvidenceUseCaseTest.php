@@ -12,7 +12,6 @@ use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidencePermissionAc
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceIdExistsCheckerInterface;
-use App\Modules\QualityAssessment\Domain\Services\EvidenceIssuedDateEmptyCheckerInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
 use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
@@ -24,7 +23,6 @@ final class CreateEvidenceUseCaseTest extends TestCase
     private EvidenceRepositoryInterface&MockObject $repository;
     private EvidenceFileUploaderInterface&MockObject $fileUploader;
     private EvidenceIdExistsCheckerInterface&MockObject $idChecker;
-    private EvidenceIssuedDateEmptyCheckerInterface&MockObject $dateChecker;
     private EvidencePermissionCheckerInterface&MockObject $permissionChecker;
     private MilestoneReaderInterface&MockObject $milestoneReader;
     private EventDispatcherInterface&MockObject $eventDispatcher;
@@ -36,20 +34,17 @@ final class CreateEvidenceUseCaseTest extends TestCase
         $this->repository = $this->createMock(EvidenceRepositoryInterface::class);
         $this->fileUploader = $this->createMock(EvidenceFileUploaderInterface::class);
         $this->idChecker = $this->createMock(EvidenceIdExistsCheckerInterface::class);
-        $this->dateChecker = $this->createMock(EvidenceIssuedDateEmptyCheckerInterface::class);
         $this->permissionChecker = $this->createMock(EvidencePermissionCheckerInterface::class);
         $this->milestoneReader = $this->createMock(MilestoneReaderInterface::class);
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
 
-        // Ensure UnitOfWork executes the closure
         $this->unitOfWork->method('execute')->willReturnCallback(fn($callback) => $callback());
 
         $this->useCase = new CreateEvidenceUseCase(
             $this->repository,
             $this->fileUploader,
             $this->idChecker,
-            $this->dateChecker,
             $this->permissionChecker,
             $this->milestoneReader,
             $this->eventDispatcher,
@@ -60,12 +55,14 @@ final class CreateEvidenceUseCaseTest extends TestCase
     public function testExecuteSuccessfully(): void
     {
         $actorId = 'user-123';
+        $evidenceId = 'H1.01.01.01';
+        $milestoneId = 1;
         $request = $this->createMock(CreateEvidenceRequestInterface::class);
 
-        $request->method('getId')->willReturn('H1.01.01.01');
+        $request->method('getId')->willReturn($evidenceId);
         $request->method('getName')->willReturn('Evidence Name');
         $request->method('getCriteriaId')->willReturn('1.1');
-        $request->method('getMilestoneId')->willReturn(1); // Changed to int
+        $request->method('getMilestoneId')->willReturn($milestoneId);
         $request->method('getIssuedDate')->willReturn('2024-01-01');
         $request->method('getDocumentNumber')->willReturn('DOC-123');
         $request->method('getIssuingAuthority')->willReturn('Authority');
@@ -73,11 +70,14 @@ final class CreateEvidenceUseCaseTest extends TestCase
 
         $this->permissionChecker->method('check')->willReturn(true);
         $this->idChecker->method('check')->willReturn(false);
-        $this->dateChecker->method('check')->willReturn(false);
         $this->milestoneReader->method('getCodeById')->willReturn('MS_CODE_01');
         $this->fileUploader->method('upload')->willReturn('evidence_file.pdf');
 
         $this->repository->expects($this->once())->method('create');
+        $this->repository->expects($this->once())
+            ->method('attachMilestone')
+            ->with($evidenceId, $milestoneId);
+
         $this->eventDispatcher->expects($this->once())->method('dispatch')
             ->with($this->isInstanceOf(EvidenceCreated::class));
 
@@ -122,21 +122,27 @@ final class CreateEvidenceUseCaseTest extends TestCase
 
     public function testDoesNotUploadFileWhenUploadHasError(): void
     {
+        $evidenceId = 'H1.01.01.01';
+        $milestoneId = 1;
         $request = $this->createMock(CreateEvidenceRequestInterface::class);
+        
         $request->method('getCriteriaId')->willReturn('1.1');
         $request->method('getName')->willReturn('Evidence name');
-        $request->method('getId')->willReturn('H1.01.01.01');
-        $request->method('getMilestoneId')->willReturn(1);
-        $request->method('getIssuingAuthority')->willReturn('HD150');
+        $request->method('getId')->willReturn($evidenceId);
+        $request->method('getMilestoneId')->willReturn($milestoneId);
+        $request->method('getIssuingAuthority')->willReturn('Authority');
         $request->method('getFile')->willReturn(['error' => UPLOAD_ERR_NO_FILE]);
 
         $this->permissionChecker->method('check')->willReturn(true);
         $this->idChecker->method('check')->willReturn(false);
-        $this->dateChecker->method('check')->willReturn(true);
         $this->milestoneReader->method('getCodeById')->willReturn('MS_CODE_01');
 
         $this->fileUploader->expects($this->never())->method('upload');
+        
         $this->repository->expects($this->once())->method('create');
+        $this->repository->expects($this->once())
+            ->method('attachMilestone')
+            ->with($evidenceId, $milestoneId);
 
         $this->useCase->execute($request, 'actor-id');
     }

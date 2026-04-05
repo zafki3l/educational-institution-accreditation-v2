@@ -2,73 +2,92 @@
 
 namespace Tests\Unit\Modules\QualityAssessment\Application\UseCases\Evidence;
 
+use App\Modules\QualityAssessment\Application\Readers\MilestoneReaderInterface;
 use App\Modules\QualityAssessment\Application\UseCases\Evidence\DeleteEvidenceUseCase;
+use App\Modules\QualityAssessment\Domain\Entities\Evidence;
+use App\Modules\QualityAssessment\Domain\Events\Evidence\EvidenceDeleted;
+use App\Modules\QualityAssessment\Domain\Exception\Criteria\CriteriaEmptyIdException;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidencePermissionAccessDeniedException;
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
+use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Tests\TraitHelper\DebugHelper;
 
 final class DeleteEvidenceUseCaseTest extends TestCase
 {
-    use DebugHelper;
-
     private EvidenceRepositoryInterface&MockObject $repository;
-    private LoggerInterface&MockObject $logger;
+    private EvidencePermissionCheckerInterface&MockObject $permissionChecker;
+    private MilestoneReaderInterface&MockObject $milestoneReader;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private DeleteEvidenceUseCase $useCase;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(EvidenceRepositoryInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
+        $this->permissionChecker = $this->createMock(EvidencePermissionCheckerInterface::class);
+        $this->milestoneReader = $this->createMock(MilestoneReaderInterface::class);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')->willReturnCallback(fn($callback) => $callback());
 
         $this->useCase = new DeleteEvidenceUseCase(
             $this->repository,
-            $this->logger
+            $this->permissionChecker,
+            $this->milestoneReader,
+            $this->eventDispatcher,
+            $this->unitOfWork
         );
     }
 
-    /**
-     * Run: composer test -- --filter DeleteEvidenceUseCaseTest::testExecuteSuccessfully
-     * 
-     * @return void
-     */
     public function testExecuteSuccessfully(): void
     {
-        $evidenceId = 'H1.01.01.01';
+        $criteriaId = '1.1';
+        $evidenceIdStr = 'H1.01.01.01';
         $actorId = 'user-admin-99';
-        $expectedCriteriaId = '1.1';
+        $milestoneId = 10;
+        $milestoneCode = 'MS_CODE_01';
 
-        $this->debug('START', [
-            'evidence_id' => $evidenceId,
-            'actor' => $actorId
-        ]);
+        $evidence = $this->createMock(Evidence::class);
+        $evidence->method('getId')->willReturn(EvidenceId::fromString($evidenceIdStr));
+        $evidence->method('getMilestoneId')->willReturn($milestoneId);
+        $evidence->method('getName')->willReturn('Test Evidence');
+
+        $this->permissionChecker->method('check')->with($criteriaId, $actorId)->willReturn(true);
+        $this->repository->method('findOrFail')->with($evidenceIdStr)->willReturn($evidence);
+        $this->milestoneReader->method('getCodeById')->with($milestoneId)->willReturn($milestoneCode);
 
         $this->repository->expects($this->once())
             ->method('delete')
-            ->with($evidenceId)
-            ->willReturnCallback(function($id) use ($expectedCriteriaId) {
-                $this->debug('REPO_ACTION', ['id' => $id]);
-                return $expectedCriteriaId;
-            });
+            ->with($evidenceIdStr);
 
-        $this->logger->expects($this->once())
-            ->method('write')
-            ->with(
-                'info',
-                'delete',
-                $this->stringContains($evidenceId), 
-                $actorId,
-                $this->callback(function($context) use ($evidenceId, $expectedCriteriaId) {
-                    $this->debug('LOG_CONTEXT',  $context);
-                    return $context['id'] === $evidenceId && $context['criteria_id'] === $expectedCriteriaId;
-                })
-            );
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with($this->isInstanceOf(EvidenceDeleted::class));
 
-        $this->debug('EXECUTE', 'Chạy DeleteEvidenceUseCase...');
-        $result = $this->useCase->execute($evidenceId, $actorId);
+        $this->useCase->execute($criteriaId, $evidenceIdStr, $actorId);
+    }
 
-        $this->assertEquals($expectedCriteriaId, $result);
-        $this->debug('END', ['returned_criteria_id' => $result]);
+    public function testThrowsExceptionWhenCriteriaIdIsEmpty(): void
+    {
+        $this->expectException(CriteriaEmptyIdException::class);
+        
+        $this->useCase->execute('', 'H1.01.01.01', 'actor-id');
+    }
+
+    public function testThrowsExceptionWhenPermissionIsDenied(): void
+    {
+        $criteriaId = '1.1';
+        $actorId = 'actor-id';
+
+        $this->permissionChecker->method('check')->willReturn(false);
+
+        $this->expectException(EvidencePermissionAccessDeniedException::class);
+
+        $this->useCase->execute($criteriaId, 'H1.01.01.01', $actorId);
     }
 }

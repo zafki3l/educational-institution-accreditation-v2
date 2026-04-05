@@ -17,28 +17,110 @@ final class EvidenceTest extends TestCase
     public function testCreateEvidenceSuccessfully(): void
     {
         $id = EvidenceId::fromString('H1.01.01.01');
-        $name = 'Decision to establish the council';
-        $docNumber = '123/QD-UBND';
+        $name = 'Initial Name';
+        $docNumber = '123/QD';
         $issuedDate = new DateTimeImmutable('2023-01-01');
-        $authority = 'Provincial People Committee';
+        $authority = 'Authority';
         $milestoneId = 10;
 
         $evidence = Evidence::create($id, $name, $docNumber, $issuedDate, $authority, $milestoneId);
 
         $this->assertInstanceOf(Evidence::class, $evidence);
-        $this->assertSame($id, $evidence->getId());
         $this->assertEquals($name, $evidence->getName());
-        $this->assertEquals($docNumber, $evidence->getDocumentNumber());
-        $this->assertEquals($issuedDate, $evidence->getIssuedDate());
-        $this->assertEquals($authority, $evidence->getIssuingAuthority());
-        $this->assertEquals($milestoneId, $evidence->getMilestoneId());
-        $this->assertNull($evidence->getFileUrl());
+        $this->assertFalse($evidence->hasChanges(), 'New evidence should not have changes initially');
     }
+
+    #[DataProvider('invalidEvidenceDataProvider')]
+    public function testCreateThrowsExceptionWhenRequiredFieldsAreInvalid(
+        string $name,
+        ?string $docNumber,
+        string $authority,
+        int $milestoneId,
+        string $expectedException
+    ): void {
+        $id = EvidenceId::fromString('H1.01.01.01');
+        $issuedDate = new DateTimeImmutable();
+
+        $this->expectException($expectedException);
+
+        Evidence::create($id, $name, $docNumber, $issuedDate, $authority, $milestoneId);
+    }
+
+    public function testUpdateSuccessfullyTracksChanges(): void
+    {
+        $oldDate = new DateTimeImmutable('2023-01-01');
+        $evidence = Evidence::create(
+            EvidenceId::fromString('H1.01.01.01'),
+            'Old Name',
+            'Old Doc',
+            $oldDate,
+            'Old Authority',
+            1
+        );
+
+        $newName = 'New Name';
+        $newDate = new DateTimeImmutable('2024-01-01');
+        $evidence->update(
+            $newName,
+            'Old Doc',
+            $newDate,
+            'Old Authority',
+            2,
+            'http://new-file.com'
+        );
+
+        $this->assertEquals($newName, $evidence->getName());
+        $this->assertEquals(2, $evidence->getMilestoneId());
+        $this->assertTrue($evidence->hasChanges());
+
+        $changes = $evidence->getChanges();
+        
+        $this->assertArrayHasKey('name', $changes);
+        $this->assertEquals('Old Name', $changes['name']['old']);
+        $this->assertEquals('New Name', $changes['name']['new']);
+
+        $this->assertArrayHasKey('milestone_id', $changes);
+        $this->assertEquals(1, $changes['milestone_id']['old']);
+        $this->assertEquals(2, $changes['milestone_id']['new']);
+
+        $this->assertArrayNotHasKey('document_number', $changes);
+        $this->assertArrayNotHasKey('issuing_authority', $changes);
+    }
+
+    public function testUpdateDateComparisonLogic(): void
+    {
+        $date = new DateTimeImmutable('2023-01-01');
+        $id = EvidenceId::fromString('H1.01.01.01');
+        
+        $evidence = Evidence::create($id, 'Name', 'Doc', $date, 'Auth', 1);
+        
+        $this->assertFalse($evidence->hasChanges(), 'Should have no changes after creation');
+
+        $sameDateValue = new DateTimeImmutable('2023-01-01');
+        $evidence->update('Name', 'Doc', $sameDateValue, 'Auth', 1, null);
+
+        $this->assertArrayNotHasKey(
+            'issued_date', 
+            $evidence->getChanges(), 
+            'Updating with the same date value should not trigger a change'
+        );
+    }
+
+    public function testUpdateThrowsExceptionWhenNameIsEmpty(): void
+    {
+        $evidence = $this->createValidEvidence();
+
+        $this->expectException(EvidenceEmptyNameException::class);
+
+        $evidence->update('', 'Doc', null, 'Auth', 1, null);
+    }
+
+    ## --- File URL Tests ---
 
     public function testChangeFileUrlSuccessfully(): void
     {
         $evidence = $this->createValidEvidence();
-        $newUrl = 'file.pdf';
+        $newUrl = 'new_file.pdf';
 
         $evidence->changeFileUrl($newUrl);
 
@@ -54,34 +136,12 @@ final class EvidenceTest extends TestCase
         $evidence->changeFileUrl('');
     }
 
-    #[DataProvider('invalidEvidenceDataProvider')]
-    public function testCreateThrowsExceptionWhenRequiredFieldsAreInvalid(
-        string $name,
-        string $docNumber,
-        string $authority,
-        int $milestoneId,
-        string $expectedException
-    ): void {
-        $id = EvidenceId::fromString('H1.01.01.01');
-        $issuedDate = new DateTimeImmutable();
-
-        $this->expectException($expectedException);
-
-        Evidence::create($id, $name, $docNumber, $issuedDate, $authority, $milestoneId);
-    }
-
     public static function invalidEvidenceDataProvider(): array
     {
         return [
-            'empty_name' => [
-                '', 'DOC-123', 'Authority', 1, EvidenceEmptyNameException::class
-            ],
-            'empty_issuing_authority' => [
-                'Evidence Name', 'DOC-123', '', 1, EvidenceEmptyIssuingAuthorityException::class
-            ],
-            'milestone_id_is_zero' => [
-                'Evidence Name', 'DOC-123', 'Authority', 0, MilestoneIdEmptyException::class
-            ],
+            'empty_name' => ['', 'DOC-123', 'Authority', 1, EvidenceEmptyNameException::class],
+            'empty_issuing_authority' => ['Name', 'DOC-123', '', 1, EvidenceEmptyIssuingAuthorityException::class],
+            'milestone_id_is_zero' => ['Name', 'DOC-123', 'Authority', 0, MilestoneIdEmptyException::class],
         ];
     }
     

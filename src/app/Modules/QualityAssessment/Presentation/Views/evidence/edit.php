@@ -117,16 +117,14 @@ if (!empty($evidence->issued_date)) {
 
                         <div class="form-group">
                             <label>Mốc đánh giá</label>
-                            <select name="milestone_id" id="milestoneSelect" disabled>
+                            <select name="milestone_id" id="milestoneSelect" 
+                                data-criteria-id="<?= $evidence['milestone']->criteria_id ?>"
+                                data-selected="<?= $evidence['milestone_id'] ?>">
                                 <option>
                                     <?= $evidence['milestone']->order ?> - <?= $evidence['milestone']->name ?>
                                 </option>
                             </select>
-                        </div>
-
-                        <input type="hidden" 
-                                name="milestone_id" 
-                                value="<?= $evidence['milestone_id'] ?>">
+                        </div>  
 
                         <!-- Divider -->
                         <div class="divider"></div>
@@ -206,8 +204,45 @@ if (!empty($evidence->issued_date)) {
 
     </div>
 
-    <script src="/js/evidence/selectionOption.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const criteriaSelect  = document.getElementById('criteriaSelect');
+    const milestoneSelect = document.getElementById('milestoneSelect');
 
+    criteriaSelect.addEventListener('change', async () => {
+        const criteriaId     = milestoneSelect.dataset.criteriaId; // lấy từ data-criteria-id
+        const oldMilestoneId = milestoneSelect.dataset.selected;
+
+        console.log('criteriaId:', criteriaId);
+
+        milestoneSelect.innerHTML = '<option value="">-- Chọn mốc đánh giá --</option>';
+
+        if (!criteriaId) {
+            milestoneSelect.disabled = true;
+            return;
+        }
+
+        const response = await fetch(`/api/criterias/${criteriaId}/milestones`);
+        console.log('status:', response.status);
+
+        if (!response.ok) throw new Error('Failed to fetch milestones');
+
+        const result = await response.json();
+        console.log('result:', result);
+
+        result.milestones.forEach(milestone => {
+            const option = document.createElement('option');
+            option.value = milestone.id;
+            option.title = milestone.name;
+            option.textContent = `${milestone.order} - ${milestone.name}`;
+            if (milestone.id == oldMilestoneId) option.selected = true;
+            milestoneSelect.appendChild(option);
+        });
+    });
+
+    criteriaSelect.dispatchEvent(new Event('change'));
+});
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 

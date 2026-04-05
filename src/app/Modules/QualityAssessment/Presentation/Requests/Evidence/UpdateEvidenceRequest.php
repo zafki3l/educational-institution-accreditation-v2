@@ -13,6 +13,7 @@ final class UpdateEvidenceRequest implements UpdateEvidenceRequestInterface
     private string $issuing_authority;
     private ?array $file;
     private int $milestone_id;
+    private string $criteria_id;
 
     public function __construct() 
     {
@@ -23,6 +24,7 @@ final class UpdateEvidenceRequest implements UpdateEvidenceRequestInterface
         $this->issuing_authority = $_POST['issuing_authority'];
         $this->file = $_FILES['file'];
         $this->milestone_id = (int) $_POST['milestone_id'];
+        $this->criteria_id = $_POST['criteria_id'];
     }
 
     public function getId(): string
@@ -58,5 +60,10 @@ final class UpdateEvidenceRequest implements UpdateEvidenceRequestInterface
     public function getMilestoneId(): int
     {
         return $this->milestone_id;
+    }
+
+    public function getCriteriaId(): string
+    {
+        return $this->criteria_id;
     }
 }

@@ -68,6 +68,7 @@
                                 type="button"
                                 class="icon-btn danger delete-evidence-btn"
                                 data-id="<?= htmlspecialchars($evidence->id) ?>"
+                                data-criteria="<?= htmlspecialchars($criteriaId) ?>"
                                 data-name="<?= htmlspecialchars($evidence->name) ?>"
                             >
                                 <span class="material-symbols-outlined">delete</span>
@@ -83,6 +84,88 @@
 <?php include 'deleteModal.php' ?>
 <?php include 'evidenceMilestonesModal.php' ?>
 
-
 <script src="/js/evidence/EvidenceTable.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+    const deleteModal = document.getElementById('deleteConfirmModal');
+    if (!deleteModal) {
+        console.error('Không tìm thấy #deleteConfirmModal');
+        return;
+    }
+
+    const closeDeleteBtn   = document.getElementById('closeDeleteModal');
+    const cancelDeleteBtn  = document.getElementById('cancelDelete');
+    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    const deleteNameEl     = document.getElementById('evidenceDeleteName');
+    const modalOverlay     = deleteModal.querySelector('.modal-overlay');
+
+    let deleteEvidenceId = null;
+    let deleteCriteriaId = null;  
+
+    // Open modal
+    document.querySelectorAll('.delete-evidence-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();   // quan trọng
+
+            deleteEvidenceId = btn.dataset.id;
+            deleteCriteriaId = btn.dataset.criteria;
+            const evidenceName = btn.dataset.name;
+
+            console.log('Delete clicked - Evidence ID:', deleteEvidenceId); // Debug
+
+            if (deleteNameEl) deleteNameEl.textContent = `"${evidenceName}"`;
+            deleteModal.classList.add('active');
+        });
+    });
+
+    // Close modal
+    const closeModal = () => {
+        deleteModal.classList.remove('active');
+        deleteEvidenceId = null;
+    };
+
+    closeDeleteBtn?.addEventListener('click', closeModal);
+    cancelDeleteBtn?.addEventListener('click', closeModal);
+
+    modalOverlay?.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+    });
+
+    confirmDeleteBtn?.addEventListener('click', () => {
+        console.log('Confirm delete clicked. Evidence ID =', deleteEvidenceId);
+
+        if (!deleteEvidenceId) {
+            alert('Không tìm thấy ID minh chứng để xóa!');
+            return;
+        }
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/criterias/${deleteCriteriaId}/evidences/${deleteEvidenceId}`;
+
+        const methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'DELETE';
+        form.appendChild(methodInput);
+
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = 'CSRF-token';
+        tokenInput.value = document.querySelector('input[name="CSRF-token"]')?.value || '';
+        form.appendChild(tokenInput);
+
+        console.log('Submitting to:', form.action);   // Debug
+
+        document.body.appendChild(form);
+        form.submit();
+    });
+
+    console.log('Delete modal script loaded successfully');
+});
+
+</script>
+
 <script src="/js/evidence/EvidenceMilestonesModal.js"></script>

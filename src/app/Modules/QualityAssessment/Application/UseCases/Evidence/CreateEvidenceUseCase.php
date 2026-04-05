@@ -12,7 +12,6 @@ use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidencePermissionAc
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceIdExistsCheckerInterface;
-use App\Modules\QualityAssessment\Domain\Services\EvidenceIssuedDateEmptyCheckerInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
@@ -25,7 +24,6 @@ final class CreateEvidenceUseCase
         private EvidenceRepositoryInterface $repository,
         private EvidenceFileUploaderInterface $evidenceFileUploader,
         private EvidenceIdExistsCheckerInterface $evidenceIdExistsChecker,
-        private EvidenceIssuedDateEmptyCheckerInterface $evidenceIssuedDateEmptyChecker,
         private EvidencePermissionCheckerInterface $evidencePermissionChecker,
         private MilestoneReaderInterface $milestoneReader,
         private EventDispatcherInterface $eventDispatcher,
@@ -46,16 +44,16 @@ final class CreateEvidenceUseCase
             throw new EvidenceIdExistsException();
         }
 
+        $issuedDate = $request->getIssuedDate()
+            ? new DateTimeImmutable($request->getIssuedDate())
+            : null;
+
         $file = $request->getFile();
-        
-        $issuedDate = ($this->evidenceIssuedDateEmptyChecker->check($request->getIssuedDate()))
-            ? null
-            : new DateTimeImmutable($request->getIssuedDate());
 
         $evidence = Evidence::create(
             EvidenceId::fromString($request->getId()),
             $request->getName(),
-            $request->getDocumentNumber(),
+            $request->getDocumentNumber() ?: null,
             $issuedDate,
             $request->getIssuingAuthority(),
             $request->getMilestoneId()
@@ -69,6 +67,8 @@ final class CreateEvidenceUseCase
             }
             
             $this->repository->create($evidence);
+
+            $this->repository->attachMilestone($evidence->getId()->value(), $evidence->getMilestoneId());
             
             $this->eventDispatcher->dispatch(new EvidenceCreated(
                 $evidence->getId()->value(),

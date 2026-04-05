@@ -17,32 +17,6 @@ final class EvidenceId
     private function __construct(private string $value) {}
 
     /**
-     * Generate evidence code from components
-     * 
-     * @param int $boxNumber Box number (n)
-     * @param int $standardNumber Standard number (ab)
-     * @param int $criteriaNumber Criteria number (cd)
-     * @param int $evidenceNumber Evidence number (ef)
-     * @return self
-     */
-    public static function generate(
-        int $boxNumber,
-        int $standardNumber,
-        int $criteriaNumber,
-        int $evidenceNumber
-    ): self {
-        $code = sprintf(
-            'H%d.%02d.%02d.%02d',
-            $boxNumber,
-            $standardNumber,
-            $criteriaNumber,
-            $evidenceNumber
-        );
-
-        return new self($code);
-    }
-
-    /**
      * Create evidence code from string
      * 
      * @param string $code Evidence code string (e.g., H1.01.01.01)

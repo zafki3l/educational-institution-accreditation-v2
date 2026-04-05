@@ -37,7 +37,7 @@ $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->put('/evidences/update', [UpdateEvidenceController::class, 'update']);
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
-    ->delete('/evidences/{id}', [DeleteEvidenceController::class, 'destroy']);
+    ->delete('/criterias/{criteria_id}/evidences/{id}', [DeleteEvidenceController::class, 'destroy']);
 
 $route->middleware([EnsureAuth::class])
     ->get('/evidences/{id}/show', [ShowEvidenceController::class, 'show']);

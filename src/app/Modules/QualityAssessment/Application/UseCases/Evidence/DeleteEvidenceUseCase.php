@@ -2,36 +2,52 @@
 
 namespace App\Modules\QualityAssessment\Application\UseCases\Evidence;
 
+use App\Modules\QualityAssessment\Application\Readers\MilestoneReaderInterface;
+use App\Modules\QualityAssessment\Domain\Events\Evidence\EvidenceDeleted;
+use App\Modules\QualityAssessment\Domain\Exception\Criteria\CriteriaEmptyIdException;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidencePermissionAccessDeniedException;
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 
 final class DeleteEvidenceUseCase
 {
     public function __construct(
         private EvidenceRepositoryInterface $repository,
-        private LoggerInterface $logger
+        private EvidencePermissionCheckerInterface $evidencePermissionChecker,
+        private MilestoneReaderInterface $milestoneReader,
+        private EventDispatcherInterface $eventDispatcher,
+        private UnitOfWorkInterface $unitOfWork
     ) {}
 
-    public function execute(string $id, string $actor_id): string
+    public function execute(string $criteria_id, string $id, string $actor_id): void
     {
-        $criteria_id = $this->repository->delete($id);
+        if ($criteria_id === '') {
+            throw new CriteriaEmptyIdException();
+        }
 
-        $this->writeLog($id, $criteria_id, $actor_id);
+        if (!$this->evidencePermissionChecker->check($criteria_id, $actor_id)) {
+            throw new EvidencePermissionAccessDeniedException();
+        }
+        
+        $evidence = $this->repository->findOrFail($id);
 
-        return $criteria_id;
-    }
+        $milestone_code = $this->milestoneReader->getCodeById($evidence->getMilestoneId());
 
-    private function writeLog(string $id, string $criteria_id, string $actor_id): void
-    {
-        $this->logger->write(
-            'info',
-            'delete', 
-            "Người dùng {$actor_id} đã xóa 1 minh chứng. Mã minh chứng: {$id}", 
-            $actor_id, 
-            [
-                'id' => $id,
-                'criteria_id' => $criteria_id
-            ]
-        );
+        $this->unitOfWork->execute(function () use ($evidence, $milestone_code, $actor_id) {
+            $this->repository->delete($evidence->getId()->value());
+
+            $this->eventDispatcher->dispatch(new EvidenceDeleted(
+                $evidence->getId()->value(),
+                $evidence->getName(),
+                $evidence->getDocumentNumber(),
+                $evidence->getIssuedDate()?->format('Y-m-d'),
+                $evidence->getIssuingAuthority(),
+                $milestone_code,
+                $evidence->getFileUrl(),
+                $actor_id
+            ));
+        });
     }
 }

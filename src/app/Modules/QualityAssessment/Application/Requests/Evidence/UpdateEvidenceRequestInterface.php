@@ -17,4 +17,6 @@ interface UpdateEvidenceRequestInterface
     public function getFile(): ?array;
 
     public function getMilestoneId(): int;
+
+    public function getCriteriaId(): string;
 }

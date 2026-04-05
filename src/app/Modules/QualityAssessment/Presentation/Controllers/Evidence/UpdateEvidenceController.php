@@ -15,7 +15,8 @@ final class UpdateEvidenceController extends QualityAssessmentController
 {
     public function __construct(
         private UpdateEvidenceUseCase $updateEvidenceUseCase,
-        private StandardReaderInterface $standardReader
+        private StandardReaderInterface $standardReader,
+        private AuthSession $authSession
     ) {}
 
     public function edit(string $id): ViewResponse
@@ -38,9 +39,9 @@ final class UpdateEvidenceController extends QualityAssessmentController
     public function update(UpdateEvidenceRequest $request): void
     {
         try {
-            $criteria_id = $this->updateEvidenceUseCase->execute($request, AuthSession::getUserId());
+            $this->updateEvidenceUseCase->execute($request, $this->authSession->authUser()->user_id);
 
-            $this->redirect("/criterias/{$criteria_id}/evidences?success=updated");
+            $this->redirect("/criterias/{$request->getCriteriaId()}/evidences?success=updated");
         } catch (DomainException $e) {
             $_SESSION['errors'] = [$e->getMessage()];
 

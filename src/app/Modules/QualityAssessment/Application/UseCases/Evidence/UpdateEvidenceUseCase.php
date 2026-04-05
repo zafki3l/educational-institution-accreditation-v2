@@ -2,13 +2,16 @@
 
 namespace App\Modules\QualityAssessment\Application\UseCases\Evidence;
 
+use App\Modules\QualityAssessment\Application\Readers\MilestoneReaderInterface;
 use App\Modules\QualityAssessment\Application\Requests\Evidence\UpdateEvidenceRequestInterface;
-use App\Modules\QualityAssessment\Domain\Entities\Evidence;
+use App\Modules\QualityAssessment\Domain\Events\Evidence\EvidenceUpdated;
+use App\Modules\QualityAssessment\Domain\Exception\Criteria\CriteriaEmptyIdException;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidencePermissionAccessDeniedException;
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
-use App\Modules\QualityAssessment\Domain\Services\EvidenceIssuedDateEmptyCheckerInterface;
-use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use DateTimeImmutable;
 
 final class UpdateEvidenceUseCase
@@ -16,53 +19,64 @@ final class UpdateEvidenceUseCase
     public function __construct(
         private EvidenceRepositoryInterface $repository,
         private EvidenceFileUploaderInterface $evidenceFileUploader,
-        private EvidenceIssuedDateEmptyCheckerInterface $evidenceIssuedDateEmptyChecker,
-        private LoggerInterface $logger
+        private EvidencePermissionCheckerInterface $evidencePermissionChecker,
+        private MilestoneReaderInterface $milestoneReader,
+        private EventDispatcherInterface $eventDispatcher,
+        private UnitOfWorkInterface $unitOfWork
     ) {}
 
-    public function execute(UpdateEvidenceRequestInterface $request, string $actor_id): string
+    public function execute(UpdateEvidenceRequestInterface $request, string $actor_id): void
     {
-        $issuedDate = ($this->evidenceIssuedDateEmptyChecker->check($request->getIssuedDate()))
-            ? null
-            : new DateTimeImmutable($request->getIssuedDate());
-
-        $evidence = Evidence::create(
-            EvidenceId::fromString($request->getId()),
-            $request->getName(),
-            $request->getDocumentNumber(),
-            $issuedDate,
-            $request->getIssuingAuthority(),
-            $request->getMilestoneId()
-        );
-
-        if ($request->getFile()['error'] === UPLOAD_ERR_OK) {
-            $evidence->changeFileUrl($this->evidenceFileUploader->upload($request->getFile(), $request->getId()));
+        if ($request->getCriteriaId() === '') {
+            throw new CriteriaEmptyIdException();
         }
 
-        $criteria_id = $this->repository->update($evidence);
+        if (!$this->evidencePermissionChecker->check($request->getCriteriaId(), $actor_id)) {
+            throw new EvidencePermissionAccessDeniedException();
+        }
 
-        $this->writeLog($evidence, $criteria_id, $actor_id);
+        $evidence = $this->repository->findOrFail($request->getId());
 
-        return $criteria_id;
-    }
+        $issuedDate = $request->getIssuedDate() 
+            ? new DateTimeImmutable($request->getIssuedDate()) 
+            : $evidence->getIssuedDate();
 
-    private function writeLog(Evidence $evidence, string $criteria_id, string $actor_id): void
-    {
-        $this->logger->write(
-            'info',
-            'delete', 
-            "Người dùng {$actor_id} đã cập nhật 1 minh chứng. Mã minh chứng: {$evidence->getId()->value()}", 
-            $actor_id, 
-            [
-                'id' => $evidence->getId()->value(),
-                'name' => $evidence->getName(),
-                'document_number' => $evidence->getDocumentNumber(),
-                'issued_date' => $evidence->getIssuedDate()?->format('Y-m-d'),
-                'issuing_authority' => $evidence->getIssuingAuthority(),
-                'file_url' => $evidence->getFileUrl() ? $evidence->getFileUrl() : '',
-                'milestone_id' => $evidence->getMilestoneId(),
-                'criteria_id' => $criteria_id
-            ]
+        $file = ($request->getFile()['error'] === UPLOAD_ERR_OK) 
+            ? $this->evidenceFileUploader->upload($request->getFile(), $request->getId())
+            : $evidence->getFileUrl();
+
+        $evidence->update(
+            $request->getName(),
+            $request->getDocumentNumber() ?: null,
+            $issuedDate,
+            $request->getIssuingAuthority(),
+            $request->getMilestoneId(),
+            $file
         );
+
+        if (!$evidence->hasChanges()) {
+            return;
+        }
+
+        $this->unitOfWork->execute(function () use ($evidence, $actor_id) {
+            $this->repository->update($evidence);
+
+            $this->repository->updateMilestoneLink($evidence);
+
+            $changes = $evidence->getChanges();
+
+            if (isset($changes['milestone_id'])) {
+                $changes['milestone_code'] = [
+                    'old' => $this->milestoneReader->getCodeById($changes['milestone_id']['old']),
+                    'new' => $this->milestoneReader->getCodeById($changes['milestone_id']['new'])
+                ];
+            }
+
+            $this->eventDispatcher->dispatch(new EvidenceUpdated(
+                $evidence->getId()->value(),
+                $changes,
+                $actor_id
+            ));
+        });
     }
 }

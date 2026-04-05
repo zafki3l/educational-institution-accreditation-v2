@@ -34,3 +34,16 @@ header {
 }
 
 .left-nav a:hover, .right-nav a:hover { color: #002143; }
+
+/* ===== RESPONSIVE 1024x645 ===== */
+@media (max-width: 1024px) {
+    .nav-bar {
+        padding: 16px 20px;
+        flex-wrap: wrap;
+    }
+
+    .left-nav, .right-nav {
+        gap: 15px;
+        font-size: 15px;
+    }
+}

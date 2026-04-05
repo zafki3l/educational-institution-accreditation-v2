@@ -300,3 +300,36 @@ a {
     color: #94a3b8;
     font-size: 13px;
 }
+
+/* ===== RESPONSIVE 1024x645 ===== */
+@media (max-width: 1024px) {
+    .layout {
+        padding: 30px 40px !important;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .stats-card-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .chart-legend {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .custom-bar-chart {
+        overflow-x: hidden;
+    }
+
+    .chart-bars-container {
+        gap: 10px;
+        justify-content: space-around;
+        width: 100%;
+    }
+}

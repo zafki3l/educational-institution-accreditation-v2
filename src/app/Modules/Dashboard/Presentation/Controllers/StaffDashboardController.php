@@ -17,12 +17,12 @@ class StaffDashboardController extends DashboardController
     {
         $staff = $this->staffDashboardReader->getStaffInfo($this->authSession->authUser()->user_id);
 
-        $first_criteria = $this->staffDashboardReader->getFirstCriteriaId($staff->department_id);
+        $first_criteria = $this->staffDashboardReader->getFirstCriteriaId($staff->department_id) ?? null;
 
         $overview = new StaffDashboardOverviewViewModel(
             $this->staffDashboardReader->getOverviewStandardManagementStats($staff->department_id),
             $staff,
-            $first_criteria->first_criteria_id
+            $first_criteria ? $first_criteria->first_criteria_id : null
         );
 
         return new ViewResponse(

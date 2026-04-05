@@ -10,6 +10,6 @@ final class StaffDashboardOverviewViewModel
     public function __construct(
         public readonly StandardManagementStatsResponse $standardManagement,
         public readonly StaffInfoResponse $staffInfo,
-        public readonly string $first_criteria_id
+        public readonly ?string $first_criteria_id
     ) {}
 }

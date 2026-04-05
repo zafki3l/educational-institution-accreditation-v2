@@ -12,5 +12,5 @@ interface StaffDashboardReaderInterface
 
     public function getOverviewStandardManagementStats(string $department_id): StandardManagementStatsResponse;
 
-    public function getFirstCriteriaId(string $staff_id): FirstCriteriaIdResponse;
+    public function getFirstCriteriaId(string $staff_id): ?FirstCriteriaIdResponse;
 }

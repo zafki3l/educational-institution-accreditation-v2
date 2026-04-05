@@ -50,13 +50,17 @@ class StaffDashboardReader implements StaffDashboardReaderInterface
         );
     }
 
-    public function getFirstCriteriaId(string $department_id): FirstCriteriaIdResponse
+    public function getFirstCriteriaId(string $department_id): ?FirstCriteriaIdResponse
     {
         $department = (isStaff()) 
             ? Department::with('standards.criteria')->findOrFail($department_id)
             : '';
 
         $first_criteria = (isStaff()) ? $department->standards->first()?->criteria->first() : '';
+
+        if (!$first_criteria) {
+            return null;
+        }
 
         return new FirstCriteriaIdResponse(
             isAdmin() ? '1.1' : $first_criteria->id

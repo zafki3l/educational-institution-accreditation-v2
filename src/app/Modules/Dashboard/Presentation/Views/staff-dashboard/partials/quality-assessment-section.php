@@ -27,10 +27,15 @@
                 </div>
             </a>
             
-            <a href="/criterias/<?= htmlspecialchars($overview->first_criteria_id) ?>/evidences">
+            <?php 
+                $evidence_href = ($overview->first_criteria_id)
+                    ? "/criterias/{$overview->first_criteria_id}/evidences"
+                    : "/criterias";
+            ?>
+            <a href="<?= $evidence_href ?>">
                 <div class="item">
                     <h4>Quản lý minh chứng</h4>
-                    <span><?= htmlspecialchars($overview->standardManagement->total_evidences) ?> Minh chứng</span>
+                    <span><?= htmlspecialchars($overview->standardManagement->total_evidences ?? 0) ?> Minh chứng</span>
                 </div>
             </a>
         </div>

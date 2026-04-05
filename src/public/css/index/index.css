@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .layout {
     display: flex;
 }
@@ -163,4 +167,23 @@ tbody tr:hover {
 
     outline: none;
     transition: 0.2s ease;
+}
+
+@media (max-width: 1024px) and (max-height: 700px) {
+    .main {
+        margin-left: 180px;
+        padding: 20px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .table-box {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 800px;
+    }
 }

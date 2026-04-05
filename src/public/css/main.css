@@ -16,12 +16,12 @@ main {
     flex: 1;
 }
 
-body.has-header {
+body {
     padding-top: 70px;
 }
 
 @media (max-width: 1024px) and (max-height: 700px) {
-    body.has-header {
+    body {
         padding-top: 60px;
     }
 }

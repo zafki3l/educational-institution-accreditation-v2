@@ -1,11 +1,18 @@
 .layout {
     display: flex;
+    padding-top: 70px;
 }
 
 .main {
     flex: 1;
     padding: 40px;
     margin-left: 250px;
+}
+
+@media (max-width: 1024px) and (max-height: 700px) {
+    .layout {
+        padding-top: 60px;
+    }
 }
 
 .container {
@@ -163,4 +170,23 @@ tbody tr:hover {
 
     outline: none;
     transition: 0.2s ease;
+}
+
+@media (max-width: 1024px) and (max-height: 700px) {
+    .main {
+        margin-left: 180px;
+        padding: 20px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .table-box {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 800px;
+    }
 }

@@ -2,19 +2,22 @@ header {
     background-color: white;
     width: 100%;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.195);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
-}   
+}
 
 .nav-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 16px 96px 16px 60px;
-}   
+}
 
-.left-nav, .right-nav {
+.left-nav,
+.right-nav {
     img {
         width: 24px;
         height: 24px;
@@ -24,8 +27,8 @@ header {
     display: flex;
     list-style: none;
     gap: 36px;
-    font-size: 18px;  
-    align-items: center;  
+    font-size: 18px;
+    align-items: center;
 
     a {
         color: #003d80;
@@ -33,4 +36,20 @@ header {
     }
 }
 
-.left-nav a:hover, .right-nav a:hover { color: #002143; }
+.left-nav a:hover,
+.right-nav a:hover {
+    color: #002143;
+}
+
+@media (max-width: 1024px) and (max-height: 700px) {
+    .nav-bar {
+        padding: 10px 20px;
+        flex-wrap: wrap;
+    }
+
+    .left-nav,
+    .right-nav {
+        gap: 12px;
+        font-size: 14px;
+    }
+}

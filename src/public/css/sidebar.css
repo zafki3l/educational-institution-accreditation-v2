@@ -49,19 +49,17 @@
     justify-content: space-between;
     align-items: center;
 }
-/* Sub menu container */
+
 .sidebar-sub {
     display: none;
     margin-top: 4px;
     padding-left: 0;
 }
 
-/* Khi group mở */
 .sidebar-group.open .sidebar-sub {
     display: block;
 }
 
-/* Tree wrapper */
 .sidebar-tree {
     list-style: none;
     margin: 6px 0 8px;
@@ -69,7 +67,6 @@
     border-left: 2px solid #e5e7eb;
 }
 
-/* Standard item */
 .sidebar-standard {
     margin-bottom: 2px;
 }
@@ -83,7 +80,6 @@
     font-size: 14px;
 }
 
-/* Standard toggle */
 .sidebar-standard-toggle {
     width: 100%;
     background: transparent;
@@ -108,7 +104,7 @@
     display: none;
     list-style: none;
     margin: 4px 0;
-    padding-left: 32px;   /* ⬅️ tăng từ 18px → 32px */
+    padding-left: 32px;
     border-left: 1px dashed #e5e7eb;
 }
 
@@ -116,7 +112,6 @@
     display: block;
 }
 
-/* Criteria link */
 .sidebar-criteria-link {
     display: flex;
     gap: 6px;
@@ -138,4 +133,27 @@
     background: #e0e7ff;
     color: #1e40af;
     font-weight: 600;
+}
+
+@media (max-width: 1024px) and (max-height: 700px) {
+    .sidebar {
+        top: 0;
+        padding-top: 60px;
+        height: 100vh;
+        width: 180px;
+    }
+    
+    .sidebar-item {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+
+    .sidebar-standard-toggle {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .sidebar-criteria-list {
+        padding-left: 20px;
+    }
 }

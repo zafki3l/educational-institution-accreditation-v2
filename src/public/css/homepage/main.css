@@ -73,3 +73,9 @@ section {
         text-decoration: none;
     }
 }
+
+@media (max-width: 1024px) {
+    .actions {
+        padding: 80px 40px;
+    }
+}

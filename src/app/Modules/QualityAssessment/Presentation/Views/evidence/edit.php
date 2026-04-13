@@ -70,11 +70,11 @@ if (!empty($evidence->issued_date)) {
                                 <div class="input-icon">
                                     <span class="material-icons-round">qr_code</span>
                                     <!-- Prefix tự nhập -->
-                                    <input type="text" id="prefixInput" value="<?= $prefix ?>" readonly>
+                                    <input type="text" id="prefixInput" value="<?= htmlspecialchars($prefix) ?>" readonly>
 
-                                    <input type="text" id="autoCode" value="<?= $mainCode ?>" readonly>
+                                    <input type="text" id="autoCode" value="<?= htmlspecialchars($mainCode) ?>" readonly>
 
-                                    <input type="text" id="lastCode" value="<?= $lastCode ?>" readonly>
+                                    <input type="text" id="lastCode" value="<?= htmlspecialchars($lastCode) ?>" readonly>
                                 </div>
                             </div>
 
@@ -93,35 +93,35 @@ if (!empty($evidence->issued_date)) {
                             <label>Tiêu chuẩn</label>
                             <select name="standard_id" id="standardSelect"  disabled>
                                 <option>
-                                    Tiêu chuẩn <?= $evidence['milestone']->criteria->standard->name ?>
+                                    Tiêu chuẩn <?= htmlspecialchars($evidence['milestone']->criteria->standard->name) ?>
                                 </option>
                             </select>
                         </div>
 
                         <input type="hidden" 
                         name="standard_id" 
-                        value="<?= $evidence['milestone']->criteria->standard_id ?>">
+                        value="<?= htmlspecialchars($evidence['milestone']->criteria->standard_id) ?>">
 
                         <div class="form-group">
                             <label>Tiêu chí</label>
                             <select id="criteriaSelect" disabled>
                             <option>
-                                Tiêu chí <?= $evidence['milestone']->criteria->name ?>
+                                Tiêu chí <?= htmlspecialchars($evidence['milestone']->criteria->name) ?>
                             </option>
                         </select>
                         </div>
 
                         <input type="hidden" 
                         name="criteria_id" 
-                        value="<?= $evidence['milestone']->criteria_id ?>">
+                        value="<?= htmlspecialchars($evidence['milestone']->criteria_id) ?>">
 
                         <div class="form-group">
                             <label>Mốc đánh giá</label>
                             <select name="milestone_id" id="milestoneSelect" 
-                                data-criteria-id="<?= $evidence['milestone']->criteria_id ?>"
-                                data-selected="<?= $evidence['milestone_id'] ?>">
+                                data-criteria-id="<?= htmlspecialchars($evidence['milestone']->criteria_id) ?>"
+                                data-selected="<?= htmlspecialchars((string) $evidence['milestone_id']) ?>">
                                 <option>
-                                    <?= $evidence['milestone']->order ?> - <?= $evidence['milestone']->name ?>
+                                    <?= htmlspecialchars($evidence['milestone']->order) ?> - <?= htmlspecialchars($evidence['milestone']->name) ?>
                                 </option>
                             </select>
                         </div>  
@@ -142,11 +142,11 @@ if (!empty($evidence->issued_date)) {
                                 <label>Ngày ban hành</label>
 
                                 <div class="date-group">
-                                    <input type="text" id="day" value="<?= $day ?>" maxlength="2">
+                                    <input type="text" id="day" value="<?= htmlspecialchars($day) ?>" maxlength="2">
                                     <span>/</span>
-                                    <input type="text" id="month" value="<?= $month ?>" maxlength="2">
+                                    <input type="text" id="month" value="<?= htmlspecialchars($month) ?>" maxlength="2">
                                     <span>/</span>
-                                    <input type="text" id="year" value="<?= $year ?>" maxlength="4">
+                                    <input type="text" id="year" value="<?= htmlspecialchars($year) ?>" maxlength="4">
                                 </div>
 
                                 <input type="hidden" name="issued_date" id="issuedDate">

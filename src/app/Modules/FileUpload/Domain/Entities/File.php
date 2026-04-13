@@ -8,7 +8,13 @@ use App\Modules\FileUpload\Domain\Exceptions\SizeTooBigException;
 class File
 {
     private const ALLOWED_SIZE = 20_000_000;
-    private const ALLOWED_EXTENSION = ['png', 'jpg', 'webp', 'jpeg', 'pdf'];
+    private const ALLOWED_MIME_BY_EXTENSION = [
+        'png' => ['image/png'],
+        'jpg' => ['image/jpeg'],
+        'jpeg' => ['image/jpeg'],
+        'webp' => ['image/webp'],
+        'pdf' => ['application/pdf'],
+    ];
 
     private function __construct(
         private string $originalName,
@@ -23,13 +29,14 @@ class File
         string $storedName,
         string $path,
         string $extension,
+        string $mimeType,
         int $size
     ): self {
         if (!self::isAllowedSize($size)) {
             throw new SizeTooBigException();
         }
 
-        if (!self::isValidExtension($extension)) {
+        if (!self::isValidFileType($extension, $mimeType)) {
             throw new FileExtensionInvalidException();
         }
 
@@ -66,8 +73,14 @@ class File
         return $size <= self::ALLOWED_SIZE ? true : false;
     }
 
-    private static function isValidExtension(string $type): bool
+    private static function isValidFileType(string $extension, string $mimeType): bool
     {
-        return in_array($type, self::ALLOWED_EXTENSION);
+        $allowedMimes = self::ALLOWED_MIME_BY_EXTENSION[$extension] ?? null;
+
+        if ($allowedMimes === null) {
+            return false;
+        }
+
+        return in_array($mimeType, $allowedMimes, true);
     }
 }

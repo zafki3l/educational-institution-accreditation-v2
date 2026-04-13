@@ -5,6 +5,11 @@ use App\Shared\Web\Responses\ViewResponse;
 use Core\Router;
 use Core\ViewRender;
 
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', dirname(__DIR__) . '/logs/error.log');
+
 require_once '../configs/path.php';
 require_once '../configs/name.php';
 require_once '../helpers/authHelper.php';

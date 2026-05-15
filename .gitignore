@@ -5,3 +5,6 @@ vendor/
 .DS_Store
 src/public/assets/evidences
 Thumbs.db
+
+src/logs/error.log
+logs/

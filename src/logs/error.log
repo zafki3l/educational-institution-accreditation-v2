@@ -3,3 +3,43 @@
 Stack trace:
 #0 {main}
   thrown in /var/www/html/src/public/index.php on line 15
+[11-May-2026 07:52:17 UTC] PHP Fatal error:  Uncaught Exception: Page not found in /var/www/html/src/core/Router.php:111
+Stack trace:
+#0 /var/www/html/src/public/index.php(30): Core\Router->dispatch('/_next/webpack-...', 'GET')
+#1 {main}
+  thrown in /var/www/html/src/core/Router.php on line 111
+[11-May-2026 07:52:23 UTC] PHP Fatal error:  Uncaught Exception: Page not found in /var/www/html/src/core/Router.php:111
+Stack trace:
+#0 /var/www/html/src/public/index.php(30): Core\Router->dispatch('/_next/webpack-...', 'GET')
+#1 {main}
+  thrown in /var/www/html/src/core/Router.php on line 111
+[11-May-2026 07:52:29 UTC] PHP Fatal error:  Uncaught Exception: Page not found in /var/www/html/src/core/Router.php:111
+Stack trace:
+#0 /var/www/html/src/public/index.php(30): Core\Router->dispatch('/_next/webpack-...', 'GET')
+#1 {main}
+  thrown in /var/www/html/src/core/Router.php on line 111
+[11-May-2026 07:52:35 UTC] PHP Fatal error:  Uncaught Exception: Page not found in /var/www/html/src/core/Router.php:111
+Stack trace:
+#0 /var/www/html/src/public/index.php(30): Core\Router->dispatch('/_next/webpack-...', 'GET')
+#1 {main}
+  thrown in /var/www/html/src/core/Router.php on line 111
+[11-May-2026 07:52:41 UTC] PHP Fatal error:  Uncaught Exception: Page not found in /var/www/html/src/core/Router.php:111
+Stack trace:
+#0 /var/www/html/src/public/index.php(30): Core\Router->dispatch('/_next/webpack-...', 'GET')
+#1 {main}
+  thrown in /var/www/html/src/core/Router.php on line 111
+[11-May-2026 07:52:47 UTC] PHP Fatal error:  Uncaught Exception: Page not found in /var/www/html/src/core/Router.php:111
+Stack trace:
+#0 /var/www/html/src/public/index.php(30): Core\Router->dispatch('/_next/webpack-...', 'GET')
+#1 {main}
+  thrown in /var/www/html/src/core/Router.php on line 111
+[11-May-2026 07:52:53 UTC] PHP Fatal error:  Uncaught Exception: Page not found in /var/www/html/src/core/Router.php:111
+Stack trace:
+#0 /var/www/html/src/public/index.php(30): Core\Router->dispatch('/_next/webpack-...', 'GET')
+#1 {main}
+  thrown in /var/www/html/src/core/Router.php on line 111
+[11-May-2026 07:52:53 UTC] PHP Fatal error:  Uncaught Exception: Page not found in /var/www/html/src/core/Router.php:111
+Stack trace:
+#0 /var/www/html/src/public/index.php(30): Core\Router->dispatch('/admin/audit-lo...', 'GET')
+#1 {main}
+  thrown in /var/www/html/src/core/Router.php on line 111

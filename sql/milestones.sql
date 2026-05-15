@@ -555,7 +555,7 @@ VALUES
 ('22.4', '22.4.3', 3, 'CSGD thực hiện khảo sát và đánh giá mức độ hài lòng của các bên liên quan đối với chất lượng người học sau tốt nghiệp của tất cả các chương trình đào tạo.'),
 ('22.4', '22.4.4', 4, 'CSGD có cơ chế giám sát và sử dụng thông tin phản hồi của các bên liên quan nhằm cải tiến chất lượng người học sau tốt nghiệp.'),
 ('22.4', '22.4.5', 5, 'CSGD thực hiện đối sánh mức độ hài lòng của các bên liên quan đối với chất lượng người học sau tốt nghiệp giữa các khóa học trước và sau của tất cả các chương trình đào tạo.'),
-('22.4', '22.4.6', 6, 'CSGD triển khai các biện pháp cải tiến nhằm nâng cao mức độ hài lòng của các bên liên quan về chất lượng người học sau tốt nghiệp của tất cả các chương trình đào tạo.');
+('22.4', '22.4.6', 6, 'CSGD triển khai các biện pháp cải tiến nhằm nâng cao mức độ hài lòng của các bên liên quan về chất lượng người học sau tốt nghiệp của tất cả các chương trình đào tạo.'),
 
 
 

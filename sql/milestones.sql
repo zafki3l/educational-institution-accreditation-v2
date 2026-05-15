@@ -643,4 +643,4 @@ VALUES
 ('25.2', '25.2.3', 3, 'Có thực hiện đối sánh về kết quả và các chỉ số thị trường của hoạt động đào tạo, NCKH và phục vụ cộng đồng; thực hiện rà soát, điều chỉnh hằng năm.'),
 ('25.2', '25.2.4', 4, 'Có hệ thống thu thập thông tin phản hồi của các bên liên quan về kết quả và các chỉ số thị trường của hoạt động đào tạo, NCKH và phục vụ cộng đồng.'),
 ('25.2', '25.2.5', 5, 'Có kế hoạch cải tiến chất lượng hoạt động căn cứ thông tin phản hồi của các bên liên quan về kết quả và các chỉ số thị trường.'),
-('25.2', '25.2.6', 6, 'Có CSDL đánh giá về kết quả và các chỉ số thị trường của hoạt động đào tạo, NCKH và phục vụ cộng đồng.'),
+('25.2', '25.2.6', 6, 'Có CSDL đánh giá về kết quả và các chỉ số thị trường của hoạt động đào tạo, NCKH và phục vụ cộng đồng.');
